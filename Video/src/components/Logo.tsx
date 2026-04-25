@@ -3,10 +3,23 @@ import {C, FONT, W} from '../design/tokens';
 interface Props {
   size?: number;
   showWordmark?: boolean;
+  wordmark?: string;
+  accentWord?: string;
 }
 
 /** StructuredMatch logo: gold rounded square with an S-curve, plus wordmark. */
-export const Logo: React.FC<Props> = ({size = 96, showWordmark = true}) => {
+export const Logo: React.FC<Props> = ({
+  size = 96,
+  showWordmark = true,
+  wordmark = 'StructuredMatch',
+  accentWord = 'Match',
+}) => {
+  const accentIndex = wordmark.indexOf(accentWord);
+  const hasAccent = accentWord.length > 0 && accentIndex >= 0;
+  const leading = hasAccent ? wordmark.slice(0, accentIndex) : wordmark;
+  const accented = hasAccent ? accentWord : '';
+  const trailing = hasAccent ? wordmark.slice(accentIndex + accentWord.length) : '';
+
   return (
     <div
       style={{
@@ -27,7 +40,9 @@ export const Logo: React.FC<Props> = ({size = 96, showWordmark = true}) => {
             lineHeight: 1,
           }}
         >
-          Structured<span style={{color: C.accent}}>Match</span>
+          {leading}
+          {hasAccent ? <span style={{color: C.accent}}>{accented}</span> : null}
+          {trailing}
         </span>
       )}
     </div>

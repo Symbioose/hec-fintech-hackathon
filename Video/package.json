@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "remotion studio",
     "render": "remotion render Pitch out/pitch.mp4",
-    "render:hd": "remotion render Pitch out/pitch.mp4 --crf=18"
+    "render:hd": "remotion render Pitch out/pitch.mp4 --crf=18",
+    "render:full": "remotion render PitchFull out/pitch-full.mp4 --crf=18",
+    "render:loop": "remotion render PitchLoop out/pitch-loop.mp4 --crf=18",
+    "render:legacy": "remotion render PitchLegacy out/pitch-legacy.mp4 --crf=18"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.0",
