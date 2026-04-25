@@ -1,9 +1,14 @@
 import {AbsoluteFill, Easing, Sequence, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {loadFont as loadInter} from '@remotion/google-fonts/Inter';
 import {loadFont as loadMono} from '@remotion/google-fonts/JetBrainsMono';
-import {C, FONT, W} from '../design/tokens';
+import {C, FONT, LV, W} from '../design/tokens';
 import {Logo} from '../components/Logo';
 import {SubScoreBars} from '../components/SubScoreBars';
+import {BrowserChrome} from '../lovable/BrowserChrome';
+import {LovableShell} from '../lovable/LovableShell';
+import {LovableDashboard} from '../lovable/LovableDashboard';
+import {LovableProductDetail} from '../lovable/LovableProductDetail';
+import {LovableWhatIf} from '../lovable/LovableWhatIf';
 
 loadInter('normal', {weights: ['400', '500', '600', '700', '900'], subsets: ['latin']});
 loadMono('normal', {weights: ['400', '500', '700'], subsets: ['latin']});
@@ -21,23 +26,24 @@ const BRAND = {
 };
 
 const NARRATIVE_SCENES = {
+  // VC cut: 90.0s exact. 7 scenes × frames - 6×36 overlap = 2700 frames @ 30fps.
   vc: {
-    problem: 300,
-    thesis: 210,
-    retrieve: 510,
-    match: 450,
-    score: 510,
-    evolve: 360,
-    close: 300,
+    problem: 270,
+    thesis: 180,
+    retrieve: 360,
+    match: 540,
+    score: 660,
+    evolve: 510,
+    close: 396,
   },
   full: {
     problem: 330,
     thesis: 240,
     retrieve: 570,
-    match: 510,
-    score: 570,
-    evolve: 390,
-    close: 270,
+    match: 540,
+    score: 660,
+    evolve: 510,
+    close: 360,
   },
 } as const;
 
@@ -354,22 +360,12 @@ const ProblemScene: React.FC<{durationInFrames: number; mode: NarrativeMode}> = 
           </div>
           <div
             style={{
-              fontSize: compact ? 68 : 76,
+              fontSize: compact ? 96 : 108,
               fontWeight: W.black,
-              letterSpacing: -3,
+              letterSpacing: -4,
               lineHeight: 1,
-              maxWidth: 900,
-            }}
-          >
-            Research volume is not the problem.
-          </div>
-          <div
-            style={{
-              fontSize: compact ? 54 : 60,
-              fontWeight: W.bold,
-              letterSpacing: -2.4,
-              lineHeight: 1.02,
               color: C.accent,
+              textShadow: `0 0 48px ${C.accentGlow}`,
             }}
           >
             Filtering is.
@@ -447,18 +443,13 @@ const ThesisScene: React.FC<{durationInFrames: number}> = ({durationInFrames}) =
         </div>
         <div
           style={{
-            fontSize: 30,
+            fontSize: 34,
             color: C.textSecondary,
-            lineHeight: 1.32,
-            maxWidth: 1120,
+            lineHeight: 1.2,
+            letterSpacing: -0.4,
           }}
         >
-          One institutional workflow for asset managers, private banks and family offices.
-        </div>
-        <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 14}}>
-          <Tag text="Agents" accent={C.info} />
-          <Tag text="Matching" accent={C.success} />
-          <Tag text="Scoring" accent={C.accent} />
+          Built for the desk.
         </div>
       </div>
     </SceneShell>
@@ -475,8 +466,8 @@ const RetrieveScene: React.FC<{durationInFrames: number; mode: NarrativeMode}> =
     <SceneShell durationInFrames={durationInFrames} padding={compact ? '74px 78px' : '82px 88px'}>
       <HeaderBlock
         eyebrow="Retrieve"
-        title="AI agents retrieve and structure incoming flow."
-        subtitle="Emails, PDFs, chats and calls become validated product records."
+        title="Six channels. One structured record."
+        subtitle="Emails. PDFs. Bloomberg. Calls. → validated product."
         right={<div style={{display: 'flex', gap: 12}}><StatPill label="channels" value="6" accent={C.info} /><StatPill label="queue" value="1" accent={C.success} /></div>}
       />
 
@@ -605,378 +596,180 @@ const RetrieveScene: React.FC<{durationInFrames: number; mode: NarrativeMode}> =
 
 const MatchScene: React.FC<{durationInFrames: number; mode: NarrativeMode}> = ({
   durationInFrames,
-  mode,
 }) => {
-  const compact = mode === 'vc';
-
+  // Live product moment #1: zoom into the actual FlowDesk dashboard.
+  // KPIs animate, score histogram bars grow, top recommendations slide in,
+  // last beat highlights the SocGen row that we'll click into next.
   return (
-    <SceneShell durationInFrames={durationInFrames} padding={compact ? '74px 78px' : '82px 88px'}>
-      <HeaderBlock
-        eyebrow="Match"
-        title="Client rules meet structured product facts."
-        subtitle="The system filters product records against mandate constraints before scoring."
-        right={
-          <div style={{display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'flex-end'}}>
-            <Tag text="Asset manager" accent={C.info} />
-            <Tag text="Private bank" accent={C.accent} />
-            <Tag text="Family office" accent={C.electric} />
-          </div>
-        }
-      />
-
-      <div
-        style={{
-          flex: 1,
-          display: 'grid',
-          gridTemplateColumns: compact ? '1fr 300px 1fr' : '1fr 320px 1fr',
-          gap: 22,
-          marginTop: 34,
-        }}
-      >
-        <GlassPanel style={{padding: '22px', display: 'flex', flexDirection: 'column', gap: 16}}>
-          <AppPanelHeader eyebrow="Your account" title="My mandate" meta="Current rules and exposures" />
-          <div style={{display: 'flex', flexWrap: 'wrap', gap: 8}}>
-            <RuleChip text="EUR / USD" accent={C.info} />
-            <RuleChip text="BBB- minimum" accent={C.success} />
-            <RuleChip text="Duration <= 5y" accent={C.accent} />
-            <RuleChip text="No fossil" accent={C.blocker} />
-            <RuleChip text="Capital protected" accent={C.success} />
-          </div>
-          <div style={{display: 'flex', flexDirection: 'column', gap: 10}}>
-            <ExposureRow label="Banks" value={0.68} accent={C.info} />
-            <ExposureRow label="Energy" value={0.12} accent={C.warning} />
-            <ExposureRow label="Duration" value={0.54} accent={C.success} />
-          </div>
-          <GlassPanel
-            style={{
-              marginTop: 'auto',
-              padding: '16px 18px',
-              borderRadius: 18,
-              background: 'rgba(255,255,255,0.04)',
-            }}
-          >
-            <div
-              style={{
-                fontFamily: FONT.mono,
-                fontSize: 12,
-                letterSpacing: 2,
-                color: C.accent,
-                textTransform: 'uppercase',
-              }}
-            >
-              client profile
-            </div>
-            <div style={{marginTop: 8, fontSize: 24, fontWeight: W.bold, letterSpacing: -0.6}}>
-              Rules evolve as the client evolves.
-            </div>
-          </GlassPanel>
-        </GlassPanel>
-
-        <GlassPanel style={{padding: '20px', display: 'flex', flexDirection: 'column', gap: 12}}>
-          <AppPanelHeader eyebrow="Matching engine" title="Checks" meta="pass early · fail early" />
-          <CheckRow label="Currency" detail="EUR matches mandate" ok />
-          <CheckRow label="Tenor" detail="5y within max duration" ok />
-          <CheckRow label="Rating" detail="A above BBB- floor" ok />
-          <CheckRow label="ESG" detail="Issuer not excluded" ok />
-          <CheckRow label="Protection" detail="Capital protection missing" ok={false} />
-          <GlassPanel
-            style={{
-              marginTop: 'auto',
-              padding: '18px',
-              borderRadius: 18,
-              background: 'rgba(248,113,113,0.08)',
-              border: `1px solid ${C.blocker}33`,
-            }}
-          >
-            <div
-              style={{
-                fontFamily: FONT.mono,
-                fontSize: 12,
-                letterSpacing: 2,
-                color: C.blocker,
-                textTransform: 'uppercase',
-              }}
-            >
-              hard fail
-            </div>
-            <div style={{marginTop: 8, fontSize: 24, fontWeight: W.bold, letterSpacing: -0.6}}>
-              Reject before the desk wastes time.
-            </div>
-          </GlassPanel>
-        </GlassPanel>
-
-        <GlassPanel style={{padding: '22px', display: 'flex', flexDirection: 'column', gap: 16}}>
-          <AppPanelHeader eyebrow="Product detail" title="Structured product" meta="What the system knows about one item" />
-          <div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12}}>
-            <FactCard label="Issuer" value="Bank Helios" />
-            <FactCard label="Type" value="Autocallable" />
-            <FactCard label="Currency" value="EUR" />
-            <FactCard label="Tenor" value="5 years" />
-            <FactCard label="Coupon" value="6.20%" />
-            <FactCard label="Barrier" value="60%" />
-            <FactCard label="Protection" value="No" accent={C.warning} />
-            <FactCard label="Rating" value="A" accent={C.success} />
-          </div>
-          <GlassPanel
-            style={{
-              marginTop: 'auto',
-              padding: '18px',
-              borderRadius: 18,
-              background: 'rgba(255,255,255,0.04)',
-            }}
-          >
-            <div
-              style={{
-                fontFamily: FONT.mono,
-                fontSize: 12,
-                letterSpacing: 2,
-                color: C.textMuted,
-                textTransform: 'uppercase',
-              }}
-            >
-              point
-            </div>
-            <div style={{marginTop: 8, fontSize: 24, fontWeight: W.bold, letterSpacing: -0.6}}>
-              Matching starts from facts, not pitch decks.
-            </div>
-          </GlassPanel>
-        </GlassPanel>
-      </div>
-    </SceneShell>
+    <LovableSceneFrame
+      durationInFrames={durationInFrames}
+      url="app.flowdesk.io/dashboard"
+      title="Dashboard · Atlas Multi-Asset Fund"
+      activeNav="dashboard"
+      eyebrow="Live · Match"
+      caption="237 offers in. 22 pass your mandate."
+      enterAnimation
+    >
+      <LovableDashboard startFrame={10} highlightTopRow />
+    </LovableSceneFrame>
   );
 };
 
 const ScoreScene: React.FC<{durationInFrames: number; mode: NarrativeMode}> = ({
   durationInFrames,
-  mode,
 }) => {
-  const compact = mode === 'vc';
-
+  // Live product moment #2: click into the top recommendation.
+  // The radar chart fills in spoke-by-spoke — the "why it surfaced" hero.
   return (
-    <SceneShell durationInFrames={durationInFrames} padding={compact ? '74px 78px' : '82px 88px'}>
-      <HeaderBlock
-        eyebrow="Score"
-        title="Score. Rank. Recommend."
-        subtitle="Automation surfaces the few items worth a portfolio manager's decision."
-        right={
-          <div style={{display: 'flex', gap: 12}}>
-            <StatPill label="screened" value="22" accent={C.info} />
-            <StatPill label="eligible" value="2" accent={C.success} />
-          </div>
-        }
-      />
-
-      <div
-        style={{
-          flex: 1,
-          display: 'grid',
-          gridTemplateColumns: compact ? '1.18fr 0.82fr' : '1.22fr 0.78fr',
-          gap: 22,
-          marginTop: 34,
-        }}
-      >
-        <GlassPanel style={{padding: '22px', display: 'flex', flexDirection: 'column', gap: 16}}>
-          <AppPanelHeader eyebrow="Matching engine" title="Recommendations for you" meta="Ranked product matches for your mandate" />
-          <div style={{display: 'flex', flexWrap: 'wrap', gap: 8}}>
-            <RuleChip text="EUR" accent={C.info} />
-            <RuleChip text="<= 5y tenor" accent={C.success} />
-            <RuleChip text="Capital protected" accent={C.success} />
-            <RuleChip text="ESG" accent={C.accent} />
-          </div>
-
-          <RecommendationCard
-            title="SocGen senior switch"
-            subtitle="Societe Generale · EUR · 2029"
-            score={94}
-            bullets={[
-              {accent: C.success, text: 'Constructive banks view'},
-              {accent: C.success, text: 'Preferred issuer'},
-              {accent: C.warning, text: 'Subordinated exposure watched'},
-            ]}
-          />
-
-          <RecommendationCard
-            title="UniCredit subordinated"
-            subtitle="UniCredit · EUR · 2028"
-            score={89}
-            bullets={[
-              {accent: C.success, text: 'Yield clears target'},
-              {accent: C.success, text: 'Rating above floor'},
-              {accent: C.info, text: 'Fits current exposure window'},
-            ]}
-          />
-
-          <GlassPanel
-            style={{
-              padding: '16px 18px',
-              borderRadius: 18,
-              background: 'rgba(255,255,255,0.04)',
-            }}
-          >
-            <div
-              style={{
-                fontFamily: FONT.mono,
-                fontSize: 12,
-                letterSpacing: 2,
-                color: C.blocker,
-                textTransform: 'uppercase',
-              }}
-            >
-              rejected
-            </div>
-            <div style={{marginTop: 8, display: 'flex', justifyContent: 'space-between', gap: 16}}>
-              <span style={{fontSize: 22, fontWeight: W.bold}}>TotalEnergies</span>
-              <span style={{fontFamily: FONT.mono, fontSize: 20, color: C.blocker}}>ESG</span>
-            </div>
-          </GlassPanel>
-        </GlassPanel>
-
-        <div style={{display: 'grid', gridTemplateRows: '1fr 1fr', gap: 22}}>
-          <GlassPanel style={{padding: '22px', display: 'flex', flexDirection: 'column', gap: 16}}>
-            <AppPanelHeader eyebrow="Overview" title="Dashboard" meta="Portfolio-level signal" />
-            <div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10}}>
-              <MiniStatCard label="Products" value="237" accent={C.info} />
-              <MiniStatCard label="Matches" value="22" accent={C.success} />
-              <MiniStatCard label="New" value="5" accent={C.accent} />
-              <MiniStatCard label="Avg score" value="71" accent={C.warning} />
-            </div>
-            <MiniChartPanel
-              title="Score distribution"
-              bars={[
-                {label: '0-20', value: 2, accent: C.textMuted},
-                {label: '20-40', value: 4, accent: C.textMuted},
-                {label: '40-60', value: 7, accent: C.info},
-                {label: '60-80', value: 6, accent: C.accent},
-                {label: '80-100', value: 3, accent: C.success},
-              ]}
-            />
-          </GlassPanel>
-
-          <GlassPanel style={{padding: '22px', display: 'flex', flexDirection: 'column', gap: 16}}>
-            <AppPanelHeader eyebrow="Selected item" title="Why it surfaced" meta="Explainable scoring" />
-            <div style={{display: 'grid', gridTemplateColumns: '1fr 320px', gap: 18, alignItems: 'center'}}>
-              <div style={{display: 'flex', flexDirection: 'column', gap: 10}}>
-                <ReasonRow accent={C.success} text="Issuer is allowed and preferred." />
-                <ReasonRow accent={C.success} text="Yield clears the desk hurdle." />
-                <ReasonRow accent={C.info} text="Exposure fits the current book." />
-              </div>
-              <SubScoreBars
-                delay={0}
-                staggerPerBar={4}
-                width={320}
-                barHeight={10}
-                bars={[
-                  {label: 'Constraints', value: 1.0},
-                  {label: 'Yield fit', value: 0.92},
-                  {label: 'Exposure fit', value: 0.88},
-                  {label: 'Market fit', value: 0.74},
-                ]}
-              />
-            </div>
-          </GlassPanel>
-        </div>
-      </div>
-    </SceneShell>
+    <LovableSceneFrame
+      durationInFrames={durationInFrames}
+      url="app.flowdesk.io/products/socgen-senior-switch"
+      title="SocGen senior switch · Score 94"
+      activeNav="recommendations"
+      eyebrow="Live · Score"
+      caption="Every recommendation is explainable. The radar shows why."
+    >
+      <LovableProductDetail startFrame={4} />
+    </LovableSceneFrame>
   );
 };
 
 const EvolveScene: React.FC<{durationInFrames: number; mode: NarrativeMode}> = ({
   durationInFrames,
-  mode,
 }) => {
-  const compact = mode === 'vc';
-
+  // Live product moment #3: the desk relaxes constraints to surface
+  // near-misses. Sliders auto-drag; new matches unlock; the chrome
+  // dissolves out at the end to hand off to the cinematic close.
   return (
-    <SceneShell durationInFrames={durationInFrames} padding={compact ? '74px 78px' : '82px 88px'}>
-      <HeaderBlock
-        eyebrow="Evolve"
-        title="As the client evolves, the feed evolves."
-        subtitle="Mandate changes and market views immediately reshape what gets recommended."
-        right={<Tag text="Adaptive workflow" accent={C.accent} />}
-      />
+    <LovableSceneFrame
+      durationInFrames={durationInFrames}
+      url="app.flowdesk.io/recommendations"
+      title="What-if mandate · 3 unlock"
+      activeNav="recommendations"
+      eyebrow="Live · Evolve"
+      caption="Relax a constraint. The feed reacts in real time."
+      exitAnimation
+    >
+      <LovableWhatIf startFrame={4} />
+    </LovableSceneFrame>
+  );
+};
 
-      <div
-        style={{
-          flex: 1,
-          display: 'grid',
-          gridTemplateColumns: compact ? '0.94fr 1.06fr' : '0.9fr 1.1fr',
-          gap: 22,
-          marginTop: 34,
-        }}
+/**
+ * Reusable shell for the three "live product" scenes. Renders the
+ * cinematic SceneShell wrapper, an eyebrow caption above the browser
+ * window, and the BrowserChrome+LovableShell containing the page.
+ */
+const LovableSceneFrame: React.FC<{
+  durationInFrames: number;
+  url: string;
+  title: string;
+  activeNav: 'dashboard' | 'recommendations' | 'products' | 'inbox' | 'mandate' | 'market' | 'watchlist';
+  eyebrow: string;
+  caption: string;
+  enterAnimation?: boolean;
+  exitAnimation?: boolean;
+  children: React.ReactNode;
+}> = ({
+  durationInFrames,
+  url,
+  title,
+  activeNav,
+  eyebrow,
+  caption,
+  enterAnimation = false,
+  exitAnimation = false,
+  children,
+}) => {
+  return (
+    <SceneShell durationInFrames={durationInFrames} padding="0">
+      <BrowserChrome
+        url={url}
+        title={title}
+        enterFrame={enterAnimation ? 0 : -120}
+        exitFrame={exitAnimation ? durationInFrames - 30 : undefined}
+        totalFrames={durationInFrames}
       >
-        <div style={{display: 'grid', gridTemplateRows: '1fr 1fr', gap: 22}}>
-          <GlassPanel style={{padding: '22px', display: 'flex', flexDirection: 'column', gap: 16}}>
-            <AppPanelHeader eyebrow="What-if panel" title="Mandate changes" meta="Adjust rules without rebuilding the workflow" />
-            <ToggleRow label="Capital protection required" from="On" to="Off" accent={C.warning} />
-            <ToggleRow label="Max duration" from="5y" to="7y" accent={C.info} />
-            <ToggleRow label="Sector view" from="Neutral banks" to="Constructive banks" accent={C.success} />
-            <GlassPanel
-              style={{
-                marginTop: 'auto',
-                padding: '16px 18px',
-                borderRadius: 18,
-                background: 'rgba(255,255,255,0.04)',
-              }}
-            >
-              <div
-                style={{
-                  fontFamily: FONT.mono,
-                  fontSize: 12,
-                  letterSpacing: 2,
-                  color: C.info,
-                  textTransform: 'uppercase',
-                }}
-              >
-                effect
-              </div>
-              <div style={{marginTop: 8, fontSize: 24, fontWeight: W.bold, letterSpacing: -0.6}}>
-                +3 more products now pass.
-              </div>
-            </GlassPanel>
-          </GlassPanel>
-
-          <GlassPanel style={{padding: '22px', display: 'flex', flexDirection: 'column', gap: 14}}>
-            <AppPanelHeader eyebrow="Context" title="House view" meta="Internal research biasing recommendations" />
-            <MarketViewCard title="Constructive on European banks" note="Lifts bank-related recommendations" accent={C.success} />
-            <MarketViewCard title="Avoid fossil-heavy credits" note="Keeps excluded issuers out" accent={C.blocker} />
-          </GlassPanel>
-        </div>
-
-        <GlassPanel style={{padding: '22px', display: 'flex', flexDirection: 'column', gap: 16}}>
-          <AppPanelHeader eyebrow="Recommendations" title="Updated output" meta="The list reacts immediately" />
-          <ScoreDeltaCard title="SocGen senior switch" before={88} after={94} accent={C.success} note="banks view improves fit" />
-          <ScoreDeltaCard title="UniCredit subordinated" before={81} after={89} accent={C.success} note="duration and view improve fit" />
-          <ScoreDeltaCard title="Helios Autocall" before={0} after={76} accent={C.info} note="capital protection rule relaxed" />
-          <GlassPanel
-            style={{
-              padding: '18px',
-              borderRadius: 18,
-              background: 'rgba(255,255,255,0.04)',
-              marginTop: 'auto',
-            }}
-          >
-            <div
-              style={{
-                fontFamily: FONT.mono,
-                fontSize: 12,
-                color: C.accent,
-                letterSpacing: 2,
-                textTransform: 'uppercase',
-              }}
-            >
-              point
-            </div>
-            <div style={{marginTop: 8, fontSize: 24, fontWeight: W.bold, letterSpacing: -0.6}}>
-              The workflow stays fixed. The client profile drives the output.
-            </div>
-          </GlassPanel>
-        </GlassPanel>
-      </div>
+        <LovableShell active={activeNav}>{children}</LovableShell>
+      </BrowserChrome>
+      <SceneCaption eyebrow={eyebrow} caption={caption} />
     </SceneShell>
   );
 };
 
+const SceneCaption: React.FC<{eyebrow: string; caption: string}> = ({eyebrow, caption}) => {
+  const frame = useCurrentFrame();
+  const opacity = interpolate(frame, [12, 28], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        top: 36,
+        left: 0,
+        right: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        opacity,
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 14,
+          padding: '8px 16px',
+          background: 'rgba(11, 15, 31, 0.78)',
+          border: `1px solid ${C.borderStrong}`,
+          borderRadius: 999,
+          backdropFilter: 'blur(12px)',
+        }}
+      >
+        <span
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
+            fontFamily: FONT.mono,
+            fontSize: 11,
+            color: LV.primaryGlow,
+            letterSpacing: 2,
+            textTransform: 'uppercase',
+            fontWeight: W.semibold,
+          }}
+        >
+          <span
+            style={{
+              width: 7,
+              height: 7,
+              borderRadius: 999,
+              background: LV.primaryGlow,
+              boxShadow: `0 0 10px ${LV.primaryGlow}`,
+            }}
+          />
+          {eyebrow}
+        </span>
+        <span style={{width: 1, height: 14, background: C.borderStrong}} />
+        <span style={{fontSize: 14, fontWeight: W.semibold, color: C.textPrimary, letterSpacing: -0.2}}>
+          {caption}
+        </span>
+      </div>
+    </div>
+  );
+};
+
 const CloseScene: React.FC<{durationInFrames: number}> = ({durationInFrames}) => {
+  const frame = useCurrentFrame();
+  const marketOp = interpolate(frame, [120, 156], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+  const marketLift = interpolate(frame, [120, 156], [16, 0], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
   return (
     <SceneShell durationInFrames={durationInFrames}>
       <div
@@ -987,39 +780,74 @@ const CloseScene: React.FC<{durationInFrames: number}> = ({durationInFrames}) =>
           justifyContent: 'center',
           alignItems: 'center',
           textAlign: 'center',
-          gap: 24,
+          gap: 26,
         }}
       >
         <Logo size={188} wordmark={BRAND.wordmark} accentWord={BRAND.accentWord} />
         <div
           style={{
-            fontSize: 88,
+            fontSize: 92,
             fontWeight: W.black,
-            letterSpacing: -3.6,
-            lineHeight: 0.98,
-            maxWidth: 1480,
+            letterSpacing: -3.8,
+            lineHeight: 0.96,
+            maxWidth: 1520,
           }}
         >
           From research firehose to <span style={{color: C.accent}}>investable feed</span>.
         </div>
         <div
           style={{
-            fontSize: 30,
+            fontSize: 34,
             color: C.textSecondary,
-            lineHeight: 1.32,
-            maxWidth: 980,
+            letterSpacing: -0.4,
           }}
         >
           Retrieve. Match. Recommend.
         </div>
-        <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 14}}>
-          <Tag text="Asset managers" accent={C.info} />
-          <Tag text="Private banks" accent={C.accent} />
-          <Tag text="Family offices" accent={C.electric} />
+        <div
+          style={{
+            opacity: marketOp,
+            transform: `translateY(${marketLift}px)`,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 18,
+            marginTop: 4,
+            padding: '14px 22px',
+            border: `1px solid ${C.borderStrong}`,
+            borderRadius: 999,
+            background: 'rgba(229, 180, 92, 0.06)',
+          }}
+        >
+          <span
+            style={{
+              fontFamily: FONT.mono,
+              fontSize: 14,
+              letterSpacing: 4,
+              color: C.textMuted,
+              textTransform: 'uppercase',
+            }}
+          >
+            Addressable market
+          </span>
+          <span style={{width: 1, height: 18, background: C.borderStrong}} />
+          <span
+            style={{
+              fontSize: 28,
+              fontWeight: W.black,
+              color: C.accent,
+              letterSpacing: -0.4,
+              fontFamily: FONT.mono,
+            }}
+          >
+            €34T
+          </span>
+          <span style={{fontSize: 18, color: C.textSecondary, letterSpacing: -0.2}}>
+            European asset management
+          </span>
         </div>
         <div
           style={{
-            marginTop: 6,
+            marginTop: 10,
             fontFamily: FONT.mono,
             fontSize: 18,
             letterSpacing: 5,
