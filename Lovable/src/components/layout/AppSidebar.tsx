@@ -1,140 +1,197 @@
 import {
-  LayoutDashboard,
+  Zap,
+  Inbox as InboxIcon,
+  LayoutGrid,
   Sparkles,
   Boxes,
-  Inbox,
-  UserCircle,
-  TrendingUp,
   Bookmark,
   Send,
+  TrendingUp,
+  Cpu,
+  CircleUser,
 } from "lucide-react";
-import { NavLink } from "@/components/NavLink";
-import { useLocation } from "react-router-dom";
-
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from "@/components/ui/sidebar";
-import { cn } from "@/lib/utils";
+import { useLocation, NavLink, useNavigate } from "react-router-dom";
 import { useAppStore } from "@/lib/store";
+import { SpiderLogo } from "@/components/common/SpiderLogo";
 
 interface Item {
-  title: string;
-  url: string;
-  icon: typeof LayoutDashboard;
+  to: string;
+  label: string;
+  icon: typeof Zap;
   end?: boolean;
   badgeKey?: "unread" | "watchlist" | "outbox_pending";
 }
 
-const items: Item[] = [
-  { title: "Dashboard", url: "/", icon: LayoutDashboard, end: true },
-  { title: "Recommendations", url: "/recommendations", icon: Sparkles },
-  { title: "Products", url: "/products", icon: Boxes },
-  { title: "Inbox", url: "/inbox", icon: Inbox, badgeKey: "unread" },
-  { title: "Outbox", url: "/outbox", icon: Send, badgeKey: "outbox_pending" },
-  { title: "Watchlist", url: "/watchlist", icon: Bookmark, badgeKey: "watchlist" },
-  { title: "My mandate", url: "/mandate", icon: UserCircle },
-  { title: "Market views", url: "/market", icon: TrendingUp },
+const ITEMS: Item[] = [
+  { to: "/",                label: "FEED",     icon: Zap, end: true },
+  { to: "/recommendations", label: "MATCH",    icon: Sparkles },
+  { to: "/inbox",           label: "INBOX",    icon: InboxIcon, badgeKey: "unread" },
+  { to: "/processing",      label: "AI",       icon: Cpu },
+  { to: "/products",        label: "DEALS",    icon: Boxes },
+  { to: "/mandate",         label: "RULES",    icon: LayoutGrid },
+  { to: "/market",          label: "VIEWS",    icon: TrendingUp },
+  { to: "/watchlist",       label: "WATCH",    icon: Bookmark, badgeKey: "watchlist" },
+  { to: "/outbox",          label: "OUT",      icon: Send, badgeKey: "outbox_pending" },
 ];
 
-export function AppSidebar() {
-  const { state } = useSidebar();
-  const collapsed = state === "collapsed";
+function NavIconItem({ item }: { item: Item }) {
   const location = useLocation();
   const { unreadCount, watchlist, outbox } = useAppStore();
   const outboxPending = outbox.filter((r) => r.status !== "received").length;
+  const active = item.end
+    ? location.pathname === item.to
+    : location.pathname.startsWith(item.to);
+
+  const badge =
+    item.badgeKey === "unread" ? unreadCount
+    : item.badgeKey === "watchlist" ? watchlist.length
+    : item.badgeKey === "outbox_pending" ? outboxPending
+    : 0;
+
+  const Icon = item.icon;
 
   return (
-    <Sidebar collapsible="icon">
-      <SidebarHeader className="border-b border-sidebar-border">
-        <div className="flex h-12 items-center gap-2.5 px-2">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md gradient-accent text-primary-foreground shadow-elevated">
-            <Sparkles className="h-4 w-4" />
-          </div>
-          {!collapsed && (
-            <div className="flex flex-col leading-tight">
-              <span className="text-sm font-semibold text-sidebar-foreground">
-                StructuredMatch
-              </span>
-              <span className="text-[10px] uppercase tracking-wider text-sidebar-foreground/60">
-                Matching copilot
-              </span>
-            </div>
-          )}
-        </div>
-      </SidebarHeader>
+    <NavLink
+      to={item.to}
+      end={item.end}
+      title={item.label}
+      style={{
+        width: 48,
+        height: 44,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 3,
+        position: "relative",
+        textDecoration: "none",
+        borderLeft: active ? `2px solid var(--c-amber)` : "2px solid transparent",
+        background: active ? "var(--c-bg2)" : "transparent",
+        transition: "background 0.1s",
+      }}
+      onMouseEnter={(e) => {
+        if (!active) e.currentTarget.style.background = "var(--c-bg2)";
+      }}
+      onMouseLeave={(e) => {
+        if (!active) e.currentTarget.style.background = "transparent";
+      }}
+    >
+      <Icon
+        size={15}
+        strokeWidth={1.75}
+        style={{ color: active ? "var(--c-amber)" : "var(--c-text3)" }}
+      />
+      <span
+        style={{
+          fontSize: 7,
+          letterSpacing: "0.05em",
+          color: active ? "var(--c-amber)" : "var(--c-text3)",
+          fontFamily: "JetBrains Mono, monospace",
+          fontWeight: active ? 700 : 400,
+        }}
+      >
+        {item.label}
+      </span>
+      {badge > 0 && (
+        <span
+          style={{
+            position: "absolute",
+            top: 4,
+            right: 6,
+            minWidth: 14,
+            height: 12,
+            padding: "0 3px",
+            background: "var(--c-amber)",
+            color: "#000",
+            fontSize: 8,
+            fontWeight: 700,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontFamily: "JetBrains Mono, monospace",
+            borderRadius: 1,
+          }}
+        >
+          {badge > 99 ? "99+" : badge}
+        </span>
+      )}
+    </NavLink>
+  );
+}
 
-      <SidebarContent>
-        <SidebarGroup>
-          {!collapsed && <SidebarGroupLabel>Workspace</SidebarGroupLabel>}
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => {
-                const active = item.end
-                  ? location.pathname === item.url
-                  : location.pathname.startsWith(item.url);
-                const badgeValue =
-                  item.badgeKey === "unread"
-                    ? unreadCount
-                    : item.badgeKey === "watchlist"
-                      ? watchlist.length
-                      : item.badgeKey === "outbox_pending"
-                        ? outboxPending
-                        : 0;
-                const showBadge = badgeValue > 0;
-                return (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={active}>
-                      <NavLink
-                        to={item.url}
-                        end={item.end}
-                        className={cn(
-                          "flex items-center gap-2.5 rounded-md text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                        )}
-                        activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
-                      >
-                        <item.icon className="h-4 w-4 shrink-0" />
-                        {!collapsed && <span className="truncate">{item.title}</span>}
-                        {!collapsed && showBadge && (
-                          <span
-                            className={cn(
-                              "tabular ml-auto inline-flex h-5 min-w-[20px] items-center justify-center rounded-full px-1.5 text-[10px] font-semibold",
-                              item.badgeKey === "unread"
-                                ? "bg-primary text-primary-foreground"
-                                : "bg-sidebar-accent text-sidebar-accent-foreground",
-                            )}
-                          >
-                            {badgeValue > 99 ? "99+" : badgeValue}
-                          </span>
-                        )}
-                      </NavLink>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                );
-              })}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
+export function AppSidebar() {
+  const navigate = useNavigate();
+  return (
+    <div
+      style={{
+        width: 48,
+        height: "100vh",
+        background: "var(--c-bg1)",
+        borderRight: "1px solid var(--c-border)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        paddingTop: 12,
+        flexShrink: 0,
+        overflowY: "auto",
+        overflowX: "hidden",
+      }}
+    >
+      {/* Logo — Spider */}
+      <NavLink
+        to="/"
+        style={{
+          width: 36,
+          height: 36,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: 18,
+          flexShrink: 0,
+          textDecoration: "none",
+          color: "var(--c-text)",
+        }}
+        title="Webi · We Buy"
+      >
+        <SpiderLogo size={28} strokeWidth={1.5} />
+      </NavLink>
 
-      <SidebarFooter className="border-t border-sidebar-border">
-        {!collapsed ? (
-          <div className="px-2 py-2 text-[10px] leading-relaxed text-sidebar-foreground/50">
-            Demo build — extraction, matching and scoring run on mocked data.
-          </div>
-        ) : (
-          <div className="h-2" />
-        )}
-      </SidebarFooter>
-    </Sidebar>
+      {ITEMS.map((item) => (
+        <NavIconItem key={item.to} item={item} />
+      ))}
+
+      <div style={{ flex: 1 }} />
+
+      {/* Profile */}
+      <button
+        title="PROFILE"
+        onClick={() => navigate("/mandate")}
+        style={{
+          width: 48,
+          height: 44,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 3,
+          background: "transparent",
+          border: "none",
+          cursor: "pointer",
+          marginBottom: 12,
+        }}
+      >
+        <CircleUser size={15} strokeWidth={1.75} style={{ color: "var(--c-text3)" }} />
+        <span
+          style={{
+            fontSize: 7,
+            letterSpacing: "0.05em",
+            color: "var(--c-text3)",
+            fontFamily: "JetBrains Mono, monospace",
+          }}
+        >
+          PROFILE
+        </span>
+      </button>
+    </div>
   );
 }
