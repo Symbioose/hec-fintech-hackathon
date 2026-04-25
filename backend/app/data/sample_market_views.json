@@ -1,0 +1,45 @@
+[
+  {
+    "id": "MV-1",
+    "date": "2026-04-22",
+    "region": "Europe",
+    "asset_class": "rates",
+    "rates_view": "down",
+    "equity_view": "neutral",
+    "volatility_view": "medium",
+    "credit_spread_view": "stable",
+    "text": "ECB cuts priced for Q3. Front-end rallies, curve bull-steepens. Favour callable fixed-coupon structures and short-dated CPNs.",
+    "author": "Macro Desk"
+  },
+  {
+    "id": "MV-2",
+    "date": "2026-04-21",
+    "region": "US",
+    "asset_class": "equity",
+    "rates_view": "stable",
+    "equity_view": "volatile",
+    "volatility_view": "high",
+    "credit_spread_view": "widening",
+    "text": "Earnings dispersion in US tech high. Worst-of structures on mega-caps offer attractive coupons but tail risk has grown.",
+    "author": "Equity Strategy"
+  },
+  {
+    "id": "MV-3",
+    "date": "2026-04-19",
+    "region": "Global",
+    "asset_class": "credit",
+    "credit_spread_view": "tightening",
+    "text": "IG spreads grinding tighter. CLNs on diversified IG baskets attractive for clients seeking incremental carry.",
+    "author": "Credit Research"
+  },
+  {
+    "id": "MV-4",
+    "date": "2026-04-17",
+    "region": "Europe",
+    "asset_class": "equity",
+    "equity_view": "bullish",
+    "volatility_view": "low",
+    "text": "Eurozone earnings revisions turning positive. Autocallables on SX5E with 60% barriers screen well.",
+    "author": "Equity Strategy"
+  }
+]

@@ -1,0 +1,75 @@
+[
+  {
+    "id": "PH-1",
+    "asset_manager_id": "AM-01",
+    "product_id": "P-1003",
+    "action": "bought",
+    "amount": 5000000,
+    "date": "2026-02-12",
+    "feedback": "Fits CPN bucket, AA- issuer."
+  },
+  {
+    "id": "PH-2",
+    "asset_manager_id": "AM-01",
+    "product_id": "P-1004",
+    "action": "rejected",
+    "date": "2026-03-05",
+    "reason": "Excluded issuer + insufficient capital protection."
+  },
+  {
+    "id": "PH-3",
+    "asset_manager_id": "AM-02",
+    "product_id": "P-1001",
+    "action": "bought",
+    "amount": 2000000,
+    "date": "2026-01-30",
+    "feedback": "Good coupon for current vol regime."
+  },
+  {
+    "id": "PH-4",
+    "asset_manager_id": "AM-02",
+    "product_id": "P-1002",
+    "action": "watched",
+    "date": "2026-04-22"
+  },
+  {
+    "id": "PH-5",
+    "asset_manager_id": "AM-03",
+    "product_id": "P-1008",
+    "action": "approved",
+    "amount": 3000000,
+    "date": "2026-04-23",
+    "feedback": "MSCI ESG Leaders aligns with mandate."
+  },
+  {
+    "id": "PH-6",
+    "asset_manager_id": "AM-04",
+    "product_id": "P-1010",
+    "action": "requested_termsheet",
+    "date": "2026-04-24"
+  },
+  {
+    "id": "PH-7",
+    "asset_manager_id": "AM-05",
+    "product_id": "P-1011",
+    "action": "bought",
+    "amount": 8000000,
+    "date": "2026-03-18",
+    "feedback": "Capital protected, AA, fits long-duration sleeve."
+  },
+  {
+    "id": "PH-8",
+    "asset_manager_id": "AM-06",
+    "product_id": "P-1007",
+    "action": "bought",
+    "amount": 4000000,
+    "date": "2026-04-22"
+  },
+  {
+    "id": "PH-9",
+    "asset_manager_id": "AM-06",
+    "product_id": "P-1009",
+    "action": "watched",
+    "date": "2026-04-19"
+  }
+]

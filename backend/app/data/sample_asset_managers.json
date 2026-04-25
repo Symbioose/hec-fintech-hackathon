@@ -1,0 +1,253 @@
+[
+  {
+    "id": "AM-01",
+    "name": "Aurelia Capital",
+    "firm": "Aurelia Capital Partners",
+    "avatarColor": "primary",
+    "strategy": "defensive_income",
+    "risk_appetite": "low",
+    "allowed_currencies": [
+      "EUR",
+      "CHF"
+    ],
+    "max_tenor_years": 5,
+    "min_issuer_rating": "A",
+    "preferred_issuers": [
+      "Crédit Atlantique",
+      "Helvetia Securities"
+    ],
+    "excluded_issuers": [
+      "Banco Iberia"
+    ],
+    "allowed_underlying_types": [
+      "rates",
+      "credit",
+      "equity_index"
+    ],
+    "forbidden_underlyings": [
+      "AAPL US",
+      "NVDA US"
+    ],
+    "requires_capital_protection": true,
+    "max_barrier_risk": null,
+    "target_yield_min": 0.025,
+    "liquidity_need": "medium",
+    "esg_constraints": [
+      "no_controversial_weapons"
+    ],
+    "current_exposures": {
+      "equity_index": 0.15,
+      "rates": 0.55,
+      "credit": 0.2,
+      "single_stock": 0,
+      "multi_asset": 0.1
+    },
+    "aum_eur_m": 1850,
+    "description": "Defensive multi-asset mandate focused on capital preservation with steady income for institutional clients."
+  },
+  {
+    "id": "AM-02",
+    "name": "Marcus Lindqvist",
+    "firm": "Nordlys Wealth",
+    "avatarColor": "accent",
+    "strategy": "yield_enhancement",
+    "risk_appetite": "medium_high",
+    "allowed_currencies": [
+      "EUR",
+      "USD"
+    ],
+    "max_tenor_years": 6,
+    "min_issuer_rating": "BBB",
+    "preferred_issuers": [
+      "Bank Helios",
+      "Northwall Bank"
+    ],
+    "excluded_issuers": [],
+    "allowed_underlying_types": [
+      "equity_index",
+      "single_stock",
+      "multi_asset"
+    ],
+    "forbidden_underlyings": [],
+    "requires_capital_protection": false,
+    "max_barrier_risk": 0.55,
+    "target_yield_min": 0.05,
+    "liquidity_need": "medium",
+    "esg_constraints": [],
+    "current_exposures": {
+      "equity_index": 0.45,
+      "multi_asset": 0.25,
+      "single_stock": 0.15,
+      "credit": 0.1,
+      "rates": 0.05
+    },
+    "aum_eur_m": 620,
+    "description": "Wealth manager seeking enhanced yield through autocallables and reverse convertibles for HNW clients."
+  },
+  {
+    "id": "AM-03",
+    "name": "Sofia Rinaldi",
+    "firm": "Verdi Asset Management",
+    "avatarColor": "success",
+    "strategy": "esg_income",
+    "risk_appetite": "medium",
+    "allowed_currencies": [
+      "EUR"
+    ],
+    "max_tenor_years": 7,
+    "min_issuer_rating": "A-",
+    "preferred_issuers": [
+      "Crédit Atlantique"
+    ],
+    "excluded_issuers": [
+      "Pacific Trust"
+    ],
+    "allowed_underlying_types": [
+      "equity_index",
+      "rates",
+      "credit"
+    ],
+    "forbidden_underlyings": [],
+    "requires_capital_protection": false,
+    "max_barrier_risk": 0.65,
+    "target_yield_min": 0.04,
+    "liquidity_need": "low",
+    "esg_constraints": [
+      "no_controversial_weapons",
+      "no_thermal_coal",
+      "msci_esg_min_a"
+    ],
+    "current_exposures": {
+      "equity_index": 0.5,
+      "credit": 0.2,
+      "rates": 0.2,
+      "multi_asset": 0.1,
+      "single_stock": 0
+    },
+    "aum_eur_m": 980,
+    "description": "ESG-aligned income portfolio for endowments. Hard ESG screen on issuers and underlyings."
+  },
+  {
+    "id": "AM-04",
+    "name": "Theo Brennan",
+    "firm": "Westgate Family Office",
+    "avatarColor": "warning",
+    "strategy": "opportunistic",
+    "risk_appetite": "high",
+    "allowed_currencies": [
+      "USD",
+      "EUR",
+      "GBP"
+    ],
+    "max_tenor_years": 5,
+    "min_issuer_rating": "BBB-",
+    "preferred_issuers": [
+      "Pacific Trust",
+      "Northwall Bank"
+    ],
+    "excluded_issuers": [],
+    "allowed_underlying_types": [
+      "single_stock",
+      "multi_asset",
+      "equity_index"
+    ],
+    "forbidden_underlyings": [],
+    "requires_capital_protection": false,
+    "max_barrier_risk": 0.45,
+    "target_yield_min": 0.07,
+    "liquidity_need": "low",
+    "esg_constraints": [],
+    "current_exposures": {
+      "single_stock": 0.4,
+      "multi_asset": 0.35,
+      "equity_index": 0.2,
+      "rates": 0.05,
+      "credit": 0
+    },
+    "aum_eur_m": 320,
+    "description": "Opportunistic family office mandate, comfortable with concentrated single-stock and worst-of exposures."
+  },
+  {
+    "id": "AM-05",
+    "name": "Hiroko Tanaka",
+    "firm": "Sakura Pensions",
+    "avatarColor": "info",
+    "strategy": "capital_protection",
+    "risk_appetite": "low",
+    "allowed_currencies": [
+      "EUR",
+      "CHF"
+    ],
+    "max_tenor_years": 8,
+    "min_issuer_rating": "AA-",
+    "preferred_issuers": [
+      "Helvetia Securities",
+      "Crédit Atlantique"
+    ],
+    "excluded_issuers": [
+      "Banco Iberia"
+    ],
+    "allowed_underlying_types": [
+      "rates",
+      "equity_index"
+    ],
+    "forbidden_underlyings": [],
+    "requires_capital_protection": true,
+    "target_yield_min": 0.02,
+    "liquidity_need": "high",
+    "esg_constraints": [
+      "no_controversial_weapons"
+    ],
+    "current_exposures": {
+      "rates": 0.6,
+      "equity_index": 0.25,
+      "credit": 0.1,
+      "multi_asset": 0.05,
+      "single_stock": 0
+    },
+    "aum_eur_m": 4400,
+    "description": "Pension fund with strict capital protection mandate and AA- minimum issuer rating."
+  },
+  {
+    "id": "AM-06",
+    "name": "Daniel Okafor",
+    "firm": "Meridian Balanced",
+    "avatarColor": "primary",
+    "strategy": "balanced_income",
+    "risk_appetite": "medium",
+    "allowed_currencies": [
+      "EUR",
+      "USD"
+    ],
+    "max_tenor_years": 6,
+    "min_issuer_rating": "A-",
+    "preferred_issuers": [
+      "Bank Helios",
+      "Crédit Atlantique"
+    ],
+    "excluded_issuers": [],
+    "allowed_underlying_types": [
+      "equity_index",
+      "rates",
+      "credit",
+      "multi_asset"
+    ],
+    "forbidden_underlyings": [
+      "NVDA US"
+    ],
+    "requires_capital_protection": false,
+    "max_barrier_risk": 0.6,
+    "target_yield_min": 0.04,
+    "liquidity_need": "medium",
+    "esg_constraints": [],
+    "current_exposures": {
+      "equity_index": 0.35,
+      "rates": 0.3,
+      "credit": 0.2,
+      "multi_asset": 0.15,
+      "single_stock": 0
+    },
+    "aum_eur_m": 1200,
+    "description": "Balanced income mandate blending rates, credit and equity-linked structures with moderate barrier risk."
+  }
+]

@@ -1,0 +1,5321 @@
+{
+  "generated_at": "2026-04-25T18:21:59.349Z",
+  "product_count": 30,
+  "am_count": 6,
+  "input_hash": "87c6ea3bfd885e8710eaaaea088a3016d1a6063731000d6c03a0db7f79110f0e",
+  "results": [
+    {
+      "id": "R-AM-01-P-1001",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1001",
+      "score": 24,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Mandate requires capital protection — product is not protected."
+      ],
+      "sub_scores": {
+        "semantic": 0.35,
+        "constraints": 1,
+        "yield_fit": 0.848,
+        "exposure_fit": 0.88,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.20% meets target yield of 2.50%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in equity index (15%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium_high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1001",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1001",
+      "score": 86,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.8500000000000001,
+        "constraints": 1,
+        "yield_fit": 0.748,
+        "exposure_fit": 0.6399999999999999,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Bank Helios is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.20% meets target yield of 5.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1001",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1001",
+      "score": 67,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 0.75,
+        "yield_fit": 0.7879999999999999,
+        "exposure_fit": 0.6,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.20% meets target yield of 4.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Barrier at 60% is more aggressive than mandate floor (65%)."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium_high\" sits above mandate appetite \"medium\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1001",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1001",
+      "score": 84,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.8500000000000001,
+        "constraints": 1,
+        "yield_fit": 0.5314285714285714,
+        "exposure_fit": 0.84,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "neutral",
+          "text": "Product matches the mandate on all checked dimensions."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1001",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1001",
+      "score": 23,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Mandate requires capital protection — product is not protected.",
+        "Issuer rating A below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.8679999999999999,
+        "exposure_fit": 0.8,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.20% meets target yield of 2.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium_high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1001",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1001",
+      "score": 78,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.65,
+        "constraints": 1,
+        "yield_fit": 0.7879999999999999,
+        "exposure_fit": 0.72,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Bank Helios is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.20% meets target yield of 4.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium_high\" sits above mandate appetite \"medium\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1002",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1002",
+      "score": 23,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF).",
+        "Mandate requires capital protection — product is not protected.",
+        "Underlying AAPL US is forbidden by mandate."
+      ],
+      "sub_scores": {
+        "semantic": 0.175,
+        "constraints": 1,
+        "yield_fit": 0.94,
+        "exposure_fit": 1,
+        "market_fit": 0.10000000000000009
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 8.50% meets target yield of 2.50%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in single stock (0%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        },
+        {
+          "kind": "blocker",
+          "text": "Underlying AAPL US is forbidden by mandate."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1002",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1002",
+      "score": 87,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.8500000000000001,
+        "constraints": 1,
+        "yield_fit": 0.84,
+        "exposure_fit": 0.88,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Northwall Bank is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 8.50% meets target yield of 5.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in single stock (15%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium_high\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1002",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1002",
+      "score": 24,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR)."
+      ],
+      "sub_scores": {
+        "semantic": 0.25,
+        "constraints": 1,
+        "yield_fit": 0.88,
+        "exposure_fit": 1,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 8.50% meets target yield of 4.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in single stock (0%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1002",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1002",
+      "score": 87,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.8500000000000001,
+        "constraints": 1,
+        "yield_fit": 0.76,
+        "exposure_fit": 0.6799999999999999,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Northwall Bank is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 8.50% meets target yield of 7.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1002",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1002",
+      "score": 22,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF).",
+        "Mandate requires capital protection — product is not protected.",
+        "Issuer rating A+ below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.1,
+        "constraints": 1,
+        "yield_fit": 0.96,
+        "exposure_fit": 1,
+        "market_fit": 0.10000000000000009
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 8.50% meets target yield of 2.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in single stock (0%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A+ below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1002",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1002",
+      "score": 70,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.275,
+        "constraints": 1,
+        "yield_fit": 0.88,
+        "exposure_fit": 1,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 8.50% meets target yield of 4.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in single stock (0%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1003",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1003",
+      "score": 32,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 7y exceeds max 5y."
+      ],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.712,
+        "exposure_fit": 0.88,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 2.80% meets target yield of 2.50%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in equity index (15%) — adds diversification."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 7y exceeds max 5y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1003",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1003",
+      "score": 23,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 7y exceeds max 6y."
+      ],
+      "sub_scores": {
+        "semantic": 0.45,
+        "constraints": 1,
+        "yield_fit": 0.33599999999999997,
+        "exposure_fit": 0.6399999999999999,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "blocker",
+          "text": "Tenor 7y exceeds max 6y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1003",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1003",
+      "score": 69,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.42,
+        "exposure_fit": 0.6,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1003",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1003",
+      "score": 23,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 7y exceeds max 5y."
+      ],
+      "sub_scores": {
+        "semantic": 0.4,
+        "constraints": 1,
+        "yield_fit": 0.23999999999999996,
+        "exposure_fit": 0.84,
+        "market_fit": 0.85
+      },
+      "rationale": [
+        {
+          "kind": "blocker",
+          "text": "Tenor 7y exceeds max 5y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1003",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1003",
+      "score": 90,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0.732,
+        "exposure_fit": 0.8,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 2.80% meets target yield of 2.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1003",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1003",
+      "score": 25,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 7y exceeds max 6y."
+      ],
+      "sub_scores": {
+        "semantic": 0.55,
+        "constraints": 1,
+        "yield_fit": 0.42,
+        "exposure_fit": 0.72,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 7y exceeds max 6y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1004",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1004",
+      "score": 22,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer Banco Iberia is excluded by mandate.",
+        "Mandate requires capital protection — product is not protected.",
+        "Issuer rating BBB+ below minimum A."
+      ],
+      "sub_scores": {
+        "semantic": 0.175,
+        "constraints": 1,
+        "yield_fit": 0.9119999999999999,
+        "exposure_fit": 0.9199999999999999,
+        "market_fit": 0.10000000000000009
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.80% meets target yield of 2.50%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in multi asset (10%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer Banco Iberia is excluded by mandate."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BBB+ below minimum A."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1004",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1004",
+      "score": 85,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.8500000000000001,
+        "constraints": 1,
+        "yield_fit": 0.8119999999999999,
+        "exposure_fit": 0.8,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.80% meets target yield of 5.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium_high\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1004",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1004",
+      "score": 22,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating BBB+ below minimum A-."
+      ],
+      "sub_scores": {
+        "semantic": 0.25,
+        "constraints": 0.75,
+        "yield_fit": 0.852,
+        "exposure_fit": 0.9199999999999999,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.80% meets target yield of 4.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in multi asset (10%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Barrier at 55% is more aggressive than mandate floor (65%)."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BBB+ below minimum A-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1004",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1004",
+      "score": 87,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.8500000000000001,
+        "constraints": 1,
+        "yield_fit": 0.732,
+        "exposure_fit": 0.72,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.80% meets target yield of 7.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1004",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1004",
+      "score": 22,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer Banco Iberia is excluded by mandate.",
+        "Mandate requires capital protection — product is not protected.",
+        "Issuer rating BBB+ below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.1,
+        "constraints": 1,
+        "yield_fit": 0.9319999999999999,
+        "exposure_fit": 0.96,
+        "market_fit": 0.10000000000000009
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.80% meets target yield of 2.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in multi asset (5%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer Banco Iberia is excluded by mandate."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BBB+ below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1004",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1004",
+      "score": 25,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating BBB+ below minimum A-."
+      ],
+      "sub_scores": {
+        "semantic": 0.65,
+        "constraints": 0.75,
+        "yield_fit": 0.852,
+        "exposure_fit": 0.88,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.80% meets target yield of 4.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in multi asset (15%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Barrier at 55% is more aggressive than mandate floor (60%)."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BBB+ below minimum A-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1005",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1005",
+      "score": 81,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.4439999999999999,
+        "exposure_fit": 0.5599999999999999,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Helvetia Securities is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1005",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1005",
+      "score": 22,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency CHF not in mandate (EUR, USD)."
+      ],
+      "sub_scores": {
+        "semantic": 0.225,
+        "constraints": 1,
+        "yield_fit": 0.22199999999999995,
+        "exposure_fit": 0.96,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency CHF not in mandate (EUR, USD)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1005",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1005",
+      "score": 24,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency CHF not in mandate (EUR)."
+      ],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.27749999999999997,
+        "exposure_fit": 0.84,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "blocker",
+          "text": "Currency CHF not in mandate (EUR)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1005",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1005",
+      "score": 21,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency CHF not in mandate (USD, EUR, GBP)."
+      ],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.15857142857142853,
+        "exposure_fit": 0.96,
+        "market_fit": 0.85
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency CHF not in mandate (USD, EUR, GBP)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1005",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1005",
+      "score": 82,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0.5549999999999999,
+        "exposure_fit": 0.52,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Helvetia Securities is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1005",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1005",
+      "score": 24,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency CHF not in mandate (EUR, USD)."
+      ],
+      "sub_scores": {
+        "semantic": 0.55,
+        "constraints": 1,
+        "yield_fit": 0.27749999999999997,
+        "exposure_fit": 0.76,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "blocker",
+          "text": "Currency CHF not in mandate (EUR, USD)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1006",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1006",
+      "score": 24,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Mandate requires capital protection — product is not protected."
+      ],
+      "sub_scores": {
+        "semantic": 0.35,
+        "constraints": 1,
+        "yield_fit": 0.816,
+        "exposure_fit": 0.84,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.40% meets target yield of 2.50%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium_high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1006",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1006",
+      "score": 74,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.225,
+        "constraints": 1,
+        "yield_fit": 0.716,
+        "exposure_fit": 0.9199999999999999,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Bank Helios is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.40% meets target yield of 5.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in credit (10%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1006",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1006",
+      "score": 76,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.756,
+        "exposure_fit": 0.84,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.40% meets target yield of 4.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium_high\" sits above mandate appetite \"medium\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1006",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1006",
+      "score": 69,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.4628571428571428,
+        "exposure_fit": 1,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Underweight in credit (0%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1006",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1006",
+      "score": 22,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Mandate requires capital protection — product is not protected.",
+        "Issuer rating A below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.1,
+        "constraints": 1,
+        "yield_fit": 0.836,
+        "exposure_fit": 0.9199999999999999,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.40% meets target yield of 2.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in credit (10%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium_high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1006",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1006",
+      "score": 77,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.55,
+        "constraints": 1,
+        "yield_fit": 0.756,
+        "exposure_fit": 0.84,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Bank Helios is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.40% meets target yield of 4.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium_high\" sits above mandate appetite \"medium\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1007",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1007",
+      "score": 94,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.764,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.10% meets target yield of 2.50%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1007",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1007",
+      "score": 75,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.45,
+        "constraints": 1,
+        "yield_fit": 0.49199999999999994,
+        "exposure_fit": 1,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Northwall Bank is a preferred issuer for this mandate."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1007",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1007",
+      "score": 81,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.704,
+        "exposure_fit": 1,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.10% meets target yield of 4.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1007",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1007",
+      "score": 70,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.4,
+        "constraints": 1,
+        "yield_fit": 0.35142857142857137,
+        "exposure_fit": 1,
+        "market_fit": 0.85
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Northwall Bank is a preferred issuer for this mandate."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1007",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1007",
+      "score": 33,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating A+ below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0.7839999999999999,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.10% meets target yield of 2.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A+ below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1007",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1007",
+      "score": 88,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.8,
+        "constraints": 1,
+        "yield_fit": 0.704,
+        "exposure_fit": 1,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.10% meets target yield of 4.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1008",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1008",
+      "score": 24,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Mandate requires capital protection — product is not protected.",
+        "Tenor 6y exceeds max 5y."
+      ],
+      "sub_scores": {
+        "semantic": 0.35,
+        "constraints": 1,
+        "yield_fit": 0.832,
+        "exposure_fit": 0.88,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.80% meets target yield of 2.50%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in equity index (15%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium_high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 6y exceeds max 5y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1008",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1008",
+      "score": 85,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.8500000000000001,
+        "constraints": 1,
+        "yield_fit": 0.732,
+        "exposure_fit": 0.6399999999999999,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.80% meets target yield of 5.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1008",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1008",
+      "score": 84,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.772,
+        "exposure_fit": 0.6,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.80% meets target yield of 4.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium_high\" sits above mandate appetite \"medium\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1008",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1008",
+      "score": 29,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 6y exceeds max 5y."
+      ],
+      "sub_scores": {
+        "semantic": 0.8500000000000001,
+        "constraints": 1,
+        "yield_fit": 0.4971428571428571,
+        "exposure_fit": 0.84,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "blocker",
+          "text": "Tenor 6y exceeds max 5y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1008",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1008",
+      "score": 23,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Mandate requires capital protection — product is not protected."
+      ],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.852,
+        "exposure_fit": 0.8,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.80% meets target yield of 2.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium_high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1008",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1008",
+      "score": 78,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.65,
+        "constraints": 1,
+        "yield_fit": 0.772,
+        "exposure_fit": 0.72,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.80% meets target yield of 4.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium_high\" sits above mandate appetite \"medium\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1009",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1009",
+      "score": 29,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer Banco Iberia is excluded by mandate.",
+        "Issuer rating BBB+ below minimum A."
+      ],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.7919999999999999,
+        "exposure_fit": 0.5599999999999999,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.80% meets target yield of 2.50%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer Banco Iberia is excluded by mandate."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BBB+ below minimum A."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1009",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1009",
+      "score": 71,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.225,
+        "constraints": 1,
+        "yield_fit": 0.576,
+        "exposure_fit": 0.96,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1009",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1009",
+      "score": 28,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating BBB+ below minimum A-."
+      ],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.732,
+        "exposure_fit": 0.84,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.80% meets target yield of 4.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BBB+ below minimum A-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1009",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1009",
+      "score": 66,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.41142857142857137,
+        "exposure_fit": 0.96,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1009",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1009",
+      "score": 29,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer Banco Iberia is excluded by mandate.",
+        "Issuer rating BBB+ below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0.8119999999999999,
+        "exposure_fit": 0.52,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.80% meets target yield of 2.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer Banco Iberia is excluded by mandate."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BBB+ below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1009",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1009",
+      "score": 28,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating BBB+ below minimum A-."
+      ],
+      "sub_scores": {
+        "semantic": 0.55,
+        "constraints": 1,
+        "yield_fit": 0.732,
+        "exposure_fit": 0.76,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.80% meets target yield of 4.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BBB+ below minimum A-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1010",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1010",
+      "score": 22,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF).",
+        "Mandate requires capital protection — product is not protected.",
+        "Issuer rating A- below minimum A.",
+        "Underlying NVDA US is forbidden by mandate."
+      ],
+      "sub_scores": {
+        "semantic": 0.175,
+        "constraints": 1,
+        "yield_fit": 0.968,
+        "exposure_fit": 0.9199999999999999,
+        "market_fit": 0.10000000000000009
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 9.20% meets target yield of 2.50%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in multi asset (10%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A- below minimum A."
+        },
+        {
+          "kind": "blocker",
+          "text": "Underlying NVDA US is forbidden by mandate."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1010",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1010",
+      "score": 80,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.8500000000000001,
+        "constraints": 0.75,
+        "yield_fit": 0.8679999999999999,
+        "exposure_fit": 0.8,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 9.20% meets target yield of 5.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Barrier at 50% is more aggressive than mandate floor (55%)."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium_high\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1010",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1010",
+      "score": 22,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR).",
+        "Issuer Pacific Trust is excluded by mandate."
+      ],
+      "sub_scores": {
+        "semantic": 0.25,
+        "constraints": 0.75,
+        "yield_fit": 0.9079999999999999,
+        "exposure_fit": 0.9199999999999999,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 9.20% meets target yield of 4.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in multi asset (10%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Barrier at 50% is more aggressive than mandate floor (65%)."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer Pacific Trust is excluded by mandate."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1010",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1010",
+      "score": 88,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.8500000000000001,
+        "constraints": 1,
+        "yield_fit": 0.7879999999999999,
+        "exposure_fit": 0.72,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Pacific Trust is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 9.20% meets target yield of 7.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1010",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1010",
+      "score": 22,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF).",
+        "Mandate requires capital protection — product is not protected.",
+        "Issuer rating A- below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.1,
+        "constraints": 1,
+        "yield_fit": 0.988,
+        "exposure_fit": 0.96,
+        "market_fit": 0.10000000000000009
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 9.20% meets target yield of 2.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in multi asset (5%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A- below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1010",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1010",
+      "score": 25,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Underlying NVDA US is forbidden by mandate."
+      ],
+      "sub_scores": {
+        "semantic": 0.65,
+        "constraints": 0.75,
+        "yield_fit": 0.9079999999999999,
+        "exposure_fit": 0.88,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 9.20% meets target yield of 4.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in multi asset (15%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Barrier at 50% is more aggressive than mandate floor (60%)."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Underlying NVDA US is forbidden by mandate."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1011",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1011",
+      "score": 70,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.6649999999999999,
+        "constraints": 1,
+        "yield_fit": 0,
+        "exposure_fit": 0.88,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Helvetia Securities is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in equity index (15%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1011",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1011",
+      "score": 59,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.45,
+        "constraints": 1,
+        "yield_fit": 0,
+        "exposure_fit": 0.6399999999999999,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "neutral",
+          "text": "Product matches the mandate on all checked dimensions."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1011",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1011",
+      "score": 61,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0,
+        "exposure_fit": 0.6,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "neutral",
+          "text": "Product matches the mandate on all checked dimensions."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1011",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1011",
+      "score": 60,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.4,
+        "constraints": 1,
+        "yield_fit": 0,
+        "exposure_fit": 0.84,
+        "market_fit": 0.85
+      },
+      "rationale": [
+        {
+          "kind": "neutral",
+          "text": "Product matches the mandate on all checked dimensions."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1011",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1011",
+      "score": 75,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0,
+        "exposure_fit": 0.8,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Helvetia Securities is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1011",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1011",
+      "score": 64,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.55,
+        "constraints": 1,
+        "yield_fit": 0,
+        "exposure_fit": 0.72,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "neutral",
+          "text": "Product matches the mandate on all checked dimensions."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1012",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1012",
+      "score": 25,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency GBP not in mandate (EUR, CHF).",
+        "Mandate requires capital protection — product is not protected."
+      ],
+      "sub_scores": {
+        "semantic": 0.35,
+        "constraints": 1,
+        "yield_fit": 0.8879999999999999,
+        "exposure_fit": 0.88,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.20% meets target yield of 2.50%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in equity index (15%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium_high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency GBP not in mandate (EUR, CHF)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1012",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1012",
+      "score": 30,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency GBP not in mandate (EUR, USD)."
+      ],
+      "sub_scores": {
+        "semantic": 0.8500000000000001,
+        "constraints": 1,
+        "yield_fit": 0.7879999999999999,
+        "exposure_fit": 0.6399999999999999,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Bank Helios is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.20% meets target yield of 5.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency GBP not in mandate (EUR, USD)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1012",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1012",
+      "score": 26,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency GBP not in mandate (EUR)."
+      ],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.828,
+        "exposure_fit": 0.6,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.20% meets target yield of 4.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium_high\" sits above mandate appetite \"medium\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency GBP not in mandate (EUR)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1012",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1012",
+      "score": 87,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.8500000000000001,
+        "constraints": 1,
+        "yield_fit": 0.708,
+        "exposure_fit": 0.84,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.20% meets target yield of 7.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1012",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1012",
+      "score": 23,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency GBP not in mandate (EUR, CHF).",
+        "Mandate requires capital protection — product is not protected.",
+        "Issuer rating A below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.9079999999999999,
+        "exposure_fit": 0.8,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.20% meets target yield of 2.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium_high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency GBP not in mandate (EUR, CHF)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1012",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1012",
+      "score": 27,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency GBP not in mandate (EUR, USD)."
+      ],
+      "sub_scores": {
+        "semantic": 0.55,
+        "constraints": 1,
+        "yield_fit": 0.828,
+        "exposure_fit": 0.72,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Bank Helios is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.20% meets target yield of 4.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium_high\" sits above mandate appetite \"medium\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency GBP not in mandate (EUR, USD)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1013",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1013",
+      "score": 33,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF)."
+      ],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.83,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.75% meets target yield of 2.50%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1013",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1013",
+      "score": 79,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.45,
+        "constraints": 1,
+        "yield_fit": 0.73,
+        "exposure_fit": 1,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Northwall Bank is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.75% meets target yield of 5.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1013",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1013",
+      "score": 29,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR)."
+      ],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.77,
+        "exposure_fit": 1,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.75% meets target yield of 4.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1013",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1013",
+      "score": 73,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.4,
+        "constraints": 1,
+        "yield_fit": 0.4928571428571428,
+        "exposure_fit": 1,
+        "market_fit": 0.85
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Northwall Bank is a preferred issuer for this mandate."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1013",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1013",
+      "score": 33,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF).",
+        "Issuer rating A+ below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0.85,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.75% meets target yield of 2.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A+ below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1013",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1013",
+      "score": 92,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.9,
+        "constraints": 1,
+        "yield_fit": 0.77,
+        "exposure_fit": 1,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.75% meets target yield of 4.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1014",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1014",
+      "score": 25,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF).",
+        "Tenor 10y exceeds max 5y.",
+        "Issuer rating A- below minimum A."
+      ],
+      "sub_scores": {
+        "semantic": 0.6649999999999999,
+        "constraints": 1,
+        "yield_fit": 0,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 10y exceeds max 5y."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A- below minimum A."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1014",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1014",
+      "score": 23,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 10y exceeds max 6y."
+      ],
+      "sub_scores": {
+        "semantic": 0.45,
+        "constraints": 1,
+        "yield_fit": 0,
+        "exposure_fit": 1,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "blocker",
+          "text": "Tenor 10y exceeds max 6y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1014",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1014",
+      "score": 23,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR).",
+        "Issuer Pacific Trust is excluded by mandate.",
+        "Tenor 10y exceeds max 7y."
+      ],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0,
+        "exposure_fit": 1,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer Pacific Trust is excluded by mandate."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 10y exceeds max 7y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1014",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1014",
+      "score": 22,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 10y exceeds max 5y."
+      ],
+      "sub_scores": {
+        "semantic": 0.4,
+        "constraints": 1,
+        "yield_fit": 0,
+        "exposure_fit": 1,
+        "market_fit": 0.85
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Pacific Trust is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 10y exceeds max 5y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1014",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1014",
+      "score": 27,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF).",
+        "Tenor 10y exceeds max 8y.",
+        "Issuer rating A- below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 10y exceeds max 8y."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A- below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1014",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1014",
+      "score": 24,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 10y exceeds max 6y."
+      ],
+      "sub_scores": {
+        "semantic": 0.55,
+        "constraints": 1,
+        "yield_fit": 0,
+        "exposure_fit": 1,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "blocker",
+          "text": "Tenor 10y exceeds max 6y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1015",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1015",
+      "score": 23,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Mandate requires capital protection — product is not protected."
+      ],
+      "sub_scores": {
+        "semantic": 0.175,
+        "constraints": 1,
+        "yield_fit": 1,
+        "exposure_fit": 0.9199999999999999,
+        "market_fit": 0.10000000000000009
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 10.50% meets target yield of 2.50%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in multi asset (10%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1015",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1015",
+      "score": 81,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.8500000000000001,
+        "constraints": 0.75,
+        "yield_fit": 0.9199999999999999,
+        "exposure_fit": 0.8,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 10.50% meets target yield of 5.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Barrier at 50% is more aggressive than mandate floor (55%)."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium_high\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1015",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1015",
+      "score": 68,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.25,
+        "constraints": 0.9,
+        "yield_fit": 0.96,
+        "exposure_fit": 0.9199999999999999,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 10.50% meets target yield of 4.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in multi asset (10%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Barrier at 50% is more aggressive than mandate floor (65%)."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1015",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1015",
+      "score": 89,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.8500000000000001,
+        "constraints": 1,
+        "yield_fit": 0.8399999999999999,
+        "exposure_fit": 0.72,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 10.50% meets target yield of 7.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1015",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1015",
+      "score": 22,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Mandate requires capital protection — product is not protected."
+      ],
+      "sub_scores": {
+        "semantic": 0.1,
+        "constraints": 1,
+        "yield_fit": 1,
+        "exposure_fit": 0.96,
+        "market_fit": 0.10000000000000009
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 10.50% meets target yield of 2.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in multi asset (5%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1015",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1015",
+      "score": 77,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.65,
+        "constraints": 0.9,
+        "yield_fit": 0.96,
+        "exposure_fit": 0.88,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 10.50% meets target yield of 4.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in multi asset (15%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Barrier at 50% is more aggressive than mandate floor (60%)."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1016",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1016",
+      "score": 33,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF).",
+        "Tenor 7y exceeds max 5y."
+      ],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.8079999999999999,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Helvetia Securities is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.20% meets target yield of 2.50%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 7y exceeds max 5y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1016",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1016",
+      "score": 28,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 7y exceeds max 6y."
+      ],
+      "sub_scores": {
+        "semantic": 0.45,
+        "constraints": 1,
+        "yield_fit": 0.708,
+        "exposure_fit": 1,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.20% meets target yield of 5.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 7y exceeds max 6y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1016",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1016",
+      "score": 29,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR)."
+      ],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.748,
+        "exposure_fit": 1,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.20% meets target yield of 4.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1016",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1016",
+      "score": 25,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 7y exceeds max 5y."
+      ],
+      "sub_scores": {
+        "semantic": 0.4,
+        "constraints": 1,
+        "yield_fit": 0.4457142857142857,
+        "exposure_fit": 1,
+        "market_fit": 0.85
+      },
+      "rationale": [
+        {
+          "kind": "blocker",
+          "text": "Tenor 7y exceeds max 5y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1016",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1016",
+      "score": 33,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF)."
+      ],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0.828,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Helvetia Securities is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.20% meets target yield of 2.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1016",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1016",
+      "score": 32,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 7y exceeds max 6y."
+      ],
+      "sub_scores": {
+        "semantic": 0.9,
+        "constraints": 1,
+        "yield_fit": 0.748,
+        "exposure_fit": 1,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 5.20% meets target yield of 4.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 7y exceeds max 6y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1017",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1017",
+      "score": 27,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer Banco Iberia is excluded by mandate.",
+        "Mandate requires capital protection — product is not protected.",
+        "Tenor 7y exceeds max 5y.",
+        "Issuer rating BBB below minimum A."
+      ],
+      "sub_scores": {
+        "semantic": 0.35,
+        "constraints": 1,
+        "yield_fit": 0.85,
+        "exposure_fit": 1,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.25% meets target yield of 2.50%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer Banco Iberia is excluded by mandate."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 7y exceeds max 5y."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BBB below minimum A."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1017",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1017",
+      "score": 28,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 7y exceeds max 6y."
+      ],
+      "sub_scores": {
+        "semantic": 0.45,
+        "constraints": 1,
+        "yield_fit": 0.75,
+        "exposure_fit": 1,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.25% meets target yield of 5.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 7y exceeds max 6y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1017",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1017",
+      "score": 29,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating BBB below minimum A-."
+      ],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.7899999999999999,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.25% meets target yield of 4.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BBB below minimum A-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1017",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1017",
+      "score": 26,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 7y exceeds max 5y."
+      ],
+      "sub_scores": {
+        "semantic": 0.4,
+        "constraints": 1,
+        "yield_fit": 0.5357142857142857,
+        "exposure_fit": 1,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "blocker",
+          "text": "Tenor 7y exceeds max 5y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1017",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1017",
+      "score": 26,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer Banco Iberia is excluded by mandate.",
+        "Mandate requires capital protection — product is not protected.",
+        "Issuer rating BBB below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.8699999999999999,
+        "exposure_fit": 1,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.25% meets target yield of 2.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer Banco Iberia is excluded by mandate."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BBB below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1017",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1017",
+      "score": 33,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 7y exceeds max 6y.",
+        "Issuer rating BBB below minimum A-."
+      ],
+      "sub_scores": {
+        "semantic": 0.9,
+        "constraints": 1,
+        "yield_fit": 0.7899999999999999,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.25% meets target yield of 4.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 7y exceeds max 6y."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BBB below minimum A-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1018",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1018",
+      "score": 88,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.7799999999999999,
+        "exposure_fit": 0.5599999999999999,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.50% meets target yield of 2.50%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1018",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1018",
+      "score": 69,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.225,
+        "constraints": 1,
+        "yield_fit": 0.5399999999999999,
+        "exposure_fit": 0.96,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Bank Helios is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1018",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1018",
+      "score": 79,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.72,
+        "exposure_fit": 0.84,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.50% meets target yield of 4.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1018",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1018",
+      "score": 65,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.3857142857142857,
+        "exposure_fit": 0.96,
+        "market_fit": 0.85
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1018",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1018",
+      "score": 30,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating A below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0.7999999999999999,
+        "exposure_fit": 0.52,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.50% meets target yield of 2.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1018",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1018",
+      "score": 79,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.55,
+        "constraints": 1,
+        "yield_fit": 0.72,
+        "exposure_fit": 0.76,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Bank Helios is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.50% meets target yield of 4.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1019",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1019",
+      "score": 31,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF)."
+      ],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.752,
+        "exposure_fit": 0.5599999999999999,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 3.80% meets target yield of 2.50%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1019",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1019",
+      "score": 68,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.225,
+        "constraints": 1,
+        "yield_fit": 0.4559999999999999,
+        "exposure_fit": 0.96,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Northwall Bank is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1019",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1019",
+      "score": 27,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR)."
+      ],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.57,
+        "exposure_fit": 0.84,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1019",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1019",
+      "score": 64,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.3257142857142857,
+        "exposure_fit": 0.96,
+        "market_fit": 0.85
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Northwall Bank is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1019",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1019",
+      "score": 30,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF).",
+        "Issuer rating A+ below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0.7719999999999999,
+        "exposure_fit": 0.52,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 3.80% meets target yield of 2.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A+ below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1019",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1019",
+      "score": 76,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.55,
+        "constraints": 1,
+        "yield_fit": 0.57,
+        "exposure_fit": 0.76,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "neutral",
+          "text": "Product matches the mandate on all checked dimensions."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1020",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1020",
+      "score": 83,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.5279999999999999,
+        "exposure_fit": 0.5599999999999999,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1020",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1020",
+      "score": 64,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.225,
+        "constraints": 1,
+        "yield_fit": 0.26399999999999996,
+        "exposure_fit": 0.96,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1020",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1020",
+      "score": 71,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.32999999999999996,
+        "exposure_fit": 0.84,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1020",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1020",
+      "score": 61,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.18857142857142853,
+        "exposure_fit": 0.96,
+        "market_fit": 0.85
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1020",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1020",
+      "score": 85,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0.708,
+        "exposure_fit": 0.52,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 2.20% meets target yield of 2.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1020",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1020",
+      "score": 71,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.55,
+        "constraints": 1,
+        "yield_fit": 0.32999999999999996,
+        "exposure_fit": 0.76,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1021",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1021",
+      "score": 23,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF).",
+        "Mandate requires capital protection — product is not protected.",
+        "Issuer rating A- below minimum A."
+      ],
+      "sub_scores": {
+        "semantic": 0.35,
+        "constraints": 1,
+        "yield_fit": 0.9119999999999999,
+        "exposure_fit": 0.84,
+        "market_fit": 0.10000000000000009
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.80% meets target yield of 2.50%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A- below minimum A."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1021",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1021",
+      "score": 71,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.225,
+        "constraints": 1,
+        "yield_fit": 0.8119999999999999,
+        "exposure_fit": 0.9199999999999999,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.80% meets target yield of 5.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in credit (10%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium_high\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1021",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1021",
+      "score": 26,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR).",
+        "Issuer Pacific Trust is excluded by mandate."
+      ],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.852,
+        "exposure_fit": 0.84,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.80% meets target yield of 4.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer Pacific Trust is excluded by mandate."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1021",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1021",
+      "score": 75,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.732,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Pacific Trust is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.80% meets target yield of 7.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in credit (0%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1021",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1021",
+      "score": 22,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF).",
+        "Mandate requires capital protection — product is not protected.",
+        "Issuer rating A- below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.1,
+        "constraints": 1,
+        "yield_fit": 0.9319999999999999,
+        "exposure_fit": 0.9199999999999999,
+        "market_fit": 0.10000000000000009
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.80% meets target yield of 2.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in credit (10%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A- below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1021",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1021",
+      "score": 74,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.55,
+        "constraints": 1,
+        "yield_fit": 0.852,
+        "exposure_fit": 0.84,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.80% meets target yield of 4.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1022",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1022",
+      "score": 83,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.76,
+        "exposure_fit": 0.5599999999999999,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Helvetia Securities is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.00% meets target yield of 2.50%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium\" sits above mandate appetite \"low\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1022",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1022",
+      "score": 24,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency CHF not in mandate (EUR, USD)."
+      ],
+      "sub_scores": {
+        "semantic": 0.225,
+        "constraints": 1,
+        "yield_fit": 0.4799999999999999,
+        "exposure_fit": 0.96,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency CHF not in mandate (EUR, USD)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1022",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1022",
+      "score": 28,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency CHF not in mandate (EUR)."
+      ],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.7,
+        "exposure_fit": 0.84,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.00% meets target yield of 4.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency CHF not in mandate (EUR)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1022",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1022",
+      "score": 23,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency CHF not in mandate (USD, EUR, GBP)."
+      ],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.3428571428571428,
+        "exposure_fit": 0.96,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency CHF not in mandate (USD, EUR, GBP)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1022",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1022",
+      "score": 82,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0.7799999999999999,
+        "exposure_fit": 0.52,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Helvetia Securities is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.00% meets target yield of 2.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium\" sits above mandate appetite \"low\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1022",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1022",
+      "score": 28,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency CHF not in mandate (EUR, USD)."
+      ],
+      "sub_scores": {
+        "semantic": 0.55,
+        "constraints": 1,
+        "yield_fit": 0.7,
+        "exposure_fit": 0.76,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.00% meets target yield of 4.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency CHF not in mandate (EUR, USD)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1023",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1023",
+      "score": 29,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer Banco Iberia is excluded by mandate.",
+        "Tenor 6y exceeds max 5y.",
+        "Issuer rating BBB+ below minimum A."
+      ],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.7799999999999999,
+        "exposure_fit": 0.5599999999999999,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.50% meets target yield of 2.50%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer Banco Iberia is excluded by mandate."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 6y exceeds max 5y."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BBB+ below minimum A."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1023",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1023",
+      "score": 70,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.225,
+        "constraints": 1,
+        "yield_fit": 0.5399999999999999,
+        "exposure_fit": 0.96,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1023",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1023",
+      "score": 28,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating BBB+ below minimum A-."
+      ],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.72,
+        "exposure_fit": 0.84,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.50% meets target yield of 4.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BBB+ below minimum A-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1023",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1023",
+      "score": 23,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 6y exceeds max 5y."
+      ],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.3857142857142857,
+        "exposure_fit": 0.96,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 6y exceeds max 5y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1023",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1023",
+      "score": 29,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer Banco Iberia is excluded by mandate.",
+        "Issuer rating BBB+ below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0.7999999999999999,
+        "exposure_fit": 0.52,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.50% meets target yield of 2.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer Banco Iberia is excluded by mandate."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BBB+ below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1023",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1023",
+      "score": 29,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating BBB+ below minimum A-."
+      ],
+      "sub_scores": {
+        "semantic": 0.65,
+        "constraints": 1,
+        "yield_fit": 0.72,
+        "exposure_fit": 0.76,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 4.50% meets target yield of 4.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BBB+ below minimum A-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1024",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1024",
+      "score": 33,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating A-1 below minimum A."
+      ],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.752,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 3.80% meets target yield of 2.50%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A-1 below minimum A."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1024",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1024",
+      "score": 26,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating A-1 below minimum BBB."
+      ],
+      "sub_scores": {
+        "semantic": 0.45,
+        "constraints": 1,
+        "yield_fit": 0.4559999999999999,
+        "exposure_fit": 1,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Bank Helios is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A-1 below minimum BBB."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1024",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1024",
+      "score": 27,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating A-1 below minimum A-."
+      ],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.57,
+        "exposure_fit": 1,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A-1 below minimum A-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1024",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1024",
+      "score": 24,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating A-1 below minimum BBB-."
+      ],
+      "sub_scores": {
+        "semantic": 0.4,
+        "constraints": 1,
+        "yield_fit": 0.3257142857142857,
+        "exposure_fit": 1,
+        "market_fit": 0.85
+      },
+      "rationale": [
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A-1 below minimum BBB-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1024",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1024",
+      "score": 33,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating A-1 below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0.7719999999999999,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 3.80% meets target yield of 2.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A-1 below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1024",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1024",
+      "score": 30,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating A-1 below minimum A-."
+      ],
+      "sub_scores": {
+        "semantic": 0.8,
+        "constraints": 1,
+        "yield_fit": 0.57,
+        "exposure_fit": 1,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Bank Helios is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A-1 below minimum A-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1025",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1025",
+      "score": 23,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Mandate requires capital protection — product is not protected."
+      ],
+      "sub_scores": {
+        "semantic": 0.35,
+        "constraints": 1,
+        "yield_fit": 0.876,
+        "exposure_fit": 0.84,
+        "market_fit": 0.10000000000000009
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.90% meets target yield of 2.50%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1025",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1025",
+      "score": 70,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.225,
+        "constraints": 1,
+        "yield_fit": 0.776,
+        "exposure_fit": 0.9199999999999999,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.90% meets target yield of 5.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in credit (10%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium_high\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1025",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1025",
+      "score": 72,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.816,
+        "exposure_fit": 0.84,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.90% meets target yield of 4.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1025",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1025",
+      "score": 72,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.5914285714285714,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Underweight in credit (0%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1025",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1025",
+      "score": 21,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Mandate requires capital protection — product is not protected."
+      ],
+      "sub_scores": {
+        "semantic": 0.1,
+        "constraints": 1,
+        "yield_fit": 0.8959999999999999,
+        "exposure_fit": 0.9199999999999999,
+        "market_fit": 0.10000000000000009
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.90% meets target yield of 2.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in credit (10%) — adds diversification."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1025",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1025",
+      "score": 74,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.55,
+        "constraints": 1,
+        "yield_fit": 0.816,
+        "exposure_fit": 0.84,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Crédit Atlantique is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.90% meets target yield of 4.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium\"."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1026",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1026",
+      "score": 31,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF)."
+      ],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.848,
+        "exposure_fit": 0.5599999999999999,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.20% meets target yield of 2.50%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1026",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1026",
+      "score": 73,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.225,
+        "constraints": 1,
+        "yield_fit": 0.748,
+        "exposure_fit": 0.96,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Northwall Bank is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.20% meets target yield of 5.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1026",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1026",
+      "score": 28,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR)."
+      ],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.7879999999999999,
+        "exposure_fit": 0.84,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.20% meets target yield of 4.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR)."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1026",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1026",
+      "score": 68,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.5314285714285714,
+        "exposure_fit": 0.96,
+        "market_fit": 0.85
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Northwall Bank is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1026",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1026",
+      "score": 31,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF).",
+        "Issuer rating A+ below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0.8679999999999999,
+        "exposure_fit": 0.52,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.20% meets target yield of 2.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A+ below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1026",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1026",
+      "score": 80,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.55,
+        "constraints": 1,
+        "yield_fit": 0.7879999999999999,
+        "exposure_fit": 0.76,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.20% meets target yield of 4.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1027",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1027",
+      "score": 30,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF).",
+        "Issuer rating A- below minimum A."
+      ],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.84,
+        "exposure_fit": 0.5599999999999999,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.00% meets target yield of 2.50%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A- below minimum A."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1027",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1027",
+      "score": 74,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.225,
+        "constraints": 1,
+        "yield_fit": 0.74,
+        "exposure_fit": 0.96,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.00% meets target yield of 5.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1027",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1027",
+      "score": 28,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR).",
+        "Issuer Pacific Trust is excluded by mandate."
+      ],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.7799999999999999,
+        "exposure_fit": 0.84,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.00% meets target yield of 4.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer Pacific Trust is excluded by mandate."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1027",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1027",
+      "score": 68,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.5142857142857141,
+        "exposure_fit": 0.96,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Pacific Trust is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1027",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1027",
+      "score": 29,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Currency USD not in mandate (EUR, CHF).",
+        "Issuer rating A- below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0.8599999999999999,
+        "exposure_fit": 0.52,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.00% meets target yield of 2.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Currency USD not in mandate (EUR, CHF)."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A- below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1027",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1027",
+      "score": 83,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.65,
+        "constraints": 1,
+        "yield_fit": 0.7799999999999999,
+        "exposure_fit": 0.76,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 6.00% meets target yield of 4.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1028",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1028",
+      "score": 24,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer Banco Iberia is excluded by mandate.",
+        "Mandate requires capital protection — product is not protected.",
+        "Issuer rating BB+ below minimum A."
+      ],
+      "sub_scores": {
+        "semantic": 0.35,
+        "constraints": 1,
+        "yield_fit": 0.94,
+        "exposure_fit": 1,
+        "market_fit": 0.10000000000000009
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 8.50% meets target yield of 2.50%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer Banco Iberia is excluded by mandate."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BB+ below minimum A."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1028",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1028",
+      "score": 27,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating BB+ below minimum BBB."
+      ],
+      "sub_scores": {
+        "semantic": 0.45,
+        "constraints": 1,
+        "yield_fit": 0.84,
+        "exposure_fit": 1,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 8.50% meets target yield of 5.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium_high\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BB+ below minimum BBB."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1028",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1028",
+      "score": 27,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating BB+ below minimum A-."
+      ],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.88,
+        "exposure_fit": 1,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 8.50% meets target yield of 4.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BB+ below minimum A-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1028",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1028",
+      "score": 28,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating BB+ below minimum BBB-."
+      ],
+      "sub_scores": {
+        "semantic": 0.4,
+        "constraints": 1,
+        "yield_fit": 0.76,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 8.50% meets target yield of 7.00%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BB+ below minimum BBB-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1028",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1028",
+      "score": 23,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer Banco Iberia is excluded by mandate.",
+        "Mandate requires capital protection — product is not protected.",
+        "Issuer rating BB+ below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.96,
+        "exposure_fit": 1,
+        "market_fit": 0.10000000000000009
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 8.50% meets target yield of 2.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer Banco Iberia is excluded by mandate."
+        },
+        {
+          "kind": "blocker",
+          "text": "Mandate requires capital protection — product is not protected."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BB+ below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1028",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1028",
+      "score": 30,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating BB+ below minimum A-."
+      ],
+      "sub_scores": {
+        "semantic": 0.9,
+        "constraints": 1,
+        "yield_fit": 0.88,
+        "exposure_fit": 1,
+        "market_fit": 0.4
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 8.50% meets target yield of 4.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"high\" sits above mandate appetite \"medium\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating BB+ below minimum A-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1029",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1029",
+      "score": 33,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 7y exceeds max 5y."
+      ],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.7549999999999999,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Helvetia Securities is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 3.88% meets target yield of 2.50%."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 7y exceeds max 5y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1029",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1029",
+      "score": 26,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 7y exceeds max 6y."
+      ],
+      "sub_scores": {
+        "semantic": 0.45,
+        "constraints": 1,
+        "yield_fit": 0.4649999999999999,
+        "exposure_fit": 1,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "blocker",
+          "text": "Tenor 7y exceeds max 6y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1029",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1029",
+      "score": 78,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.5812499999999999,
+        "exposure_fit": 1,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "neutral",
+          "text": "Product matches the mandate on all checked dimensions."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1029",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1029",
+      "score": 24,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 7y exceeds max 5y."
+      ],
+      "sub_scores": {
+        "semantic": 0.4,
+        "constraints": 1,
+        "yield_fit": 0.3321428571428571,
+        "exposure_fit": 1,
+        "market_fit": 0.85
+      },
+      "rationale": [
+        {
+          "kind": "blocker",
+          "text": "Tenor 7y exceeds max 5y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1029",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1029",
+      "score": 94,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0.7749999999999999,
+        "exposure_fit": 1,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Helvetia Securities is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 3.88% meets target yield of 2.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1029",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1029",
+      "score": 30,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 7y exceeds max 6y."
+      ],
+      "sub_scores": {
+        "semantic": 0.8,
+        "constraints": 1,
+        "yield_fit": 0.5812499999999999,
+        "exposure_fit": 1,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "blocker",
+          "text": "Tenor 7y exceeds max 6y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-01-P-1030",
+      "asset_manager_id": "AM-01",
+      "product_id": "P-1030",
+      "score": 30,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 6y exceeds max 5y."
+      ],
+      "sub_scores": {
+        "semantic": 0.95,
+        "constraints": 1,
+        "yield_fit": 0.8999999999999999,
+        "exposure_fit": 0.5599999999999999,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.50% meets target yield of 2.50%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 6y exceeds max 5y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-02-P-1030",
+      "asset_manager_id": "AM-02",
+      "product_id": "P-1030",
+      "score": 75,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.225,
+        "constraints": 1,
+        "yield_fit": 0.7999999999999999,
+        "exposure_fit": 0.96,
+        "market_fit": 0.95
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Bank Helios is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.50% meets target yield of 5.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-03-P-1030",
+      "asset_manager_id": "AM-03",
+      "product_id": "P-1030",
+      "score": 82,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.5,
+        "constraints": 1,
+        "yield_fit": 0.84,
+        "exposure_fit": 0.84,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.50% meets target yield of 4.00%."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-04-P-1030",
+      "asset_manager_id": "AM-04",
+      "product_id": "P-1030",
+      "score": 25,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Tenor 6y exceeds max 5y."
+      ],
+      "sub_scores": {
+        "semantic": 0.2,
+        "constraints": 1,
+        "yield_fit": 0.72,
+        "exposure_fit": 0.96,
+        "market_fit": 0.9
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.50% meets target yield of 7.00%."
+        },
+        {
+          "kind": "positive",
+          "text": "Underweight in rates (5%) — adds diversification."
+        },
+        {
+          "kind": "blocker",
+          "text": "Tenor 6y exceeds max 5y."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-05-P-1030",
+      "asset_manager_id": "AM-05",
+      "product_id": "P-1030",
+      "score": 30,
+      "hard_fail": true,
+      "hard_fail_reasons": [
+        "Issuer rating A below minimum AA-."
+      ],
+      "sub_scores": {
+        "semantic": 0.92,
+        "constraints": 1,
+        "yield_fit": 0.9199999999999999,
+        "exposure_fit": 0.52,
+        "market_fit": 0.7
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "100% capital protection matches mandate requirement."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.50% meets target yield of 2.00%."
+        },
+        {
+          "kind": "warning",
+          "text": "Risk level \"medium\" sits above mandate appetite \"low\"."
+        },
+        {
+          "kind": "blocker",
+          "text": "Issuer rating A below minimum AA-."
+        }
+      ]
+    },
+    {
+      "id": "R-AM-06-P-1030",
+      "asset_manager_id": "AM-06",
+      "product_id": "P-1030",
+      "score": 84,
+      "hard_fail": false,
+      "hard_fail_reasons": [],
+      "sub_scores": {
+        "semantic": 0.65,
+        "constraints": 1,
+        "yield_fit": 0.84,
+        "exposure_fit": 0.76,
+        "market_fit": 1
+      },
+      "rationale": [
+        {
+          "kind": "positive",
+          "text": "Bank Helios is a preferred issuer for this mandate."
+        },
+        {
+          "kind": "positive",
+          "text": "Coupon of 7.50% meets target yield of 4.00%."
+        }
+      ]
+    }
+  ]
+}
