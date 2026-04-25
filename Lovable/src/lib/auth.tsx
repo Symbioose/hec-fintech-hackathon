@@ -1,5 +1,5 @@
 // Fake auth: any email/password is accepted, session stored in localStorage.
-// Hardcoded to a single asset manager — Marcus Lindqvist (Nordlys Wealth).
+// Hardcoded to a single asset manager — François Martin (Carmignac Credit Fund A).
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
