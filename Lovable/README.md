@@ -2,6 +2,8 @@
 
 AI-powered deal flow engine for asset managers receiving structured product proposals from banks. Ingests raw bank emails and Bloomberg chats, extracts every product into a typed schema via **Gemini 2.0 Flash**, scores it against the fund's investment mandate, and surfaces only the deals that matter — ranked, explained, and ready to negotiate.
 
+**The moat:** every buy, pass, and negotiation decision is logged into the fund's Mandate Knowledge Base. After 3 months of usage, Webi holds a precise model of the fund's implicit preferences — sector tilts, issuer relationships, historical pricing thresholds — that no competitor can replicate from the outside. Bloomberg can copy the interface. No one can copy 10,000 decisions made by François Martin at Carmignac.
+
 ---
 
 ## Architecture
@@ -16,14 +18,25 @@ Bank email / Bloomberg chat / PDF
 │  + per-field confidence scores  │  backend/app/api/routes_extract.py
 └──────────────┬──────────────────┘
                ▼
+┌─────────────────────────────────────────────────────┐
+│  Mandate Knowledge Base                             │
+│  ┌─────────────────┐  ┌──────────────────────────┐ │
+│  │ Explicit rules  │  │ Implicit preference model │ │
+│  │ IPS constraints │  │ Buy/pass history · FAISS  │ │
+│  │ ESG exclusions  │  │ Sector tilts · Issuer rel.│ │
+│  │ Rating floors   │  │ Pricing thresholds        │ │
+│  └────────┬────────┘  └────────────┬─────────────┘ │
+│           └──────────┬─────────────┘               │
+└──────────────────────┼──────────────────────────────┘
+                       ▼
 ┌─────────────────────────────────┐
 │  Hard filter engine             │  Currency · Rating · ESG · Tenor
 │  + 5-dimension weighted score   │  Seniority · Forbidden underlyings
 │  (deterministic, auditable)     │  backend/app/core/scoring.py
 └──────────────┬──────────────────┘
-               ├── MATCH (≥78)     → IC Note · PDF export
+               ├── MATCH (≥78)       → IC Note · PDF export
                ├── NEAR-MISS (50–77) → Negotiation recs · Counter-offer (Gemini)
-               └── REJECT (<50)   → Compliance log
+               └── REJECT (<50)      → Compliance log
                ▼
 ┌─────────────────────────────────┐
 │  POST /recommendations/score    │  Gemini prose rationale
@@ -31,6 +44,38 @@ Bank email / Bloomberg chat / PDF
 │  per (product, mandate) pair    │  backend/app/api/routes_score.py
 └─────────────────────────────────┘
 ```
+
+---
+
+## The Data Flywheel — Webi's Defensible Moat
+
+Most fintech tools are stateless: they score a product against a static rulebook and forget everything. Webi is different — every interaction enriches a living model of the fund's mandate.
+
+```
+           ┌──────────────────────────────────────┐
+           │         MANDATE KNOWLEDGE BASE        │
+           │                                      │
+  input ──▶│  Explicit IPS constraints            │──▶ scoring
+           │  + Purchase history (buys / passes)  │
+           │  + Negotiation outcomes (bps won/lost)│
+           │  + FAISS embeddings of past deals    │
+           │  + Implicit sector / issuer weights  │
+           │                                      │
+           └──────────────────┬───────────────────┘
+                              │ every decision
+                              ▼ enriches the model
+                         (flywheel)
+```
+
+**After day 1** — Webi applies the explicit mandate (IPS constraints, ESG list, rating floors).
+
+**After month 1** — Webi knows which issuers the PM systematically favors above the mandate minimum, and pre-ranks them higher.
+
+**After month 3** — Webi detects implicit preferences: the fund never buys autocalls with quarterly observation even when they pass mandate, the PM always negotiates +20bps on barriers, BNP deals close 3× faster than Deutsche Bank. These patterns surface as scoring adjustments invisible to any competitor.
+
+**After year 1** — the Mandate Knowledge Base contains thousands of scored proposals, negotiation transcripts, and outcome data. This dataset is the product. It cannot be replicated by Bloomberg, Excel, or a generic LLM wrapper. It is unique to each fund and compounds over time.
+
+This is why switching cost is near-infinite: a fund that leaves Webi loses its institutional memory.
 
 ---
 
