@@ -2,186 +2,222 @@ import type { AssetManagerProfile } from "@/types/assetManager";
 
 export const ASSET_MANAGERS: AssetManagerProfile[] = [
   {
-    id: "AM-01",
-    name: "Aurelia Capital",
-    firm: "Aurelia Capital Partners",
-    avatarColor: "primary",
-    strategy: "defensive_income",
-    risk_appetite: "low",
-    allowed_currencies: ["EUR", "CHF"],
-    max_tenor_years: 5,
-    min_issuer_rating: "A",
-    preferred_issuers: ["Crédit Atlantique", "Helvetia Securities"],
-    excluded_issuers: ["Banco Iberia"],
-    allowed_underlying_types: ["rates", "credit", "equity_index"],
-    forbidden_underlyings: ["AAPL US", "NVDA US"],
-    requires_capital_protection: true,
-    max_barrier_risk: null,
-    target_yield_min: 0.025,
-    liquidity_need: "medium",
-    esg_constraints: ["no_controversial_weapons"],
-    current_exposures: {
-      equity_index: 0.15,
-      rates: 0.55,
-      credit: 0.2,
-      single_stock: 0.0,
-      multi_asset: 0.1,
-    },
-    aum_eur_m: 1_850,
-    description:
-      "Defensive multi-asset mandate focused on capital preservation with steady income for institutional clients.",
-  },
-  {
     id: "AM-02",
-    name: "Marcus Lindqvist",
-    firm: "Nordlys Wealth",
+    name: "François Martin",
+    firm: "Carmignac Credit Fund A",
+    avatarColor: "primary",
+    strategy: "balanced_income",
+    risk_appetite: "medium",
+
+    /* ── Currency & tenor ─────────────────────────────────────────────── */
+    allowed_currencies: ["EUR"],
+    max_tenor_years: 5,
+
+    /* ── Credit quality ───────────────────────────────────────────────── */
+    min_issuer_rating: "BBB-",          // Investment Grade only (BBB- floor, worst-of S&P/Moody's)
+    preferred_issuers: [
+      "BNP Paribas SA",
+      "Société Générale SA",
+      "ING Groep NV",
+      "Crédit Agricole SA",
+      "HSBC Holdings PLC",
+      "Barclays PLC",
+    ],
+    excluded_issuers: [],               // ESG handled via forbidden_underlyings
+
+    /* ── Asset class ──────────────────────────────────────────────────── */
+    allowed_underlying_types: ["credit", "rates"],
+    forbidden_underlyings: [
+      "TotalEnergies SE",               // ESG — fossil fuels
+      "Glencore PLC",                   // ESG — thermal coal
+      "BP PLC",                         // ESG — fossil fuels
+      "Shell PLC",                      // ESG — fossil fuels
+      "Equinor ASA",                    // ESG — fossil fuels
+      "Anglo American PLC",             // ESG — mining
+    ],
+
+    /* ── Capital / protection ─────────────────────────────────────────── */
+    requires_capital_protection: false,
+    max_barrier_risk: null,
+
+    /* ── Yield & risk ─────────────────────────────────────────────────── */
+    target_yield_min: 0.03,             // 3.00% minimum coupon / yield
+    liquidity_need: "high",             // UCITS — daily liquidity required
+
+    /* ── ESG ──────────────────────────────────────────────────────────── */
+    esg_constraints: [
+      "article_8_ucits",                // SFDR Article 8 classification
+      "no_fossil_fuels",                // Excludes all fossil fuel producers
+      "no_controversial_weapons",       // Cluster munitions, anti-personnel mines
+      "no_tobacco",                     // Tobacco manufacturers excluded
+      "sfdr_pai_mandatory",             // Must report Principal Adverse Impact
+      "min_msci_esg_score_bbb",         // Minimum MSCI ESG corporate rating BBB
+    ],
+
+    /* ── Exposures ────────────────────────────────────────────────────── */
+    current_exposures: {
+      credit: 0.45,                     // 45% IG corporate credit
+      rates: 0.30,                      // 30% sovereign / quasi-sovereign
+      multi_asset: 0.15,               // 15% diversified
+      equity_index: 0.05,
+      single_stock: 0.05,
+    },
+
+    aum_eur_m: 1_240,
+    description: [
+      "UCITS Article 8 SFDR | AUM EUR 1.24B | EUR only | Max tenor 5Y",
+      "IG credit (BBB- min, S&P worst-of) | Senior Preferred / Unsecured only — no Sub/Tier2/AT1",
+      "ESG: excludes fossil fuels, thermal coal, controversial weapons, tobacco",
+      "Geography: EEA + UK only | Max single issuer 10% AUM | Daily liquidity (UCITS)",
+      "PM views: constructif bancaires européennes · bearish pétrole · préférence duration < 3Y",
+    ].join("\n"),
+  },
+
+  /* ── Secondary profiles (used in other contexts) ────────────────────── */
+  {
+    id: "AM-01",
+    name: "Sarah Chen",
+    firm: "BlueBridge Capital",
     avatarColor: "accent",
     strategy: "yield_enhancement",
     risk_appetite: "medium_high",
     allowed_currencies: ["EUR", "USD"],
     max_tenor_years: 6,
     min_issuer_rating: "BBB",
-    preferred_issuers: ["Bank Helios", "Northwall Bank"],
+    preferred_issuers: ["Deutsche Bank AG", "UBS AG"],
     excluded_issuers: [],
-    allowed_underlying_types: ["equity_index", "single_stock", "multi_asset"],
+    allowed_underlying_types: ["credit", "equity_index", "single_stock"],
     forbidden_underlyings: [],
     requires_capital_protection: false,
     max_barrier_risk: 0.55,
     target_yield_min: 0.05,
     liquidity_need: "medium",
     esg_constraints: [],
-    current_exposures: {
-      equity_index: 0.45,
-      multi_asset: 0.25,
-      single_stock: 0.15,
-      credit: 0.1,
-      rates: 0.05,
-    },
-    aum_eur_m: 620,
-    description:
-      "Wealth manager seeking enhanced yield through autocallables and reverse convertibles for HNW clients.",
+    current_exposures: { credit: 0.4, equity_index: 0.35, single_stock: 0.15, rates: 0.1, multi_asset: 0 },
+    aum_eur_m: 680,
+    description: "Yield-enhancement mandate. EUR & USD. Sub-eligible accounts. No ESG screen.",
   },
   {
     id: "AM-03",
-    name: "Sofia Rinaldi",
-    firm: "Verdi Asset Management",
+    name: "Laura Deschamps",
+    firm: "Caisse Piliers Gestion",
     avatarColor: "success",
-    strategy: "esg_income",
-    risk_appetite: "medium",
+    strategy: "defensive_income",
+    risk_appetite: "low",
     allowed_currencies: ["EUR"],
-    max_tenor_years: 7,
+    max_tenor_years: 4,
     min_issuer_rating: "A-",
-    preferred_issuers: ["Crédit Atlantique"],
-    excluded_issuers: ["Pacific Trust"],
-    allowed_underlying_types: ["equity_index", "rates", "credit"],
-    forbidden_underlyings: [],
+    preferred_issuers: ["BNP Paribas SA", "Crédit Agricole SA"],
+    excluded_issuers: [],
+    allowed_underlying_types: ["credit", "rates"],
+    forbidden_underlyings: ["TotalEnergies SE", "Glencore PLC", "BP PLC", "Shell PLC", "Equinor ASA"],
     requires_capital_protection: false,
-    max_barrier_risk: 0.65,
-    target_yield_min: 0.04,
-    liquidity_need: "low",
-    esg_constraints: [
-      "no_controversial_weapons",
-      "no_thermal_coal",
-      "msci_esg_min_a",
-    ],
-    current_exposures: {
-      equity_index: 0.5,
-      credit: 0.2,
-      rates: 0.2,
-      multi_asset: 0.1,
-      single_stock: 0.0,
-    },
-    aum_eur_m: 980,
-    description:
-      "ESG-aligned income portfolio for endowments. Hard ESG screen on issuers and underlyings.",
+    max_barrier_risk: null,
+    target_yield_min: 0.025,
+    liquidity_need: "high",
+    esg_constraints: ["article_8_ucits", "no_fossil_fuels", "no_controversial_weapons"],
+    current_exposures: { credit: 0.7, rates: 0.25, equity_index: 0.05, single_stock: 0, multi_asset: 0 },
+    aum_eur_m: 2_100,
+    description: "Conservative insurance mandate. A- minimum. EUR only. Duration < 4Y. UCITS Article 8.",
   },
   {
     id: "AM-04",
-    name: "Theo Brennan",
-    firm: "Westgate Family Office",
-    avatarColor: "warning",
-    strategy: "opportunistic",
-    risk_appetite: "high",
-    allowed_currencies: ["USD", "EUR", "GBP"],
-    max_tenor_years: 5,
-    min_issuer_rating: "BBB-",
-    preferred_issuers: ["Pacific Trust", "Northwall Bank"],
+    name: "Magnus Lindqvist",
+    firm: "Nordlys Wealth Family Office",
+    avatarColor: "secondary",
+    strategy: "defensive_income",
+    risk_appetite: "low",
+
+    /* ── Currency & tenor ─────────────────────────────────────────────── */
+    allowed_currencies: ["EUR"],
+    max_tenor_years: 3,
+
+    /* ── Credit quality ───────────────────────────────────────────────── */
+    min_issuer_rating: "A-",
+    preferred_issuers: ["ING Groep NV", "BNP Paribas SA"],
     excluded_issuers: [],
-    allowed_underlying_types: ["single_stock", "multi_asset", "equity_index"],
+
+    /* ── Asset class ──────────────────────────────────────────────────── */
+    allowed_underlying_types: ["credit", "rates"],
     forbidden_underlyings: [],
+
+    /* ── Capital / protection ─────────────────────────────────────────── */
     requires_capital_protection: false,
-    max_barrier_risk: 0.45,
-    target_yield_min: 0.07,
-    liquidity_need: "low",
-    esg_constraints: [],
+    max_barrier_risk: null,
+
+    /* ── Yield & risk ─────────────────────────────────────────────────── */
+    target_yield_min: 0.02,             // 2.00% minimum yield
+    liquidity_need: "medium",
+
+    /* ── ESG ──────────────────────────────────────────────────────────── */
+    esg_constraints: [],                // No formal ESG screen, very conservative by nature
+
+    /* ── Exposures ────────────────────────────────────────────────────── */
     current_exposures: {
-      single_stock: 0.4,
-      multi_asset: 0.35,
-      equity_index: 0.2,
-      rates: 0.05,
-      credit: 0.0,
+      credit: 0.55,                     // 55% high-grade corporate credit
+      rates: 0.40,                      // 40% sovereign / covered bonds
+      multi_asset: 0.05,
+      equity_index: 0,
+      single_stock: 0,
     },
-    aum_eur_m: 320,
-    description:
-      "Opportunistic family office mandate, comfortable with concentrated single-stock and worst-of exposures.",
+
+    aum_eur_m: 340,
+    description: [
+      "Nordic family office | AUM EUR 340M | EUR only | Max tenor 3Y",
+      "High-grade credit (A- min) | Senior secured / Senior Preferred only",
+      "No formal ESG screen but extremely conservative issuer selection",
+      "Preferred issuers: ING Groep NV, BNP Paribas SA | Low risk appetite",
+      "Focus: capital preservation + defensive income above 2% threshold",
+    ].join("\n"),
   },
   {
     id: "AM-05",
-    name: "Hiroko Tanaka",
-    firm: "Sakura Pensions",
-    avatarColor: "info",
-    strategy: "capital_protection",
-    risk_appetite: "low",
-    allowed_currencies: ["EUR", "CHF"],
-    max_tenor_years: 8,
-    min_issuer_rating: "AA-",
-    preferred_issuers: ["Helvetia Securities", "Crédit Atlantique"],
-    excluded_issuers: ["Banco Iberia"],
-    allowed_underlying_types: ["rates", "equity_index"],
-    forbidden_underlyings: [],
-    requires_capital_protection: true,
-    target_yield_min: 0.02,
-    liquidity_need: "high",
-    esg_constraints: ["no_controversial_weapons"],
-    current_exposures: {
-      rates: 0.6,
-      equity_index: 0.25,
-      credit: 0.1,
-      multi_asset: 0.05,
-      single_stock: 0.0,
-    },
-    aum_eur_m: 4_400,
-    description:
-      "Pension fund with strict capital protection mandate and AA- minimum issuer rating.",
-  },
-  {
-    id: "AM-06",
-    name: "Daniel Okafor",
-    firm: "Meridian Balanced",
-    avatarColor: "primary",
-    strategy: "balanced_income",
-    risk_appetite: "medium",
+    name: "Sophie Renard",
+    firm: "Atelier Patrimoine MFO",
+    avatarColor: "warning",
+    strategy: "yield_enhancement",
+    risk_appetite: "medium_high",
+
+    /* ── Currency & tenor ─────────────────────────────────────────────── */
     allowed_currencies: ["EUR", "USD"],
-    max_tenor_years: 6,
-    min_issuer_rating: "A-",
-    preferred_issuers: ["Bank Helios", "Crédit Atlantique"],
+    max_tenor_years: 5,
+
+    /* ── Credit quality ───────────────────────────────────────────────── */
+    min_issuer_rating: "BBB",
+    preferred_issuers: [],
     excluded_issuers: [],
-    allowed_underlying_types: ["equity_index", "rates", "credit", "multi_asset"],
-    forbidden_underlyings: ["NVDA US"],
+
+    /* ── Asset class ──────────────────────────────────────────────────── */
+    allowed_underlying_types: ["credit", "equity_index", "single_stock"],
+    forbidden_underlyings: [],
+
+    /* ── Capital / protection ─────────────────────────────────────────── */
     requires_capital_protection: false,
     max_barrier_risk: 0.6,
-    target_yield_min: 0.04,
+
+    /* ── Yield & risk ─────────────────────────────────────────────────── */
+    target_yield_min: 0.045,            // 4.50% minimum yield
     liquidity_need: "medium",
-    esg_constraints: [],
+
+    /* ── ESG ──────────────────────────────────────────────────────────── */
+    esg_constraints: [],                // No ESG constraints across client sleeves
+
+    /* ── Exposures ────────────────────────────────────────────────────── */
     current_exposures: {
-      equity_index: 0.35,
-      rates: 0.3,
-      credit: 0.2,
-      multi_asset: 0.15,
-      single_stock: 0.0,
+      credit: 0.30,                     // 30% IG/HY corporate credit
+      equity_index: 0.35,               // 35% index-linked structured products
+      single_stock: 0.20,               // 20% single-stock autocalls
+      rates: 0.10,
+      multi_asset: 0.05,
     },
-    aum_eur_m: 1_200,
-    description:
-      "Balanced income mandate blending rates, credit and equity-linked structures with moderate barrier risk.",
+
+    aum_eur_m: 520,
+    description: [
+      "French multi-family office | AUM EUR 520M | EUR & USD | Max tenor 5Y",
+      "BBB minimum issuer rating | Multiple client sleeves — yield is primary objective",
+      "Eligible for equity-linked structures, autocalls, barrier products (barrier ≤ 60%)",
+      "No ESG screen | Sub-eligible for IG-rated tranches | Medium-high risk tolerance",
+      "Target: 4.5%+ net yield across sleeves | Broad underlying universe incl. single stocks",
+    ].join("\n"),
   },
 ];

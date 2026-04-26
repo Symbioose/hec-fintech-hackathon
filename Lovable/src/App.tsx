@@ -17,6 +17,7 @@ import MyMandate from "./pages/MyMandate.tsx";
 import Watchlist from "./pages/Watchlist.tsx";
 import MarketViewsPage from "./pages/MarketViewsPage.tsx";
 import OutboxPage from "./pages/Outbox.tsx";
+import Processing from "./pages/Processing.tsx";
 import Login from "./pages/Login.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
@@ -48,6 +49,7 @@ const App = () => (
                           <Route path="/watchlist" element={<Watchlist />} />
                           <Route path="/mandate" element={<MyMandate />} />
                           <Route path="/market" element={<MarketViewsPage />} />
+                          <Route path="/processing" element={<Processing />} />
                           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                           <Route path="*" element={<NotFound />} />
                         </Routes>

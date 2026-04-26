@@ -34,6 +34,41 @@ export const PURCHASE_HISTORY: PurchaseHistoryItem[] = [
     action: "watched",
     date: "2026-04-22",
   },
+
+  /* ── AM-02 extended history (credit mandate context) ─────────────────── */
+  {
+    id: "PH-AM02-1",
+    asset_manager_id: "AM-02",
+    product_id: "P-BNP-H1-2026",
+    action: "bought",
+    amount: 2_000_000,
+    date: "2026-01-14",
+    feedback: "Strong Q4 beat, timing good entry post-spread widening.",
+  },
+  {
+    id: "PH-AM02-2",
+    asset_manager_id: "AM-02",
+    product_id: "P-TOT-REJECTED",
+    action: "rejected",
+    date: "2026-02-07",
+    reason: "ESG exclusion — fossil fuels. Article 8 non-compliant.",
+  },
+  {
+    id: "PH-AM02-3",
+    asset_manager_id: "AM-02",
+    product_id: "P-SGN-FRN-Q1",
+    action: "watched",
+    date: "2026-03-19",
+  },
+  {
+    id: "PH-AM02-4",
+    asset_manager_id: "AM-02",
+    product_id: "P-ING-H2-2025",
+    action: "bought",
+    amount: 1_500_000,
+    date: "2026-04-03",
+    feedback: "Short duration carry, fits duration target <3Y.",
+  },
   {
     id: "PH-5",
     asset_manager_id: "AM-03",

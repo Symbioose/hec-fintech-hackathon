@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { LogOut, User, Settings } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { useAppStore } from "@/lib/store";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -55,8 +56,8 @@ export function ProfileMenu() {
         <DropdownMenuItem onClick={() => navigate("/mandate")}>
           <User className="mr-2 h-4 w-4" /> My mandate
         </DropdownMenuItem>
-        <DropdownMenuItem disabled>
-          <Settings className="mr-2 h-4 w-4" /> Settings
+        <DropdownMenuItem onClick={() => { navigate("/market"); toast("Market Views — configure PM signals and sector biases"); }}>
+          <Settings className="mr-2 h-4 w-4" /> Settings & views
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem

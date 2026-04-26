@@ -1,43 +1,12 @@
 import { useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppStore } from "@/lib/store";
 import { RAW_SAMPLES } from "@/mocks/rawSamples";
 import { extractFromSample, extractFromText } from "@/lib/extractionMock";
-import { score as scoreProduct } from "@/lib/matchingMock";
-import { ASSET_MANAGERS } from "@/mocks/assetManagers";
+import { extractProductWithGemini, geminiAvailable } from "@/lib/gemini";
 import type { Product } from "@/types/product";
-import { PageHeader } from "@/components/common/PageHeader";
-import { SourceIcon } from "@/components/common/SourceIcon";
-import { ProductTypeBadge } from "@/components/common/ProductTypeBadge";
-import { ScoreBar } from "@/components/common/ScoreBar";
-import { HighlightedRawText } from "@/components/common/HighlightedRawText";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
-import {
-  Sparkles,
-  ChevronDown,
-  ChevronUp,
-  ArrowRight,
-  Inbox as InboxIcon,
-  CheckCheck,
-  Filter,
-} from "lucide-react";
-import { fmtRelative, humanize } from "@/lib/format";
+import { humanize } from "@/lib/format";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
 
 interface InboxItem {
   id: string;
@@ -46,27 +15,40 @@ interface InboxItem {
   raw_text: string;
   ingested_at: string;
   product_id: string;
+  status: "processed" | "processing" | "queued";
 }
 
-type Filter = "all" | "unread" | "read";
+function fmtTime(iso: string): string {
+  const d = new Date(iso);
+  return `${d.getHours().toString().padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
+}
 
+/* ─── Page ────────────────────────────────────────────────────────────── */
 export default function Inbox() {
-  const { products, addProduct, me, meta, markRead } = useAppStore();
   const navigate = useNavigate();
-  const [filter, setFilter] = useState<Filter>("all");
+  const { products, addProduct, meta, markRead } = useAppStore();
+  const [filter, setFilter] = useState<"all" | "unread" | "read">("all");
+  const [extracting, setExtracting] = useState(false);
+  const [extractingLabel, setExtractingLabel] = useState("Processing...");
+  const [text, setText] = useState("");
+  const [justExtracted, setJustExtracted] = useState<Product | null>(null);
+  const [aiFieldCount, setAiFieldCount] = useState<number | null>(null);
 
-  const items = useMemo<InboxItem[]>(
+  const items: InboxItem[] = useMemo(
     () =>
       products
         .filter((p) => !!p.raw_text)
-        .map((p) => ({
-          id: `IN-${p.id}`,
-          source_type: p.source_type,
-          source_reference: p.source_reference ?? humanize(p.source_type) ?? "manual",
-          raw_text: p.raw_text!,
-          ingested_at: p.ingested_at,
-          product_id: p.id,
-        }))
+        .map(
+          (p): InboxItem => ({
+            id: `IN-${p.id}`,
+            source_type: p.source_type,
+            source_reference: p.source_reference ?? humanize(p.source_type) ?? "manual",
+            raw_text: p.raw_text!,
+            ingested_at: p.ingested_at,
+            product_id: p.id,
+            status: "processed",
+          }),
+        )
         .sort(
           (a, b) =>
             new Date(b.ingested_at).getTime() - new Date(a.ingested_at).getTime(),
@@ -74,9 +56,7 @@ export default function Inbox() {
     [products],
   );
 
-  const unreadCount = items.filter((it) => !meta[it.product_id]?.read).length;
-
-  const visibleItems = useMemo(() => {
+  const visible = useMemo(() => {
     if (filter === "all") return items;
     return items.filter((it) => {
       const isRead = meta[it.product_id]?.read ?? false;
@@ -84,349 +64,451 @@ export default function Inbox() {
     });
   }, [items, filter, meta]);
 
-  function markAllRead() {
-    let count = 0;
-    for (const it of items) {
-      if (!meta[it.product_id]?.read) {
-        markRead(it.product_id, true);
-        count++;
-      }
-    }
-    if (count > 0) toast.success(`Marked ${count} message${count > 1 ? "s" : ""} as read`);
-  }
+  const unreadCount = items.filter((it) => !meta[it.product_id]?.read).length;
+  const processed = items.length;
 
-  // Simulate-arrival panel
-  const [text, setText] = useState("");
-  const [extracting, setExtracting] = useState(false);
-  const [justExtracted, setJustExtracted] = useState<Product | null>(null);
-
-  function runExtraction(input: string, fn: () => Product) {
+  async function runExtraction(rawText: string, fallback: () => Product) {
     setExtracting(true);
     setJustExtracted(null);
+    setAiFieldCount(null);
+
+    try {
+      if (geminiAvailable && rawText.trim().length > 40) {
+        setExtractingLabel("✦ Gemini extracting financial terms...");
+        const aiResult = await extractProductWithGemini(rawText);
+        if (aiResult) {
+          const confidence = aiResult.confidence ?? {};
+          const highConfFields = Object.values(confidence).filter(v => v >= 0.5).length;
+          setAiFieldCount(highConfFields);
+
+          const base = fallback();
+          const p: Product = {
+            ...base,
+            issuer: aiResult.issuer ?? base.issuer,
+            product_name: aiResult.product_name ?? base.product_name,
+            product_type: (aiResult.product_type as Product["product_type"]) ?? base.product_type,
+            currency: (aiResult.currency as Product["currency"]) ?? base.currency,
+            tenor_years: aiResult.tenor_years ?? base.tenor_years,
+            coupon: aiResult.coupon ?? base.coupon,
+            coupon_type: (aiResult.coupon_type as Product["coupon_type"]) ?? base.coupon_type,
+            underlying: aiResult.underlying?.length ? aiResult.underlying : base.underlying,
+            underlying_type: (aiResult.underlying_type as Product["underlying_type"]) ?? base.underlying_type,
+            barrier: aiResult.barrier ?? base.barrier,
+            capital_protection: aiResult.capital_protection ?? base.capital_protection,
+            autocall: aiResult.autocall ?? base.autocall,
+            issuer_rating: aiResult.issuer_rating ?? base.issuer_rating,
+            risk_level: (aiResult.risk_level as Product["risk_level"]) ?? base.risk_level,
+            notional: aiResult.notional ?? base.notional,
+            maturity_date: aiResult.maturity_date ?? base.maturity_date,
+            raw_text: rawText,
+          };
+          setJustExtracted(p);
+          addProduct(p);
+          setExtracting(false);
+          setText("");
+          toast.success(`${p.id} ingested · Gemini extracted ${highConfFields} fields · scoring...`);
+          return;
+        }
+      }
+    } catch {
+      // fall through to mock extraction
+    }
+
+    setExtractingLabel("Processing...");
     setTimeout(() => {
-      const p = fn();
+      const p = fallback();
       setJustExtracted(p);
+      addProduct(p);
       setExtracting(false);
       setText("");
+      toast.success(`${p.id} ingested · scoring against mandate...`);
     }, 1100);
   }
 
-  function acceptIntoCatalog(p: Product) {
-    addProduct(p);
-    toast.success(`${p.id} added to your catalog`);
-    setJustExtracted(null);
-  }
-
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-6">
-      <PageHeader
-        eyebrow="Channels"
-        title="Inbox"
-        description="Raw incoming messages from your channels (email, Bloomberg chat, term sheets, calls). Each one is parsed into a product and scored against your mandate."
-        actions={
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 rounded-md border bg-surface px-2.5 py-1 text-xs text-muted-foreground">
-              <InboxIcon className="h-3.5 w-3.5" />
-              <span className="tabular font-medium text-foreground">{items.length}</span>
-              <span>messages</span>
-              {unreadCount > 0 && (
-                <>
-                  <span className="text-border">·</span>
-                  <span className="tabular font-medium text-primary">{unreadCount}</span>
-                  <span>unread</span>
-                </>
-              )}
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-7 gap-1.5 text-xs"
-              disabled={unreadCount === 0}
-              onClick={markAllRead}
-            >
-              <CheckCheck className="h-3.5 w-3.5" /> Mark all read
-            </Button>
-          </div>
-        }
-      />
-
-      {/* Simulate arrival */}
-      <Card className="shadow-card">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-sm font-semibold">
-            <Sparkles className="h-4 w-4 text-primary" /> Simulate a new arrival
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="flex flex-wrap gap-2">
-            {RAW_SAMPLES.map((s) => (
-              <Button
-                key={s.id}
-                size="sm"
-                variant="outline"
-                className="gap-1.5"
-                disabled={extracting}
-                onClick={() => runExtraction(s.raw_text, () => extractFromSample(s))}
-              >
-                <SourceIcon type={s.source_type} className="h-3.5 w-3.5" />
-                {s.label}
-              </Button>
-            ))}
-          </div>
-          <div className="flex flex-col gap-2 md:flex-row">
-            <Textarea
-              rows={3}
-              placeholder="…or paste your own bank message, chat snippet, term sheet text…"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              className="font-mono text-xs"
-            />
-            <Button
-              className="gap-1.5 md:self-start"
-              disabled={!text.trim() || extracting}
-              onClick={() => runExtraction(text, () => extractFromText(text, "manual"))}
-            >
-              <Sparkles className="h-4 w-4" /> Extract
-            </Button>
-          </div>
-
-          {extracting && (
-            <div className="rounded-md border bg-surface-muted p-3">
-              <p className="mb-2 text-xs text-muted-foreground">
-                Calling LLM extractor and scoring against your mandate…
-              </p>
-              <Skeleton className="mb-1.5 h-3 w-3/4" />
-              <Skeleton className="h-3 w-1/2" />
-            </div>
-          )}
-
-          {justExtracted && !extracting && (
-            <ExtractedPreview
-              product={justExtracted}
-              onAccept={() => acceptIntoCatalog(justExtracted)}
-              onView={() => {
-                acceptIntoCatalog(justExtracted);
-                navigate(`/products/${justExtracted.id}`);
-              }}
-              onDiscard={() => setJustExtracted(null)}
-            />
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Filter bar */}
-      <div className="flex items-center gap-2 text-xs">
-        <Filter className="h-3.5 w-3.5 text-muted-foreground" />
-        {(["all", "unread", "read"] as const).map((f) => (
-          <Button
-            key={f}
-            size="sm"
-            variant={filter === f ? "default" : "outline"}
-            className="h-7 px-3 text-xs"
-            onClick={() => setFilter(f)}
+    <div
+      style={{
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+        background: "var(--c-bg)",
+        color: "var(--c-text)",
+        fontFamily: "JetBrains Mono, monospace",
+      }}
+    >
+      {/* ── Stat strip ── */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr) auto",
+          gap: 1,
+          background: "var(--c-border)",
+          borderBottom: "1px solid var(--c-border)",
+          flexShrink: 0,
+        }}
+      >
+        {[
+          [String(items.length), "MESSAGES TODAY"],
+          [String(processed),    "PROCESSED"],
+          [String(unreadCount),  "UNREAD"],
+          ["5",                  "ELIGIBLE"],
+        ].map(([n, l]) => (
+          <div
+            key={l}
+            style={{
+              background: "var(--c-bg1)",
+              padding: "12px 18px",
+              textAlign: "center",
+            }}
           >
-            {f === "all" ? `All (${items.length})` : f === "unread" ? `Unread (${unreadCount})` : `Read (${items.length - unreadCount})`}
-          </Button>
+            <div
+              style={{
+                fontSize: 22,
+                fontWeight: 700,
+                color: "var(--c-amber)",
+                fontFamily: "JetBrains Mono, monospace",
+              }}
+            >
+              {n}
+            </div>
+            <div
+              style={{
+                fontSize: 9,
+                color: "var(--c-text3)",
+                letterSpacing: "0.12em",
+                fontWeight: 700,
+                marginTop: 2,
+              }}
+            >
+              {l}
+            </div>
+          </div>
         ))}
+        <div
+          style={{
+            background: "var(--c-bg1)",
+            padding: "12px 18px",
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+          }}
+        >
+          <button
+            onClick={() => navigate("/processing")}
+            style={{
+              padding: "8px 14px",
+              background: "var(--c-amber)",
+              border: "none",
+              borderRadius: 2,
+              color: "#000",
+              fontSize: 10,
+              fontWeight: 700,
+              cursor: "pointer",
+              fontFamily: "JetBrains Mono, monospace",
+              letterSpacing: "0.08em",
+            }}
+          >
+            ⚡ ANALYSE INBOX →
+          </button>
+        </div>
       </div>
 
-      {/* Inbox feed */}
-      <div className="space-y-2">
-        {visibleItems.map((it) => {
-          const product = products.find((p) => p.id === it.product_id);
-          return <InboxRow key={it.id} item={it} product={product} amId={me.id} />;
-        })}
-        {visibleItems.length === 0 && (
-          <Card className="shadow-card">
-            <CardContent className="py-12 text-center text-sm text-muted-foreground">
-              {filter === "all"
-                ? 'No messages yet. Use "Simulate a new arrival" above.'
-                : `No ${filter} messages.`}
-            </CardContent>
-          </Card>
+      {/* ── Simulate-arrival panel ── */}
+      <div
+        style={{
+          padding: "12px 18px",
+          background: "var(--c-bg1)",
+          borderBottom: "1px solid var(--c-border)",
+          flexShrink: 0,
+        }}
+      >
+        <div
+          style={{
+            fontSize: 9,
+            fontWeight: 700,
+            letterSpacing: "0.12em",
+            color: "var(--c-text3)",
+            marginBottom: 8,
+          }}
+        >
+          SIMULATE NEW ARRIVAL
+        </div>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 8 }}>
+          {RAW_SAMPLES.map((s) => (
+            <button
+              key={s.id}
+              onClick={() => runExtraction(s.raw_text, () => extractFromSample(s))}
+              disabled={extracting}
+              style={{
+                padding: "5px 10px",
+                background: "transparent",
+                border: "1px solid var(--c-border2)",
+                borderRadius: 2,
+                color: "var(--c-text2)",
+                fontSize: 10,
+                cursor: extracting ? "not-allowed" : "pointer",
+                fontFamily: "JetBrains Mono, monospace",
+                letterSpacing: "0.04em",
+                opacity: extracting ? 0.5 : 1,
+                transition: "all 0.1s",
+              }}
+              onMouseEnter={(e) => {
+                if (!extracting) {
+                  e.currentTarget.style.borderColor = "var(--c-amber-dim)";
+                  e.currentTarget.style.color = "var(--c-amber)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "var(--c-border2)";
+                e.currentTarget.style.color = "var(--c-text2)";
+              }}
+            >
+              + {s.label}
+            </button>
+          ))}
+        </div>
+        <div style={{ display: "flex", gap: 6 }}>
+          <textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="…or paste a bank message, chat snippet, term sheet text…"
+            rows={2}
+            style={{
+              flex: 1,
+              padding: "8px 10px",
+              background: "var(--c-bg2)",
+              border: "1px solid var(--c-border2)",
+              borderRadius: 2,
+              color: "var(--c-text)",
+              fontSize: 10,
+              fontFamily: "JetBrains Mono, monospace",
+              outline: "none",
+              resize: "none",
+            }}
+          />
+          <button
+            onClick={() => runExtraction(text, () => extractFromText(text, "manual"))}
+            disabled={!text.trim() || extracting}
+            style={{
+              padding: "0 14px",
+              background: geminiAvailable ? "var(--c-match)" : "var(--c-amber)",
+              border: "none",
+              borderRadius: 2,
+              color: "#000",
+              fontSize: 10,
+              fontWeight: 700,
+              cursor: !text.trim() || extracting ? "not-allowed" : "pointer",
+              fontFamily: "JetBrains Mono, monospace",
+              letterSpacing: "0.04em",
+              opacity: !text.trim() || extracting ? 0.4 : 1,
+            }}
+          >
+            {geminiAvailable ? "✦ AI EXTRACT" : "EXTRACT"}
+          </button>
+        </div>
+        {extracting && (
+          <div style={{ marginTop: 8, display: "flex", alignItems: "center", gap: 8 }}>
+            <span
+              style={{
+                fontSize: 10,
+                color: geminiAvailable ? "var(--c-match)" : "var(--c-amber)",
+                fontFamily: "JetBrains Mono, monospace",
+                letterSpacing: "0.04em",
+              }}
+              className="animate-blink"
+            >
+              ● {extractingLabel}
+            </span>
+          </div>
+        )}
+        {justExtracted && !extracting && (
+          <div
+            style={{
+              marginTop: 8,
+              padding: "8px 10px",
+              background: "var(--c-match-bg)",
+              border: "1px solid var(--c-match-border)",
+              borderRadius: 2,
+              fontSize: 10,
+              color: "var(--c-match)",
+              fontFamily: "JetBrains Mono, monospace",
+            }}
+          >
+            ✓ {aiFieldCount != null ? `Gemini extracted ${aiFieldCount} fields` : "EXTRACTED"} · {justExtracted.id} · {justExtracted.product_name ?? humanize(justExtracted.product_type)}
+          </div>
         )}
       </div>
-    </div>
-  );
-}
 
-function InboxRow({
-  item,
-  product,
-  amId,
-}: {
-  item: InboxItem;
-  product?: Product;
-  amId: string;
-}) {
-  const { meta, markRead } = useAppStore();
-  const [open, setOpen] = useState(false);
-  const isRead = product ? meta[product.id]?.read ?? false : true;
+      {/* ── Filter bar ── */}
+      <div
+        style={{
+          padding: "8px 18px",
+          background: "var(--c-bg1)",
+          borderBottom: "1px solid var(--c-border)",
+          display: "flex",
+          alignItems: "center",
+          gap: 6,
+          flexShrink: 0,
+        }}
+      >
+        <span
+          style={{
+            fontSize: 9,
+            color: "var(--c-text3)",
+            letterSpacing: "0.12em",
+            fontWeight: 700,
+            marginRight: 4,
+          }}
+        >
+          FILTER:
+        </span>
+        {(["all", "unread", "read"] as const).map((f) => {
+          const active = filter === f;
+          const count =
+            f === "all" ? items.length : f === "unread" ? unreadCount : items.length - unreadCount;
+          return (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              style={{
+                padding: "3px 10px",
+                background: active ? "var(--c-amber-bg)" : "transparent",
+                border: `1px solid ${active ? "var(--c-amber-dim)" : "var(--c-border)"}`,
+                borderRadius: 2,
+                color: active ? "var(--c-amber)" : "var(--c-text3)",
+                fontSize: 9,
+                cursor: "pointer",
+                fontFamily: "JetBrains Mono, monospace",
+                fontWeight: active ? 700 : 400,
+                letterSpacing: "0.05em",
+                textTransform: "uppercase",
+              }}
+            >
+              {f} ({count})
+            </button>
+          );
+        })}
+      </div>
 
-  const recScore = useMemo(() => {
-    if (!product) return null;
-    const am = ASSET_MANAGERS.find((a) => a.id === amId);
-    if (!am) return null;
-    return scoreProduct(product, am);
-  }, [product, amId]);
+      {/* ── Inbox feed ── */}
+      <div style={{ flex: 1, overflowY: "auto" }}>
+        {visible.map((it) => {
+          const product = products.find((p) => p.id === it.product_id);
+          const isRead = meta[it.product_id]?.read ?? false;
+          const snippet = it.raw_text.replace(/\s+/g, " ").slice(0, 110);
 
-  const snippet = item.raw_text.replace(/\s+/g, " ").slice(0, 160);
-  const sourceLabel = humanize(item.source_type);
-  // Suppress the secondary source badge when the row title is just the humanized source name
-  // (i.e. when no real source_reference was provided).
-  const showSourceBadge =
-    item.source_reference.trim().toLowerCase() !== sourceLabel.toLowerCase();
-
-  function handleToggle(o: boolean) {
-    setOpen(o);
-    if (o && product && !isRead) markRead(product.id, true);
-  }
-
-  return (
-    <Card
-      className={cn(
-        "shadow-card transition-shadow hover:shadow-elevated",
-        !isRead && "border-l-[3px] border-l-primary",
-      )}
-    >
-      <Collapsible open={open} onOpenChange={handleToggle}>
-        <div className="flex items-center gap-3 p-4">
-          <SourceIcon type={item.source_type} className="h-5 w-5 shrink-0" />
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-              <span className={cn("text-sm", !isRead ? "font-semibold" : "font-medium")}>
-                {item.source_reference}
-              </span>
-              {showSourceBadge && (
-                <Badge variant="outline" className="text-[10px]">
-                  {sourceLabel}
-                </Badge>
-              )}
-              {!isRead && (
-                <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-primary">
-                  Unread
-                </span>
-              )}
-              <span className="text-[11px] text-muted-foreground">
-                {fmtRelative(item.ingested_at)}
-              </span>
-            </div>
-            <p className="mt-0.5 line-clamp-1 text-xs text-muted-foreground">{snippet}</p>
-          </div>
-
-          {product && (
-            <div className="hidden items-center gap-2 md:flex">
-              <ProductTypeBadge type={product.product_type} />
-              {recScore && (
-                <div className="w-24">
-                  <ScoreBar value={recScore.score} size="sm" />
+          return (
+            <div
+              key={it.id}
+              onClick={() => {
+                if (!isRead) markRead(it.product_id, true);
+                navigate(`/products/${it.product_id}`);
+              }}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "24px 1fr auto",
+                gap: "0 14px",
+                alignItems: "center",
+                padding: "12px 18px",
+                borderBottom: "1px solid var(--c-border)",
+                cursor: "pointer",
+                background: !isRead ? "rgba(245,166,35,0.02)" : "transparent",
+                transition: "background 0.1s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--c-bg2)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = !isRead
+                  ? "rgba(245,166,35,0.02)"
+                  : "transparent";
+              }}
+            >
+              {/* Status dot */}
+              <div
+                style={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: "50%",
+                  justifySelf: "center",
+                  background: isRead ? "var(--c-border2)" : "var(--c-teal)",
+                  boxShadow: !isRead ? "0 0 8px rgba(0,201,167,0.5)" : "none",
+                }}
+              />
+              <div style={{ minWidth: 0 }}>
+                <div
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 600,
+                    color: "var(--c-text)",
+                    marginBottom: 3,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                  }}
+                >
+                  {it.source_reference}
+                  {product && (
+                    <span style={{ fontSize: 9, color: "var(--c-teal)", fontWeight: 400 }}>
+                      → {product.id}
+                    </span>
+                  )}
+                  {!isRead && (
+                    <span
+                      style={{
+                        background: "var(--c-amber)",
+                        color: "#000",
+                        fontSize: 8,
+                        fontWeight: 700,
+                        padding: "1px 5px",
+                        borderRadius: 1,
+                        letterSpacing: "0.08em",
+                      }}
+                    >
+                      NEW
+                    </span>
+                  )}
                 </div>
-              )}
-            </div>
-          )}
-
-          <CollapsibleTrigger asChild>
-            <Button variant="ghost" size="sm" className="h-8 w-8 shrink-0 p-0">
-              {open ? (
-                <ChevronUp className="h-4 w-4" />
-              ) : (
-                <ChevronDown className="h-4 w-4" />
-              )}
-            </Button>
-          </CollapsibleTrigger>
-        </div>
-
-        <CollapsibleContent>
-          <div className="space-y-3 border-t bg-surface-muted/40 p-4">
-            <div>
-              <p className="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
-                Raw message — extracted fields highlighted
-              </p>
-              {product ? (
-                <HighlightedRawText text={item.raw_text} product={product} />
-              ) : (
-                <pre className="whitespace-pre-wrap rounded-md border bg-surface p-3 text-xs leading-relaxed">
-                  {item.raw_text}
-                </pre>
-              )}
-            </div>
-            {product && (
-              <div className="flex items-center justify-between rounded-md border bg-surface p-3">
-                <div className="min-w-0">
-                  <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
-                    Parsed product
-                  </p>
-                  <p className="truncate text-sm font-medium">
-                    {product.product_name ?? `${product.issuer} ${humanize(product.product_type)}`}
-                  </p>
+                <div
+                  style={{
+                    fontSize: 10,
+                    color: "var(--c-text2)",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {snippet}…
                 </div>
-                <Button asChild size="sm" variant="outline" className="gap-1.5">
-                  <Link to={`/products/${product.id}`}>
-                    Open <ArrowRight className="h-3.5 w-3.5" />
-                  </Link>
-                </Button>
               </div>
-            )}
+              <div
+                style={{
+                  fontSize: 10,
+                  color: "var(--c-text3)",
+                  fontFamily: "JetBrains Mono, monospace",
+                }}
+              >
+                {fmtTime(it.ingested_at)}
+              </div>
+            </div>
+          );
+        })}
+        {visible.length === 0 && (
+          <div
+            style={{
+              padding: "60px 20px",
+              textAlign: "center",
+              color: "var(--c-text3)",
+              fontSize: 11,
+              fontFamily: "JetBrains Mono, monospace",
+              letterSpacing: "0.04em",
+            }}
+          >
+            NO MESSAGES MATCHING THIS FILTER
           </div>
-        </CollapsibleContent>
-      </Collapsible>
-    </Card>
-  );
-}
-
-function ExtractedPreview({
-  product,
-  onAccept,
-  onView,
-  onDiscard,
-}: {
-  product: Product;
-  onAccept: () => void;
-  onView: () => void;
-  onDiscard: () => void;
-}) {
-  return (
-    <div className="space-y-3 rounded-md border bg-surface p-4">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div>
-          <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
-            Just extracted · {product.id}
-          </p>
-          <p className="text-sm font-semibold">
-            {product.product_name ?? `${product.issuer} ${humanize(product.product_type)}`}
-          </p>
-        </div>
-        <ProductTypeBadge type={product.product_type} />
+        )}
       </div>
-      {product.raw_text && (
-        <HighlightedRawText text={product.raw_text} product={product} />
-      )}
-      <div className="grid grid-cols-2 gap-2 text-xs md:grid-cols-4">
-        <KV k="Currency" v={product.currency} />
-        <KV k="Tenor" v={product.tenor_years ? `${product.tenor_years}y` : "—"} />
-        <KV k="Coupon" v={product.coupon ? `${(product.coupon * 100).toFixed(2)}%` : "—"} />
-        <KV k="Rating" v={product.issuer_rating ?? "—"} />
-      </div>
-      <div className="flex flex-wrap gap-2">
-        <Button size="sm" onClick={onView} className="gap-1.5">
-          Open in catalog <ArrowRight className="h-3.5 w-3.5" />
-        </Button>
-        <Button size="sm" variant="outline" onClick={onAccept}>
-          Add silently
-        </Button>
-        <Button size="sm" variant="ghost" onClick={onDiscard}>
-          Discard
-        </Button>
-      </div>
-    </div>
-  );
-}
-
-function KV({ k, v }: { k: string; v: React.ReactNode }) {
-  return (
-    <div className="rounded-md bg-surface-muted px-2.5 py-1.5">
-      <div className="text-[10px] uppercase tracking-wide text-muted-foreground">{k}</div>
-      <div className="font-medium tabular">{v}</div>
     </div>
   );
 }

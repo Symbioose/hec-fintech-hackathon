@@ -1,25 +1,119 @@
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { ThemeToggle } from "@/components/layout/ThemeToggle";
-import { ProfileMenu } from "@/components/layout/ProfileMenu";
-import { Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { useLocation } from "react-router-dom";
+import { useAppStore } from "@/lib/store";
+
+const PAGE_TITLES: Record<string, string> = {
+  "/":                "OPPORTUNITY FEED",
+  "/recommendations": "MATCH ENGINE",
+  "/inbox":           "RESEARCH INBOX",
+  "/processing":      "AI PROCESSING",
+  "/products":        "DEAL FLOW",
+  "/mandate":         "FUND MANDATE",
+  "/market":          "MARKET VIEWS",
+  "/watchlist":       "WATCHLIST",
+  "/outbox":          "OUTBOX",
+};
+
+function pageTitle(pathname: string): string {
+  if (pathname.startsWith("/products/")) return "PRODUCT DETAIL";
+  return PAGE_TITLES[pathname] ?? "WORKSPACE";
+}
 
 export function Topbar() {
+  const location = useLocation();
+  const { me } = useAppStore();
+  const today = new Date().toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+  const title = pageTitle(location.pathname);
+
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b bg-surface/80 px-3 backdrop-blur supports-[backdrop-filter]:bg-surface/60 md:px-6">
-      <SidebarTrigger className="-ml-1" />
-      <div className="hidden flex-1 items-center md:flex">
-        <div className="relative max-w-sm flex-1">
-          <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            placeholder="Search products, issuers, messages…"
-            className="h-9 w-full border-border/60 bg-surface-muted pl-8 text-sm"
-          />
-        </div>
+    <header
+      style={{
+        height: 44,
+        background: "var(--c-bg1)",
+        borderBottom: "1px solid var(--c-border)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        flexShrink: 0,
+        padding: "0 18px",
+      }}
+    >
+      {/* ── Left: page title + breadcrumb ── */}
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <span
+          style={{
+            fontSize: 11,
+            fontWeight: 700,
+            color: "var(--c-text)",
+            letterSpacing: "0.12em",
+            fontFamily: "JetBrains Mono, monospace",
+          }}
+        >
+          {title}
+        </span>
+        <span style={{ color: "var(--c-border3)", fontSize: 10 }}>/</span>
+        <span
+          style={{
+            fontSize: 10,
+            color: "var(--c-text3)",
+            letterSpacing: "0.06em",
+            fontFamily: "JetBrains Mono, monospace",
+          }}
+        >
+          WEBI · WE BUY
+        </span>
       </div>
-      <div className="ml-auto flex items-center gap-1">
-        <ThemeToggle />
-        <ProfileMenu />
+
+      {/* ── Right: live status ── */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 18,
+          fontFamily: "JetBrains Mono, monospace",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+            fontSize: 10,
+            color: "var(--c-text3)",
+            letterSpacing: "0.08em",
+          }}
+        >
+          <span
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: "var(--c-teal)",
+              display: "inline-block",
+              boxShadow: "0 0 6px rgba(74,222,128,0.5)",
+            }}
+            className="animate-pulse-slow"
+          />
+          LIVE
+        </div>
+        <div style={{ fontSize: 10, color: "var(--c-text2)", letterSpacing: "0.06em" }}>
+          <span style={{ color: "var(--c-text3)" }}>FUND </span>
+          <span style={{ color: "var(--c-amber)", fontWeight: 600 }}>
+            {me.firm.toUpperCase()}
+          </span>
+        </div>
+        <div
+          style={{
+            fontSize: 10,
+            color: "var(--c-text3)",
+            letterSpacing: "0.06em",
+          }}
+        >
+          {today.toUpperCase()}
+        </div>
       </div>
     </header>
   );
