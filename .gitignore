@@ -36,3 +36,8 @@ node_modules/
 
 # Inner .git dirs preserved as backups when subrepos were flattened
 .git_old_backup/
+
+# Internal planning docs
+Docs/
+Code/
+codex_context_structured_products_matching.md
