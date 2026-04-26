@@ -1,6 +1,6 @@
 """Seed sample data into Postgres on startup.
 
-Reads from app/data/sample_*.json (refreshed via scripts/export_mocks.ts).
+Reads from app/data/sample_*.json (refreshed via scripts/export_seed.ts).
 Idempotent: only inserts into a table if it's empty.
 """
 from __future__ import annotations
