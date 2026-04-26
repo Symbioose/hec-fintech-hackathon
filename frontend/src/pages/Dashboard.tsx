@@ -5,7 +5,7 @@ import { recommendationsFor, score } from "@/lib/matchingMock";
 import { generateNegotiation, summarizeNegotiation, type NegoRec } from "@/lib/negotiation";
 import { generateCounterOfferEmail, generateICNote, printICNote } from "@/lib/draftEmail";
 import { generateAICounterOffer, generateAIExecSummary, geminiAvailable, type CounterOfferContext, type ICNoteContext } from "@/lib/gemini";
-import { scoreProductViaBackend } from "@/lib/api";
+import { scoreProductViaBackend, getAMRecommendations } from "@/lib/api";
 import { ASSET_MANAGERS } from "@/mocks/assetManagers";
 import { PURCHASE_HISTORY } from "@/mocks/purchaseHistory";
 import type { Product } from "@/types/product";
@@ -359,11 +359,12 @@ function BucketHeader({
 
 /* ─── Feed Header ─────────────────────────────────────────────────────── */
 function FeedHeader({
-  total, match, gap, reject, filter, onFilter,
+  total, match, gap, reject, filter, onFilter, backendSource,
 }: {
   total: number; match: number; gap: number; reject: number;
   filter: "all" | "match" | "near-miss";
   onFilter: (f: "all" | "match" | "near-miss") => void;
+  backendSource: boolean;
 }) {
   const updated = new Date().toLocaleTimeString("en-GB", {
     hour: "2-digit", minute: "2-digit",
@@ -392,6 +393,17 @@ function FeedHeader({
         <span style={{ color: "var(--c-reject)" }}>{reject} rejected</span>
         <span style={{ color: "var(--c-border3)", margin: "0 8px" }}>·</span>
         <span style={{ color: "var(--c-text3)" }}>Updated {updated}</span>
+        <span style={{ color: "var(--c-border3)", margin: "0 8px" }}>·</span>
+        <span
+          style={{
+            color: backendSource ? "var(--c-teal)" : "var(--c-text3)",
+            fontSize: 9,
+            fontWeight: 700,
+            letterSpacing: "0.06em",
+          }}
+        >
+          {backendSource ? "● BACKEND" : "○ LOCAL"}
+        </span>
       </div>
       <div style={{ display: "flex", gap: 6 }}>
         {(["all", "match", "near-miss"] as const).map((f) => {
@@ -1624,10 +1636,28 @@ export default function Dashboard() {
   const { products, me } = useAppStore();
   const [filter, setFilter] = useState<"all" | "match" | "near-miss">("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  // Map of product_id → backend recommendation (null = not yet fetched)
+  const [backendRecMap, setBackendRecMap] = useState<Map<string, Recommendation>>(new Map());
+  const [backendSource, setBackendSource] = useState(false);
+
+  // Fetch all recommendations from the backend for the current AM.
+  // Falls back silently to local scoring if the backend is offline.
+  useEffect(() => {
+    getAMRecommendations(me.id).then((recs) => {
+      if (!recs || recs.length === 0) return;
+      const map = new Map<string, Recommendation>();
+      for (const r of recs) map.set(r.product_id, r);
+      setBackendRecMap(map);
+      setBackendSource(true);
+    });
+  }, [me.id]);
 
   const items = useMemo<FeedItem[]>(() => {
-    const recs = recommendationsFor(me, products);
-    const sorted = [...recs].sort((a, b) => {
+    // Local scoring is instant and used as the baseline.
+    // Backend recommendations override when available (same algorithm, same result + prose).
+    const localRecs = recommendationsFor(me, products);
+    const merged = localRecs.map((localRec) => backendRecMap.get(localRec.product_id) ?? localRec);
+    const sorted = [...merged].sort((a, b) => {
       if (a.hard_fail !== b.hard_fail) return a.hard_fail ? 1 : -1;
       return b.score - a.score;
     });
@@ -1643,7 +1673,7 @@ export default function Dashboard() {
         flagged: flaggedTags(p),
       }];
     });
-  }, [products, me]);
+  }, [products, me, backendRecMap]);
 
   const matchItems  = items.filter((i) => i.status === "MATCH");
   const gapItems    = items.filter((i) => i.status === "NEAR-MISS");
@@ -1670,6 +1700,7 @@ export default function Dashboard() {
           reject={rejectItems.length}
           filter={filter}
           onFilter={setFilter}
+          backendSource={backendSource}
         />
         <ColHeaders />
 

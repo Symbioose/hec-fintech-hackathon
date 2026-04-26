@@ -59,3 +59,42 @@ export async function isBackendOnline(): Promise<boolean> {
     return false;
   }
 }
+
+/**
+ * Fetch all backend-scored recommendations for one seeded AM.
+ * Uses POST /recommendations/asset-manager/{id} which scores all seeded products at once.
+ * Returns null if the backend is offline or the AM is not in the seed data.
+ */
+export async function getAMRecommendations(
+  amId: string,
+  withProse = false,
+): Promise<Recommendation[] | null> {
+  try {
+    const qs = withProse ? "?with_prose=true" : "";
+    const res = await fetch(
+      `${BACKEND}/recommendations/asset-manager/${encodeURIComponent(amId)}${qs}`,
+      {
+        method: "POST",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      },
+    );
+    if (!res.ok) return null;
+    return (await res.json()) as Recommendation[];
+  } catch {
+    return null;
+  }
+}
+
+/** Fetch seeded product list for telemetry (Processing page). */
+export async function getBackendProductCount(): Promise<number | null> {
+  try {
+    const res = await fetch(`${BACKEND}/products`, {
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!res.ok) return null;
+    const data = (await res.json()) as unknown[];
+    return data.length;
+  } catch {
+    return null;
+  }
+}

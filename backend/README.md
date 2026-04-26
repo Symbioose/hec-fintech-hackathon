@@ -1,6 +1,6 @@
 # StructuredMatch Backend — Phases 1–5
 
-FastAPI backend that mirrors the scoring algorithm in `Lovable/src/lib/matchingMock.ts` field-for-field. **The frontend is the source of truth for the matching algorithm — any divergence here is a bug.**
+FastAPI backend that mirrors the scoring algorithm in `frontend/src/lib/matchingMock.ts` field-for-field. **The frontend is the source of truth for the matching algorithm — any divergence here is a bug.**
 
 ## Local development
 
@@ -34,7 +34,7 @@ cd backend
 npx tsx scripts/export_mocks.ts
 ```
 
-This re-emits `app/data/sample_*.json` from `../Lovable/src/mocks/*.ts`. Run whenever the frontend mocks change.
+This re-emits `app/data/sample_*.json` from `../frontend/src/mocks/*.ts`. Run whenever the frontend mocks change.
 
 ## Regenerate the scoring fixture (Phase 4)
 

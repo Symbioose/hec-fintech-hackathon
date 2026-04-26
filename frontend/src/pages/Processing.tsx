@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { checkBackend, geminiAvailable, type BackendStatus } from "@/lib/gemini";
+import { getAMRecommendations, getBackendProductCount } from "@/lib/api";
 
 /* ─── Agents ──────────────────────────────────────────────────────────── */
 interface Step { t: number; progress: number; status: string; }
@@ -80,14 +81,20 @@ function buildLogTimeline(): LogEntry[] {
     });
   });
   log.push({ t: 2100, agent: "ROUTER", text: "Loading mandate constraints (8 rules)..." });
-  log.push({ t: 6300, agent: "ROUTER", text: "Cross-checking 12 ideas against mandate...", color: "var(--c-text2)" });
-  log.push({ t: 7800, agent: "ROUTER", text: "Auto-rejecting 1 product (mandate breach)...", color: "var(--c-reject)" });
-  log.push({ t: 8200, agent: "ROUTER", text: "Generating gap analysis for 6 near-misses...", color: "var(--c-gap)" });
-  log.push({ t: 8500, agent: "ROUTER", text: "Analysis complete: 5 match · 6 near-miss · 1 rejected", color: "var(--c-text)" });
+  log.push({ t: 6300, agent: "ROUTER", text: "Cross-checking proposals against mandate...", color: "var(--c-text2)" });
+  log.push({ t: 7800, agent: "ROUTER", text: "Auto-rejecting mandate breaches...", color: "var(--c-reject)" });
+  log.push({ t: 8200, agent: "ROUTER", text: "Generating gap analysis for near-misses...", color: "var(--c-gap)" });
   return log.sort((a, b) => a.t - b.t);
 }
 
 const LOG_TIMELINE = buildLogTimeline();
+
+interface LiveStats {
+  total: number;
+  match: number;
+  nearMiss: number;
+  rejected: number;
+}
 
 /* ─── Component ───────────────────────────────────────────────────────── */
 export default function Processing() {
@@ -100,12 +107,36 @@ export default function Processing() {
   const [showButton, setShowButton] = useState(false);
   const [tick, setTick] = useState(0);
   const [backend, setBackend] = useState<BackendStatus | null>(null);
+  const [liveStats, setLiveStats] = useState<LiveStats | null>(null);
   const startRef = useRef(Date.now());
   const logEndRef = useRef<HTMLDivElement | null>(null);
 
-  // Check backend health on mount
+  // Check backend health and fetch real scoring data
   useEffect(() => {
     checkBackend().then(setBackend);
+
+    // Fetch real recommendations from the backend for Carmignac (am-001)
+    getAMRecommendations("am-001").then((recs) => {
+      if (!recs) return;
+      const match    = recs.filter((r) => !r.hard_fail && r.score >= 78).length;
+      const nearMiss = recs.filter((r) => !r.hard_fail && r.score >= 50 && r.score < 78).length;
+      const rejected = recs.filter((r) => r.hard_fail || r.score < 50).length;
+      setLiveStats({ total: recs.length, match, nearMiss, rejected });
+    });
+
+    // Also verify seeded product count for the log
+    getBackendProductCount().then((count) => {
+      if (!count) return;
+      setLog((prev) => [
+        ...prev,
+        {
+          t: 0,
+          agent: "API",
+          text: `Backend connected — ${count} products in mandate scope`,
+          color: "var(--c-teal)",
+        },
+      ]);
+    });
   }, []);
 
   // Tick counter for elapsed time
@@ -146,10 +177,24 @@ export default function Processing() {
     });
 
     timers.push(setTimeout(() => setPhase("matching"), 2000));
-    timers.push(setTimeout(() => setPhase("done"), DONE_TIME));
+    timers.push(setTimeout(() => {
+      setPhase("done");
+      // Append final summary line using real stats if available
+      setLog((prev) => {
+        const stats = liveStats;
+        const summary = stats
+          ? `Analysis complete: ${stats.match} match · ${stats.nearMiss} near-miss · ${stats.rejected} rejected`
+          : "Analysis complete: 5 match · 6 near-miss · 1 rejected";
+        return [
+          ...prev,
+          { t: DONE_TIME, agent: "ROUTER", text: summary, color: "var(--c-text)" },
+        ];
+      });
+    }, DONE_TIME));
     timers.push(setTimeout(() => setShowButton(true), BUTTON_TIME));
 
     return () => timers.forEach(clearTimeout);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Auto-scroll log
@@ -159,6 +204,10 @@ export default function Processing() {
 
   const elapsed = ((Date.now() - startRef.current) / 1000).toFixed(1);
   const allDone = phase === "done";
+
+  // Displayed stats: real backend data if available, fallback to dataset defaults
+  const displayStats = liveStats ?? { total: 12, match: 5, nearMiss: 6, rejected: 1 };
+  const statsFromBackend = liveStats !== null;
 
   return (
     <div
@@ -184,13 +233,27 @@ export default function Processing() {
           flexShrink: 0,
         }}
       >
-        <div style={{ fontSize: 11 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 11 }}>
           <span style={{ color: "var(--c-amber)", fontWeight: 700 }}>
-            {allDone ? "ANALYSIS COMPLETE" : "MULTI-AGENT PROCESSING"}
+            {allDone ? "ANALYSIS COMPLETE" : "BATCH INGESTION"}
           </span>
-          <span style={{ color: "var(--c-amber-dim)", margin: "0 8px" }}>·</span>
+          <span style={{ color: "var(--c-amber-dim)" }}>·</span>
           <span style={{ color: "var(--c-text3)" }}>
-            3 sources · 12 ideas · 8 mandate constraints
+            3 sources · {displayStats.total} proposals · 8 mandate constraints
+          </span>
+          <span
+            style={{
+              fontSize: 8,
+              fontWeight: 700,
+              color: "var(--c-text3)",
+              background: "var(--c-bg3)",
+              border: "1px solid var(--c-border2)",
+              padding: "1px 6px",
+              borderRadius: 2,
+              letterSpacing: "0.1em",
+            }}
+          >
+            OVERNIGHT BATCH · SCHEDULED 02:00 CET
           </span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 14, fontSize: 10 }}>
@@ -200,11 +263,7 @@ export default function Processing() {
           {!allDone && (
             <span
               className="animate-blink"
-              style={{
-                color: "var(--c-amber)",
-                fontWeight: 700,
-                letterSpacing: "0.08em",
-              }}
+              style={{ color: "var(--c-amber)", fontWeight: 700, letterSpacing: "0.08em" }}
             >
               ● RUNNING
             </span>
@@ -270,22 +329,25 @@ export default function Processing() {
           >
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <div style={{ display: "flex", gap: 16, fontSize: 10 }}>
-                <Stat label="MATCH"      value="5"  color="var(--c-match)" pending={!allDone} />
-                <Stat label="NEAR-MISS"  value="6"  color="var(--c-gap)"   pending={!allDone} />
-                <Stat label="REJECTED"   value="1"  color="var(--c-reject)"pending={!allDone} />
-                <Stat label="TOTAL"      value="12" color="var(--c-text)"  pending={!allDone} />
+                <Stat label="MATCH"     value={String(displayStats.match)}    color="var(--c-match)"  pending={!allDone} />
+                <Stat label="NEAR-MISS" value={String(displayStats.nearMiss)} color="var(--c-gap)"    pending={!allDone} />
+                <Stat label="REJECTED"  value={String(displayStats.rejected)} color="var(--c-reject)" pending={!allDone} />
+                <Stat label="TOTAL"     value={String(displayStats.total)}    color="var(--c-text)"   pending={!allDone} />
               </div>
               <div style={{ display: "flex", gap: 12, fontSize: 8, fontFamily: "JetBrains Mono, monospace", letterSpacing: "0.06em" }}>
                 <span style={{ color: geminiAvailable ? "var(--c-match)" : "var(--c-text3)" }}>
                   {geminiAvailable ? "✓ GEMINI" : "○ GEMINI"}
                 </span>
                 <span style={{ color: backend?.online ? "var(--c-match)" : "var(--c-text3)" }}>
-                  {backend === null ? "… API" : backend.online ? "✓ BACKEND CONNECTED" : "○ API OFFLINE"}
+                  {backend === null ? "… API" : backend.online ? "✓ BACKEND LIVE" : "○ BACKEND OFFLINE"}
                 </span>
                 {backend?.online && (
                   <span style={{ color: "var(--c-text3)" }}>
                     FAISS {backend.indicesBuilt ? "✓" : "building…"}
                   </span>
+                )}
+                {allDone && statsFromBackend && (
+                  <span style={{ color: "var(--c-teal)" }}>✓ LIVE SCORES</span>
                 )}
               </div>
             </div>

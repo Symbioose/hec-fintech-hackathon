@@ -81,7 +81,7 @@ This is why switching cost is near-infinite: a fund that leaves Webi loses its i
 
 ## Stack
 
-**Frontend** — `Lovable/`
+**Frontend** — `frontend/`
 - React 18 · Vite 5 · TypeScript 5
 - TanStack Query · React Router v6 · Sonner
 - JetBrains Mono · terminal dark design system
@@ -110,7 +110,7 @@ Log in with any email + password — signs in as **François Martin (Carmignac C
 To enable Gemini features (live extraction + AI counter-offer drafting):
 
 ```bash
-# Lovable/.env.local
+# frontend/.env.local
 VITE_GEMINI_API_KEY=your_google_api_key
 ```
 
