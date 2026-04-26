@@ -1,6 +1,6 @@
 // App-wide store (single asset manager).
 // Manages products, per-product triage/read-state metadata, user edits to extracted fields,
-// a compare-selection set, and a fake outbox for sent term-sheet requests.
+// a compare-selection set, and a pending outbox for sent term-sheet requests.
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";

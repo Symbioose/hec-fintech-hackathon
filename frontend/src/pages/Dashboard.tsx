@@ -5,7 +5,7 @@ import { recommendationsFor, score } from "@/lib/mandateScoring";
 import { generateNegotiation, summarizeNegotiation, type NegoRec } from "@/lib/negotiation";
 import { generateCounterOfferEmail, generateICNote, printICNote } from "@/lib/draftEmail";
 import { generateAICounterOffer, generateAIExecSummary, geminiAvailable, type CounterOfferContext, type ICNoteContext } from "@/lib/gemini";
-import { scoreProductViaBackend, getAMRecommendations } from "@/lib/api";
+import { scoreProductViaBackend } from "@/lib/api";
 import { ASSET_MANAGERS } from "@/data/assetManagers";
 import { PURCHASE_HISTORY } from "@/data/purchaseHistory";
 import type { Product } from "@/types/product";
@@ -1636,25 +1636,31 @@ export default function Dashboard() {
   const { products, me } = useAppStore();
   const [filter, setFilter] = useState<"all" | "match" | "near-miss">("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  // Map of product_id → backend recommendation (null = not yet fetched)
   const [backendRecMap, setBackendRecMap] = useState<Map<string, Recommendation>>(new Map());
   const [backendSource, setBackendSource] = useState(false);
 
-  // Fetch all recommendations from the backend for the current AM.
+  // Score all products against the current AM mandate via the backend.
+  // Sends full product + AM objects — no dependency on backend seed data IDs.
   // Falls back silently to local scoring if the backend is offline.
   useEffect(() => {
-    getAMRecommendations(me.id).then((recs) => {
-      if (!recs || recs.length === 0) return;
+    let cancelled = false;
+    Promise.all(products.map((p) => scoreProductViaBackend(p, me, false))).then((results) => {
+      if (cancelled) return;
       const map = new Map<string, Recommendation>();
-      for (const r of recs) map.set(r.product_id, r);
-      setBackendRecMap(map);
-      setBackendSource(true);
+      results.forEach((rec, i) => {
+        if (rec) map.set(products[i].id, rec);
+      });
+      if (map.size > 0) {
+        setBackendRecMap(map);
+        setBackendSource(true);
+      }
     });
-  }, [me.id]);
+    return () => { cancelled = true; };
+  }, [me, products]);
 
   const items = useMemo<FeedItem[]>(() => {
-    // Local scoring is instant and used as the baseline.
-    // Backend recommendations override when available (same algorithm, same result + prose).
+    // Local scoring renders instantly. Backend scores override once the parallel
+    // POST /recommendations/score calls resolve (same deterministic algorithm).
     const localRecs = recommendationsFor(me, products);
     const merged = localRecs.map((localRec) => backendRecMap.get(localRec.product_id) ?? localRec);
     const sorted = [...merged].sort((a, b) => {

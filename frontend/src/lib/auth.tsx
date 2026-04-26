@@ -1,4 +1,4 @@
-// Fake auth: any email/password is accepted, session stored in localStorage.
+// Demo auth: session scoped to a single AM profile, stored in localStorage.
 // Hardcoded to a single asset manager — François Martin (Carmignac Credit Fund A).
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";

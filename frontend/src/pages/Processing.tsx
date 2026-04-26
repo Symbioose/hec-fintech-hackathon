@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { checkBackend, geminiAvailable, type BackendStatus } from "@/lib/gemini";
-import { getAMRecommendations, getBackendProductCount } from "@/lib/api";
+import { getBackendProductCount } from "@/lib/api";
 
 /* ─── Agents ──────────────────────────────────────────────────────────── */
 interface Step { t: number; progress: number; status: string; }
@@ -111,20 +111,11 @@ export default function Processing() {
   const startRef = useRef(Date.now());
   const logEndRef = useRef<HTMLDivElement | null>(null);
 
-  // Check backend health and fetch real scoring data
+  // Check backend health and fetch real backend data
   useEffect(() => {
     checkBackend().then(setBackend);
 
-    // Fetch real recommendations from the backend for Carmignac (am-001)
-    getAMRecommendations("am-001").then((recs) => {
-      if (!recs) return;
-      const match    = recs.filter((r) => !r.hard_fail && r.score >= 78).length;
-      const nearMiss = recs.filter((r) => !r.hard_fail && r.score >= 50 && r.score < 78).length;
-      const rejected = recs.filter((r) => r.hard_fail || r.score < 50).length;
-      setLiveStats({ total: recs.length, match, nearMiss, rejected });
-    });
-
-    // Also verify seeded product count for the log
+    // Verify seeded product count for the log
     getBackendProductCount().then((count) => {
       if (!count) return;
       setLog((prev) => [
