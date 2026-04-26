@@ -106,6 +106,93 @@ Rules:
   return callGemini(prompt);
 }
 
+/* ─── Structured product extraction from raw text ────────────────────────── */
+
+export interface ExtractedProduct {
+  issuer: string | null;
+  product_name: string | null;
+  product_type: string | null;
+  currency: string | null;
+  tenor_years: number | null;
+  coupon: number | null;
+  coupon_type: string | null;
+  underlying: string[];
+  underlying_type: string | null;
+  barrier: number | null;
+  capital_protection: boolean;
+  autocall: boolean;
+  issuer_rating: string | null;
+  risk_level: string | null;
+  notional: number | null;
+  maturity_date: string | null;
+  confidence: Record<string, number>;
+}
+
+const EXTRACTION_SCHEMA = `{
+  "issuer": "string — bank or issuer name (e.g. BNP Paribas SA)",
+  "product_name": "string — full product name or null",
+  "product_type": "one of: fixed_rate_note, floating_rate_note, autocallable, reverse_convertible, capital_protected_note, credit_linked_note, range_accrual, other",
+  "currency": "ISO code: EUR, USD, GBP, CHF or null",
+  "tenor_years": "number — duration in years (e.g. 1.9) or null",
+  "coupon": "decimal — e.g. 0.03125 for 3.125% or null",
+  "coupon_type": "one of: fixed, floating, memory, conditional, zero_coupon or null",
+  "underlying": "array of strings — names of underlying assets/issuers",
+  "underlying_type": "one of: credit, rates, equity_index, single_stock, multi_asset or null",
+  "barrier": "decimal — e.g. 0.6 for 60% or null",
+  "capital_protection": "boolean",
+  "autocall": "boolean",
+  "issuer_rating": "S&P rating: AAA, AA+, AA, AA-, A+, A, A-, BBB+, BBB, BBB-, BB+ or null",
+  "risk_level": "one of: low, medium, medium_high, high or null",
+  "notional": "number in EUR/USD (e.g. 1250000) or null",
+  "maturity_date": "ISO date string YYYY-MM-DD or null",
+  "confidence": "object mapping each field name to a 0-1 confidence score"
+}`;
+
+export async function extractProductWithGemini(
+  rawText: string,
+): Promise<ExtractedProduct | null> {
+  if (!API_KEY) return null;
+
+  const prompt = `You are a structured products analyst. Extract financial product terms from the following bank communication.
+
+Return ONLY a valid JSON object matching this schema exactly:
+${EXTRACTION_SCHEMA}
+
+Rules:
+- coupon must be a decimal fraction (3.125% → 0.03125)
+- barrier must be a decimal fraction (60% → 0.6)
+- If a field cannot be determined from the text, use null (or [] for arrays, false for booleans)
+- confidence: assign 0.9+ if explicitly stated, 0.5-0.8 if inferred, 0.2-0.4 if uncertain
+- Do NOT invent values not present in the text
+
+Bank communication:
+---
+${rawText.slice(0, 3000)}
+---`;
+
+  const res = await fetch(`${ENDPOINT}?key=${API_KEY}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: {
+        temperature: 0.1,
+        maxOutputTokens: 1024,
+        responseMimeType: "application/json",
+      },
+    }),
+  });
+
+  if (!res.ok) return null;
+  const data = await res.json();
+  const raw = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "{}";
+  try {
+    return JSON.parse(raw) as ExtractedProduct;
+  } catch {
+    return null;
+  }
+}
+
 /* ─── Backend health ──────────────────────────────────────────────────────── */
 
 export interface BackendStatus {

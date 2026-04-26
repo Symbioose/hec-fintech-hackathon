@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppStore } from "@/lib/store";
 import { RAW_SAMPLES } from "@/mocks/rawSamples";
 import { extractFromSample, extractFromText } from "@/lib/extractionMock";
+import { extractProductWithGemini, geminiAvailable } from "@/lib/gemini";
 import type { Product } from "@/types/product";
 import { humanize } from "@/lib/format";
 import { toast } from "sonner";
@@ -28,8 +29,10 @@ export default function Inbox() {
   const { products, addProduct, meta, markRead } = useAppStore();
   const [filter, setFilter] = useState<"all" | "unread" | "read">("all");
   const [extracting, setExtracting] = useState(false);
+  const [extractingLabel, setExtractingLabel] = useState("Processing...");
   const [text, setText] = useState("");
   const [justExtracted, setJustExtracted] = useState<Product | null>(null);
+  const [aiFieldCount, setAiFieldCount] = useState<number | null>(null);
 
   const items: InboxItem[] = useMemo(
     () =>
@@ -64,11 +67,56 @@ export default function Inbox() {
   const unreadCount = items.filter((it) => !meta[it.product_id]?.read).length;
   const processed = items.length;
 
-  function runExtraction(_input: string, fn: () => Product) {
+  async function runExtraction(rawText: string, fallback: () => Product) {
     setExtracting(true);
     setJustExtracted(null);
+    setAiFieldCount(null);
+
+    try {
+      if (geminiAvailable && rawText.trim().length > 40) {
+        setExtractingLabel("✦ Gemini extracting financial terms...");
+        const aiResult = await extractProductWithGemini(rawText);
+        if (aiResult) {
+          const confidence = aiResult.confidence ?? {};
+          const highConfFields = Object.values(confidence).filter(v => v >= 0.5).length;
+          setAiFieldCount(highConfFields);
+
+          const base = fallback();
+          const p: Product = {
+            ...base,
+            issuer: aiResult.issuer ?? base.issuer,
+            product_name: aiResult.product_name ?? base.product_name,
+            product_type: (aiResult.product_type as Product["product_type"]) ?? base.product_type,
+            currency: (aiResult.currency as Product["currency"]) ?? base.currency,
+            tenor_years: aiResult.tenor_years ?? base.tenor_years,
+            coupon: aiResult.coupon ?? base.coupon,
+            coupon_type: (aiResult.coupon_type as Product["coupon_type"]) ?? base.coupon_type,
+            underlying: aiResult.underlying?.length ? aiResult.underlying : base.underlying,
+            underlying_type: (aiResult.underlying_type as Product["underlying_type"]) ?? base.underlying_type,
+            barrier: aiResult.barrier ?? base.barrier,
+            capital_protection: aiResult.capital_protection ?? base.capital_protection,
+            autocall: aiResult.autocall ?? base.autocall,
+            issuer_rating: aiResult.issuer_rating ?? base.issuer_rating,
+            risk_level: (aiResult.risk_level as Product["risk_level"]) ?? base.risk_level,
+            notional: aiResult.notional ?? base.notional,
+            maturity_date: aiResult.maturity_date ?? base.maturity_date,
+            raw_text: rawText,
+          };
+          setJustExtracted(p);
+          addProduct(p);
+          setExtracting(false);
+          setText("");
+          toast.success(`${p.id} ingested · Gemini extracted ${highConfFields} fields · scoring...`);
+          return;
+        }
+      }
+    } catch {
+      // fall through to mock extraction
+    }
+
+    setExtractingLabel("Processing...");
     setTimeout(() => {
-      const p = fn();
+      const p = fallback();
       setJustExtracted(p);
       addProduct(p);
       setExtracting(false);
@@ -244,7 +292,7 @@ export default function Inbox() {
             disabled={!text.trim() || extracting}
             style={{
               padding: "0 14px",
-              background: "var(--c-amber)",
+              background: geminiAvailable ? "var(--c-match)" : "var(--c-amber)",
               border: "none",
               borderRadius: 2,
               color: "#000",
@@ -256,21 +304,22 @@ export default function Inbox() {
               opacity: !text.trim() || extracting ? 0.4 : 1,
             }}
           >
-            EXTRACT
+            {geminiAvailable ? "✦ AI EXTRACT" : "EXTRACT"}
           </button>
         </div>
         {extracting && (
-          <div
-            style={{
-              marginTop: 8,
-              fontSize: 10,
-              color: "var(--c-amber)",
-              fontFamily: "JetBrains Mono, monospace",
-              letterSpacing: "0.04em",
-            }}
-            className="animate-blink"
-          >
-            ● CALLING EXTRACTOR · scoring against mandate...
+          <div style={{ marginTop: 8, display: "flex", alignItems: "center", gap: 8 }}>
+            <span
+              style={{
+                fontSize: 10,
+                color: geminiAvailable ? "var(--c-match)" : "var(--c-amber)",
+                fontFamily: "JetBrains Mono, monospace",
+                letterSpacing: "0.04em",
+              }}
+              className="animate-blink"
+            >
+              ● {extractingLabel}
+            </span>
           </div>
         )}
         {justExtracted && !extracting && (
@@ -278,15 +327,15 @@ export default function Inbox() {
             style={{
               marginTop: 8,
               padding: "8px 10px",
-              background: "var(--c-teal-bg)",
-              border: "1px solid rgba(0,201,167,0.4)",
+              background: "var(--c-match-bg)",
+              border: "1px solid var(--c-match-border)",
               borderRadius: 2,
               fontSize: 10,
-              color: "var(--c-teal)",
+              color: "var(--c-match)",
               fontFamily: "JetBrains Mono, monospace",
             }}
           >
-            ✓ EXTRACTED · {justExtracted.id} · {justExtracted.product_name ?? humanize(justExtracted.product_type)}
+            ✓ {aiFieldCount != null ? `Gemini extracted ${aiFieldCount} fields` : "EXTRACTED"} · {justExtracted.id} · {justExtracted.product_name ?? humanize(justExtracted.product_type)}
           </div>
         )}
       </div>
