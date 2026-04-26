@@ -38,8 +38,10 @@ async def score_product(body: ScoreRequest, request: Request) -> RecommendationS
     product = body.product
     am = body.am
 
+    embedder = getattr(request.app.state, "embedding_client", None)
+
     passes, reasons = passes_hard_constraints(product, am)
-    sub = compute_sub_scores(product, am)
+    sub = compute_sub_scores(product, am, embedder=embedder)
     final_score = compute_final_score(sub, hard_fail=not passes)
     rationale = build_rationale_bullets(product, am, reasons)
 

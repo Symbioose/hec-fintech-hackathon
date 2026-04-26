@@ -1,7 +1,9 @@
 """Sub-score and final-score functions.
 
-Direct port of Lovable/src/lib/matchingMock.ts:78-142. The five sub-scores and
-their weights are pinned to the frontend so backend ranks match the UI.
+When an EmbeddingClient is passed to compute_sub_scores, the semantic sub-score
+is computed as cosine similarity between Gemini-embedded canonical texts of the
+product and the AM mandate. Without an embedder (tests, frontend fallback), a
+deterministic rule-based strategy affinity is used instead.
 
 Weights:    0.25 semantic + 0.25 constraints + 0.20 yield_fit + 0.15 exposure_fit + 0.15 market_fit
 Hard-fail:  multiply weighted total by 0.35 before rounding to int 0..100.
@@ -10,11 +12,18 @@ Rounding:   `math.floor(x + 0.5)` to match JavaScript's `Math.round` (ties → +
 from __future__ import annotations
 
 import math
+from typing import TYPE_CHECKING
 
+import numpy as np
+
+from app.core.canonical_text import asset_manager_to_canonical_text, product_to_canonical_text
 from app.core.matching import APPETITE_RANK, RISK_RANK
 from app.schemas.asset_manager import AssetManagerProfileSchema
 from app.schemas.product import ProductSchema
 from app.schemas.recommendation import SubScoresSchema
+
+if TYPE_CHECKING:
+    from app.core.embeddings import EmbeddingClient
 
 
 def _clamp01(x: float) -> float:
@@ -27,7 +36,7 @@ def _js_round(x: float) -> int:
 
 
 def _strategy_affinity(product: ProductSchema, strategy: str) -> float:
-    """Mirror of matchingMock.ts:81-94."""
+    """Rule-based fallback used when no embedder is available."""
     if strategy == "defensive_income":
         return (0.95 if product.capital_protection else 0.35) * (
             1.0 if product.coupon else 0.7
@@ -53,11 +62,21 @@ def _strategy_affinity(product: ProductSchema, strategy: str) -> float:
     return 0.5  # custom
 
 
-def compute_semantic(product: ProductSchema, am: AssetManagerProfileSchema) -> float:
-    if product.underlying_type:
-        allowed = product.underlying_type in am.allowed_underlying_types
-    else:
-        allowed = True
+def compute_semantic(
+    product: ProductSchema,
+    am: AssetManagerProfileSchema,
+    embedder: "EmbeddingClient | None" = None,
+) -> float:
+    if embedder is not None and embedder.use_gemini:
+        # Real semantic similarity: cosine sim between Gemini-embedded canonical texts.
+        # Vectors are already L2-normalised, so dot product == cosine similarity.
+        p_vec = embedder.embed(product_to_canonical_text(product))
+        am_vec = embedder.embed(asset_manager_to_canonical_text(am))
+        sim = float(np.dot(p_vec, am_vec))
+        return _clamp01(sim)
+
+    # Fallback: deterministic rule-based affinity (used in tests and frontend parity mode).
+    allowed = (product.underlying_type in am.allowed_underlying_types) if product.underlying_type else True
     return _clamp01(_strategy_affinity(product, am.strategy) * (1.0 if allowed else 0.5))
 
 
@@ -94,10 +113,12 @@ def compute_market_fit(product: ProductSchema, am: AssetManagerProfileSchema) ->
 
 
 def compute_sub_scores(
-    product: ProductSchema, am: AssetManagerProfileSchema
+    product: ProductSchema,
+    am: AssetManagerProfileSchema,
+    embedder: "EmbeddingClient | None" = None,
 ) -> SubScoresSchema:
     return SubScoresSchema(
-        semantic=compute_semantic(product, am),
+        semantic=compute_semantic(product, am, embedder=embedder),
         constraints=compute_constraints(product, am),
         yield_fit=compute_yield_fit(product, am),
         exposure_fit=compute_exposure_fit(product, am),
