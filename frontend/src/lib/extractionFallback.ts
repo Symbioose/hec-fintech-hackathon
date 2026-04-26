@@ -1,5 +1,5 @@
 import type { Product } from "@/types/product";
-import type { RawSample } from "@/mocks/rawSamples";
+import type { RawSample } from "@/data/rawSamples";
 
 let nextId = 9000;
 

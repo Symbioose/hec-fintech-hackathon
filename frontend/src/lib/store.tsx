@@ -5,8 +5,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import type { Product } from "@/types/product";
-import { PRODUCTS } from "@/mocks/products";
-import { ASSET_MANAGERS } from "@/mocks/assetManagers";
+import { PRODUCTS } from "@/data/products";
+import { ASSET_MANAGERS } from "@/data/assetManagers";
 import { ME_AM_ID } from "@/lib/auth";
 import type { OutboxRequest, OutboxStatus } from "@/types/outbox";
 

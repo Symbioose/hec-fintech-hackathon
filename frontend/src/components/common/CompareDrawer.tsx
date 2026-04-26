@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useAppStore } from "@/lib/store";
-import { score as scoreProduct } from "@/lib/matchingMock";
+import { score as scoreProduct } from "@/lib/mandateScoring";
 import {
   Sheet,
   SheetContent,

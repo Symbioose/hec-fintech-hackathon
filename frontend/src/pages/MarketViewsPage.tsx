@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { MARKET_VIEWS } from "@/mocks/marketViews";
+import { MARKET_VIEWS } from "@/data/marketViews";
 import { PageHeader } from "@/components/common/PageHeader";
 import { MarketViewCard } from "@/components/common/MarketViewCard";
 import { useAppStore } from "@/lib/store";

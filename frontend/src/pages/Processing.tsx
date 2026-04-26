@@ -17,9 +17,9 @@ interface AgentDef {
 
 const AGENTS: AgentDef[] = [
   {
-    initials: "BNP",
-    name: "BNP Paribas EM",
-    subtitle: "PDF · Indicative term sheet",
+    initials: "PDF",
+    name: "PDF Ingestion Agent",
+    subtitle: "PDF · Indicative term sheets",
     accentColor: "#ffffff",
     result: "4 products extracted",
     steps: [
@@ -31,9 +31,9 @@ const AGENTS: AgentDef[] = [
     ],
   },
   {
-    initials: "GS",
-    name: "Goldman Sachs SP",
-    subtitle: "Bloomberg MSG · Sales note",
+    initials: "BBG",
+    name: "Bloomberg Feed Agent",
+    subtitle: "Bloomberg MSG · Sales notes",
     accentColor: "#b0b0b0",
     result: "2 products extracted",
     steps: [
@@ -45,9 +45,9 @@ const AGENTS: AgentDef[] = [
     ],
   },
   {
-    initials: "SGN",
-    name: "SocGen SP Desk",
-    subtitle: "Email · Weekly outlook",
+    initials: "EML",
+    name: "Email Parser Agent",
+    subtitle: "Email · Weekly outlooks",
     accentColor: "#7a7a7a",
     result: "6 products extracted",
     steps: [

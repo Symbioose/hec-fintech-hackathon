@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppStore } from "@/lib/store";
-import { recommendationsFor, score } from "@/lib/matchingMock";
+import { recommendationsFor, score } from "@/lib/mandateScoring";
 import { generateNegotiation, summarizeNegotiation, type NegoRec } from "@/lib/negotiation";
 import { generateCounterOfferEmail, generateICNote, printICNote } from "@/lib/draftEmail";
 import { generateAICounterOffer, generateAIExecSummary, geminiAvailable, type CounterOfferContext, type ICNoteContext } from "@/lib/gemini";
 import { scoreProductViaBackend, getAMRecommendations } from "@/lib/api";
-import { ASSET_MANAGERS } from "@/mocks/assetManagers";
-import { PURCHASE_HISTORY } from "@/mocks/purchaseHistory";
+import { ASSET_MANAGERS } from "@/data/assetManagers";
+import { PURCHASE_HISTORY } from "@/data/purchaseHistory";
 import type { Product } from "@/types/product";
 import type { Recommendation } from "@/types/recommendation";
 import type { AssetManagerProfile } from "@/types/assetManager";

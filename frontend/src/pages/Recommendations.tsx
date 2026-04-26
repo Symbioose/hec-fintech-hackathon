@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { RowSelectCheckbox } from "@/components/common/RowSelectCheckbox";
 import { Link } from "react-router-dom";
 import { useAppStore } from "@/lib/store";
-import { recommendationsFor } from "@/lib/matchingMock";
+import { recommendationsFor } from "@/lib/mandateScoring";
 import { PageHeader } from "@/components/common/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

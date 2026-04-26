@@ -16,12 +16,12 @@ import { Breadcrumbs } from "@/components/common/Breadcrumbs";
 import { RequestTermSheetDialog } from "@/components/common/RequestTermSheetDialog";
 import { MarketViewCard } from "@/components/common/MarketViewCard";
 import { alignmentsForProduct } from "@/lib/marketAlignment";
-import { MARKET_VIEWS } from "@/mocks/marketViews";
+import { MARKET_VIEWS } from "@/data/marketViews";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { ArrowLeft, Sparkles, Send } from "lucide-react";
 import { fmtCurrency, fmtDate, fmtPct, humanize } from "@/lib/format";
-import { score as scoreProduct } from "@/lib/matchingMock";
+import { score as scoreProduct } from "@/lib/mandateScoring";
 import { CheckCircle2, AlertTriangle, XCircle, Circle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 

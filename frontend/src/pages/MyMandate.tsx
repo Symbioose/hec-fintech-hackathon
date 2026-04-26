@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useAppStore, canonicalPassReason, PASS_REASON_LABEL } from "@/lib/store";
-import { PURCHASE_HISTORY } from "@/mocks/purchaseHistory";
+import { PURCHASE_HISTORY } from "@/data/purchaseHistory";
 import { PageHeader } from "@/components/common/PageHeader";
 import { StrategyBadge } from "@/components/common/StrategyBadge";
 import { ExposureBar } from "@/components/common/ExposureBar";
@@ -18,7 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { fmtAum, fmtCurrency, fmtDate, fmtPct, humanize } from "@/lib/format";
-import { recommendationsFor } from "@/lib/matchingMock";
+import { recommendationsFor } from "@/lib/mandateScoring";
 import { Sparkles, AlertTriangle } from "lucide-react";
 
 const ACTION_STYLE: Record<string, string> = {

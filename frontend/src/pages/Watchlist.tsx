@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useAppStore } from "@/lib/store";
-import { score } from "@/lib/matchingMock";
+import { score } from "@/lib/mandateScoring";
 import { PageHeader } from "@/components/common/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Bookmark, Heart } from "lucide-react";

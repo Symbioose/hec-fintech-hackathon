@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppStore } from "@/lib/store";
-import { RAW_SAMPLES } from "@/mocks/rawSamples";
-import { extractFromSample, extractFromText } from "@/lib/extractionMock";
+import { RAW_SAMPLES } from "@/data/rawSamples";
+import { extractFromSample, extractFromText } from "@/lib/extractionFallback";
 import { extractProductWithGemini, geminiAvailable } from "@/lib/gemini";
 import { extractViaBackend } from "@/lib/api";
 import type { Product } from "@/types/product";
