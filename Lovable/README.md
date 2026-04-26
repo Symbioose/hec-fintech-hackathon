@@ -1,40 +1,55 @@
 # Webi — Structured Products Copilot
 
-**AI-powered deal flow engine for asset managers receiving structured product proposals from banks.**
-
-Webi ingests the daily firehose of bank proposals — Bloomberg chats, emails, term-sheet PDFs — extracts every product into a typed schema using **Gemini 2.0 Flash**, scores it against the fund's investment mandate, and surfaces only the deals that matter: ranked, explained, and ready to act on.
-
-> Built at **Paris Fintech Hackathon 2026** (HEC Paris, April 25–26). Full-stack: React/TypeScript frontend + FastAPI/PostgreSQL/FAISS backend. Both are production-ready and connected.
+AI-powered deal flow engine for asset managers receiving structured product proposals from banks. Ingests raw bank emails and Bloomberg chats, extracts every product into a typed schema via **Gemini 2.0 Flash**, scores it against the fund's investment mandate, and surfaces only the deals that matter — ranked, explained, and ready to negotiate.
 
 ---
 
-## The problem
+## Architecture
 
-Asset managers receive 50–100 structured product proposals per week across fragmented channels. Each one must be manually read, checked against mandate constraints (credit rating, tenor, ESG exclusions, seniority, yield target…), and either rejected, approved, or negotiated. This takes 4–6 hours per analyst per day. Most near-miss deals are never followed up on.
-
-## The solution
-
-Three-phase AI pipeline:
-
-1. **Auto-reject** — hard mandate breaches (ESG exclusion, below-IG rating, wrong seniority) are flagged instantly. Zero analyst time.
-2. **High-confidence match** — products scoring ≥ 78/100 surface in the MATCH bucket with an investment committee memo auto-generated and ready to export as PDF.
-3. **Gap analysis** — near-miss products (score 50–77) get specific negotiation recommendations: *"Request coupon +25bps. Barclays can accommodate this within current spread environment."* One click drafts the counter-offer email via Gemini.
+```
+Bank email / Bloomberg chat / PDF
+        │
+        ▼
+┌─────────────────────────────────┐
+│  POST /extract                  │  Gemini 2.0 Flash — server-side
+│  Structured JSON extraction     │  responseMimeType: application/json
+│  + per-field confidence scores  │  backend/app/api/routes_extract.py
+└──────────────┬──────────────────┘
+               ▼
+┌─────────────────────────────────┐
+│  Hard filter engine             │  Currency · Rating · ESG · Tenor
+│  + 5-dimension weighted score   │  Seniority · Forbidden underlyings
+│  (deterministic, auditable)     │  backend/app/core/scoring.py
+└──────────────┬──────────────────┘
+               ├── MATCH (≥78)     → IC Note · PDF export
+               ├── NEAR-MISS (50–77) → Negotiation recs · Counter-offer (Gemini)
+               └── REJECT (<50)   → Compliance log
+               ▼
+┌─────────────────────────────────┐
+│  POST /recommendations/score    │  Gemini prose rationale
+│  Narrative explanation          │  with_prose=true → Gemini 2.0 Flash
+│  per (product, mandate) pair    │  backend/app/api/routes_score.py
+└─────────────────────────────────┘
+```
 
 ---
 
-## AI integration
+## Stack
 
-| Feature | Implementation |
-|---|---|
-| **Document extraction** | Paste any bank email → Gemini 2.0 Flash extracts structured `Product` JSON with per-field confidence scores. Falls back to regex heuristics if offline. |
-| **Counter-offer drafting** | Negotiation tab → "AI DRAFT WITH GEMINI" → Gemini generates a contextual counter-proposal email grounded on the product's specific mandate gaps. |
-| **IC Note generation** | Investment committee memorandum auto-generated from scoring data, compliance checks, PM view alignment, and portfolio analytics. Export as PDF via browser print dialog. |
-| **Gemini embeddings** | Backend uses `gemini-embedding-2` (768-dim, L2-normalized) + FAISS for semantic similarity search across products, mandates, and purchase history. |
-| **Backend prose rationale** | `POST /recommendations/asset-manager/{id}?with_prose=true` calls Gemini for free-form rationale alongside rule-based bullets. |
+**Frontend** — `Lovable/`
+- React 18 · Vite 5 · TypeScript 5
+- TanStack Query · React Router v6 · Sonner
+- JetBrains Mono · terminal dark design system
+
+**Backend** — `backend/`
+- FastAPI · Pydantic v2 · SQLAlchemy · Python 3.11
+- PostgreSQL · FAISS (IndexFlatIP, cosine similarity)
+- Google Gemini API (`gemini-2.0-flash` · `gemini-embedding-2` 768-dim)
+- Docker Compose
 
 ---
 
-## Run it locally
+## Quickstart
 
 ### Frontend only (no backend required)
 
@@ -45,7 +60,7 @@ npm run dev
 # → http://localhost:8080
 ```
 
-Log in with **any** email + password — signs you in as **François Martin (Carmignac Credit Fund A, EUR 1.24B AUM, UCITS Article 8 SFDR)**.
+Log in with any email + password — signs in as **François Martin (Carmignac Credit Fund A, EUR 1.24B AUM, UCITS Article 8 SFDR)**.
 
 To enable Gemini features (live extraction + AI counter-offer drafting):
 
@@ -54,13 +69,13 @@ To enable Gemini features (live extraction + AI counter-offer drafting):
 VITE_GEMINI_API_KEY=your_google_api_key
 ```
 
-### Full stack (frontend + backend)
+### Full stack
 
 ```bash
 # 1. Start Postgres
 docker compose up -d postgres
 
-# 2. Start backend (auto-seeds DB, builds FAISS indices)
+# 2. Start backend
 cd backend
 pip install -e ".[dev]"
 GOOGLE_API_KEY=your_key uvicorn app.main:app --reload
@@ -71,7 +86,8 @@ cd ../Lovable
 npm run dev
 ```
 
-Backend health check:
+Health check:
+
 ```bash
 curl http://localhost:8000/health
 # {"status":"ok","embedding_provider":"gemini","indices_built":true,"prose_available":true}
@@ -79,48 +95,26 @@ curl http://localhost:8000/health
 
 ---
 
-## What's built
+## API
 
-### Frontend (`Lovable/`)
-
-| Route | Feature |
-|---|---|
-| `/` | **Opportunity feed** — 3 buckets (MATCH/NEAR-MISS/REJECT), score rings, 4-tab detail panel |
-| `/inbox` | **Research inbox** — Gemini extraction from pasted text, sample bank messages, read/unread state |
-| `/processing` | **AI processing** — multi-agent simulation (BNP, Goldman, SocGen), live Gemini/backend status |
-| `/products` | Product catalog with filters, triage, multi-select compare |
-| `/products/:id` | Detail view with sub-score radar, market view alignment, term-sheet request |
-| `/recommendations` | Ranked matches + What-if constraint relaxation panel |
-| `/mandate` | Editable mandate (currencies, tenor, min rating, ESG constraints, yield target) |
-| `/market` | PM house views with product alignment signals |
-| `/watchlist` | Flagged products (Watch / Interested) |
-| `/outbox` | Sent term-sheet requests with simulated status (sent → acknowledged → received) |
-
-**Detail panel — 4 tabs:**
-- **ANALYSIS**: 12 compliance checks (green/orange/red grid), 5 AI score bars, PM view alignment (5 signals), cross-mandate routing (5 AM profiles scored), investment history
-- **NEGOTIATION**: per-gap negotiation cards + Gemini-powered counter-offer draft with loading state
-- **IC NOTE**: full investment committee memorandum, Export PDF, Send to Compliance
-- **SOURCE**: raw bank message, copy to clipboard, flag for compliance
-
-### Backend (`backend/`)
-
-Built across 5 phases, fully tested:
-
-| Phase | Status | Description |
+| Method | Path | Description |
 |---|---|---|
-| 1 — Skeleton | ✅ Done | FastAPI + `/health`, Postgres + Docker Compose, Pydantic schemas |
-| 2 — Seed data | ✅ Done | 30 products, 6 AM profiles, 10 purchase history items, 4 market views |
-| 3 — Embeddings + FAISS | ✅ Done | Gemini `gemini-embedding-2` (768-dim), 5-way multi-index, hash-based mock fallback |
-| 4 — Matching + scoring | ✅ Done | Hard filters + 5 sub-scores, mirrors `src/lib/matchingMock.ts` field-for-field, 180 golden-fixture assertions |
-| 5 — Explanations | ✅ Done | Rule-based bullets + optional Gemini prose via `?with_prose=true` |
+| `GET` | `/health` | Backend status · embedding provider · FAISS index state |
+| `POST` | `/extract` | Gemini JSON extraction from raw text. Returns `ExtractedProductOut` + confidence map. 503 if no `GOOGLE_API_KEY`. |
+| `POST` | `/recommendations/score` | Stateless scoring. Body: `{ product, am, with_prose }`. Returns `RecommendationSchema` with optional Gemini prose. |
+| `POST` | `/recommendations/product/{id}` | Score one product against all seeded AMs |
+| `POST` | `/recommendations/asset-manager/{id}` | Score all products for one AM. `?with_prose=true` adds Gemini rationale. |
+| `GET` | `/products` | List seeded products |
+| `GET` | `/asset-managers` | List seeded AM profiles |
+| `GET` | `/market-views` | PM house views |
+| `POST` | `/indices/rebuild` | Force-rebuild FAISS indices |
 
 ---
 
 ## Scoring model
 
-For each (product, mandate) pair, the engine runs hard filters then computes a weighted score:
+Hard filters applied first — any failure sets `hard_fail=true` and multiplies weighted score by **0.35**:
 
-**Hard filters** — any failure sets `hard_fail=true` and applies a 65% score penalty:
 - Currency in mandate's allowed list
 - Issuer not in exclusion list
 - Capital protection present if required
@@ -128,83 +122,129 @@ For each (product, mandate) pair, the engine runs hard filters then computes a w
 - Issuer rating ≥ minimum (S&P worst-of)
 - No forbidden underlyings (ESG exclusions)
 
-**Sub-scores (0–1):**
+Weighted sub-scores (0–1):
+
 ```
-semantic       × 0.25  — strategy-affinity table × underlying-type allowance
-constraints    × 0.25  — barrier floor, preferred issuer bonus
-yield_fit      × 0.20  — coupon vs target yield
-exposure_fit   × 0.15  — rewards underweight portfolio buckets
-market_fit     × 0.15  — product risk level vs AM risk appetite delta
+semantic        × 0.25  — strategy-affinity × underlying-type allowance
+constraints     × 0.25  — barrier floor · preferred issuer bonus
+yield_fit       × 0.20  — coupon vs target yield
+exposure_fit    × 0.15  — rewards underweight portfolio buckets
+market_fit      × 0.15  — product risk level vs AM risk appetite
 ```
 
-**Buckets:** MATCH ≥ 78 · NEAR-MISS 50–77 · REJECT < 50 or hard_fail
+Buckets: **MATCH** ≥ 78 · **NEAR-MISS** 50–77 · **REJECT** < 50 or hard_fail
 
-The frontend scoring (`src/lib/matchingMock.ts`) and backend scoring (`backend/app/core/scoring.py`) are kept in sync by 180 golden-fixture assertions.
+Frontend (`src/lib/matchingMock.ts`) and backend (`backend/app/core/scoring.py`) are kept in sync by **180 golden-fixture assertions**.
+
+---
+
+## AI integration
+
+| Feature | Path | Implementation |
+|---|---|---|
+| Server-side extraction | `POST /extract` | Gemini 2.0 Flash · `response_mime_type: application/json` · 17-field schema + confidence |
+| Client-side extraction fallback | `src/lib/gemini.ts` | Same schema · fires if backend offline |
+| Regex fallback | `src/lib/extractionMock.ts` | Always works offline |
+| Prose rationale | `POST /recommendations/score` | Gemini generates 2–3 sentence narrative per (product, mandate) pair |
+| Counter-offer email | `src/lib/gemini.ts` | `generateAICounterOffer()` — contextual email grounded on mandate gaps |
+| IC Note exec summary | `src/lib/gemini.ts` | `generateAIExecSummary()` — formal IC memorandum opening paragraph |
+| Embeddings | `backend/app/core/embeddings.py` | `gemini-embedding-2` 768-dim L2-normalized · FAISS IndexFlatIP · md5-mock fallback |
+
+Extraction priority chain (Inbox):
+1. `POST /extract` — Gemini server-side (requires `GOOGLE_API_KEY` on backend)
+2. `extractProductWithGemini()` — Gemini client-side (requires `VITE_GEMINI_API_KEY`)
+3. `extractFromText()` — regex heuristics (always available)
 
 ---
 
 ## Negotiation engine
 
-For near-miss products, `src/lib/negotiation.ts` generates specific counter-asks:
+`src/lib/negotiation.ts` — 11 rules generating specific counter-asks for near-miss products:
 
-11 rules including: coupon below yield target, barrier too aggressive, tenor exceeds mandate, currency mismatch, missing capital protection, issuer rating at floor (→ auto-unwind clause ask), forbidden underlying substitution, memory coupon on autocall, American→European barrier conversion, underlying type not in mandate.
+| Rule | Action | Priority |
+|---|---|---|
+| Coupon below yield target | REQUEST coupon increase | CRITICAL |
+| Barrier below mandate floor | ASK barrier lift | CRITICAL |
+| Tenor exceeds mandate | REQUEST shorter tenor | CRITICAL |
+| Currency mismatch | COUNTER quanto sleeve | CRITICAL |
+| Missing capital protection | REQUEST 90% protection | CRITICAL |
+| Issuer rating below floor | FLAG — cannot negotiate | CRITICAL |
+| Issuer rating at exact floor | ASK rating-trigger clause | IMPORTANT |
+| Forbidden underlying | COUNTER substitute | CRITICAL |
+| Underlying type not allowed | COUNTER equivalent structure | CRITICAL |
+| No memory coupon on autocall | ASK memory feature | IMPORTANT |
+| American barrier on reverse convertible | ASK European observation | IMPORTANT |
 
-Each `NegoRec` has: `action` (REQUEST/ASK/COUNTER/FLAG), `priority` (CRITICAL/IMPORTANT/NICE-TO-HAVE), `param`, `from`, `to`, `costBps`, `costLabel`, `rationale`.
+Each `NegoRec`: `action · priority · param · from · to · costBps · rationale`
+
+---
+
+## Frontend routes
+
+| Route | Feature |
+|---|---|
+| `/` | Opportunity feed — 3 buckets · score rings · 4-tab detail panel |
+| `/inbox` | Research inbox — Gemini extraction · read/unread state |
+| `/processing` | AI processing — multi-agent simulation · backend health |
+| `/products` | Product catalog — filters · triage · multi-select compare |
+| `/products/:id` | Detail view — sub-score radar · market view alignment |
+| `/recommendations` | Ranked matches · what-if constraint relaxation |
+| `/mandate` | Editable mandate — currencies · tenor · rating · ESG · yield |
+| `/market` | PM house views · product alignment signals |
+| `/watchlist` | Flagged products |
+| `/outbox` | Sent term-sheet requests · simulated status progression |
+
+Detail panel tabs: **ANALYSIS** (12 compliance checks · Gemini rationale · 5 sub-scores · PM signals · cross-mandate routing · history) · **NEGOTIATION** (gap cards · Gemini counter-offer draft) · **IC NOTE** (full memorandum · PDF export) · **SOURCE** (raw message)
+
+---
+
+## Tests
+
+```bash
+cd backend
+pip install -e ".[dev]"
+pytest app/tests/ -v
+```
+
+- 48 unit tests (matching · scoring · embeddings · FAISS · API · explanation)
+- 180 golden-fixture assertions — parity between `matchingMock.ts` and `scoring.py` across all (product, AM) pairs
 
 ---
 
 ## Dataset
 
-12 products based on real bank research notes dated April 25, 2026:
+12 products from real bank research notes dated 25 April 2026:
 
-**5 MATCH:** BNP Paribas SA Senior Preferred 2028 · SocGen Senior Preferred 2027 · ING Groep NV Senior Preferred 2029 · ING Groep NV Senior Preferred 2028 · Volkswagen AG Senior Unsecured 2028
+**5 MATCH** — BNP Paribas SA Senior Preferred 2028 · SocGen Senior Preferred 2027 · ING Groep NV Senior Preferred 2029 · ING Groep NV Senior Preferred 2028 · Volkswagen AG Senior Unsecured 2028
 
-**3 NEAR-MISS:** ING Groep NV FRN 2028 (float→fixed gap) · Barclays PLC Callable Senior Preferred 2029 (yield −25bps + callable risk) · BNP Paribas SA Phoenix Autocall EuroStoxx50 (equity underlying not in mandate)
+**3 NEAR-MISS** — ING Groep NV FRN 2028 (float→fixed gap) · Barclays PLC Callable Senior Preferred 2029 (yield −25bps) · BNP Paribas SA Phoenix Autocall EuroStoxx50 (equity underlying)
 
-**4 REJECT:** TotalEnergies SE 2028 (ESG — fossil fuels) · Glencore PLC 2030 (ESG — thermal coal) · Deutsche Bank AG Tier 2 2030 (seniority — subordinated) · Deutsche Lufthansa AG 2028 (High Yield — BB+)
+**4 REJECT** — TotalEnergies SE 2028 (ESG fossil fuels) · Glencore PLC 2030 (ESG thermal coal) · Deutsche Bank AG Tier 2 2030 (subordinated) · Deutsche Lufthansa AG 2028 (BB+ High Yield)
 
-5 asset manager profiles for cross-mandate routing: Carmignac Credit Fund A (primary) · BlueBridge Capital · Caisse Piliers Gestion · Nordlys Wealth Family Office · Atelier Patrimoine MFO
+5 AM profiles: Carmignac Credit Fund A (primary) · BlueBridge Capital · Caisse Piliers Gestion · Nordlys Wealth Family Office · Atelier Patrimoine MFO
 
 ---
 
-## Tech stack
-
-**Frontend:**
-- React 18 · Vite 5 · TypeScript 5
-- JetBrains Mono · custom CSS design tokens (terminal aesthetic)
-- TanStack Query · React Router v6 · Sonner toasts
-- Vitest + Testing Library
+## Environment variables
 
 **Backend:**
-- FastAPI · Pydantic v2 · SQLAlchemy · Python 3.11
-- PostgreSQL · FAISS (IndexFlatIP, cosine similarity)
-- Google Gemini API (`gemini-embedding-2` 768-dim · `gemini-2.0-flash` for extraction + prose)
-- Docker Compose (postgres + backend)
-- 180 golden-fixture assertions for scoring parity
 
----
+| Variable | Default | Description |
+|---|---|---|
+| `DATABASE_URL` | — | PostgreSQL connection string |
+| `GOOGLE_API_KEY` | — | Enables Gemini extraction · embeddings · prose |
+| `EMBEDDING_MODEL` | `gemini-embedding-2` | Gemini embedding model |
+| `EMBEDDING_DIM` | `768` | Vector dimension |
+| `FAISS_DIR` | `./storage/faiss` | FAISS index persistence path |
+| `RESET_DB` | `0` | Set to `1` to drop and reseed on startup |
+| `CORS_ORIGINS` | `http://localhost:8080` | Allowed frontend origins |
 
-## Production architecture
+**Frontend:**
 
-```
-Bank email / Bloomberg chat / PDF
-        │
-        ▼
-┌─────────────────────────────┐
-│  Gemini 2.0 Flash           │  ← extractProductWithGemini()
-│  structured JSON extraction │    responseMimeType: application/json
-│  + per-field confidence     │    src/lib/gemini.ts
-└──────────────┬──────────────┘
-               ▼
-┌─────────────────────────────┐
-│  Hard filter engine         │  ← currency, rating, ESG, tenor,
-│  + 5-dimension scoring      │    seniority, forbidden underlyings
-│  (rule-based, deterministic)│    src/lib/matchingMock.ts
-└──────────────┬──────────────┘
-               ├── MATCH  → IC Note (Gemini prose) → PM approval
-               ├── NEAR-MISS → Negotiation recs → Counter-offer (Gemini)
-               └── REJECT → Compliance log
-```
+| Variable | Description |
+|---|---|
+| `VITE_GEMINI_API_KEY` | Client-side Gemini (extraction fallback · counter-offer · IC Note) |
+| `VITE_API_URL` | Backend URL (defaults to `http://localhost:8000`) |
 
 ---
 
