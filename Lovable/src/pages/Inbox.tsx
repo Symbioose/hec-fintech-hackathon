@@ -4,6 +4,7 @@ import { useAppStore } from "@/lib/store";
 import { RAW_SAMPLES } from "@/mocks/rawSamples";
 import { extractFromSample, extractFromText } from "@/lib/extractionMock";
 import { extractProductWithGemini, geminiAvailable } from "@/lib/gemini";
+import { extractViaBackend } from "@/lib/api";
 import type { Product } from "@/types/product";
 import { humanize } from "@/lib/format";
 import { toast } from "sonner";
@@ -72,48 +73,74 @@ export default function Inbox() {
     setJustExtracted(null);
     setAiFieldCount(null);
 
-    try {
-      if (geminiAvailable && rawText.trim().length > 40) {
-        setExtractingLabel("✦ Gemini extracting financial terms...");
-        const aiResult = await extractProductWithGemini(rawText);
-        if (aiResult) {
-          const confidence = aiResult.confidence ?? {};
-          const highConfFields = Object.values(confidence).filter(v => v >= 0.5).length;
-          setAiFieldCount(highConfFields);
+    const mergeAiResult = (
+      aiResult: NonNullable<Awaited<ReturnType<typeof extractProductWithGemini>>>,
+      base: Product,
+      source: "backend" | "client",
+    ): Product => {
+      const confidence = aiResult.confidence ?? {};
+      const highConfFields = Object.values(confidence).filter((v) => v >= 0.5).length;
+      setAiFieldCount(highConfFields);
+      const label = source === "backend" ? "Gemini (server)" : "Gemini";
+      toast.success(`${base.id} ingested · ${label} extracted ${highConfFields} fields · scoring...`);
+      return {
+        ...base,
+        issuer: aiResult.issuer ?? base.issuer,
+        product_name: aiResult.product_name ?? base.product_name,
+        product_type: (aiResult.product_type as Product["product_type"]) ?? base.product_type,
+        currency: (aiResult.currency as Product["currency"]) ?? base.currency,
+        tenor_years: aiResult.tenor_years ?? base.tenor_years,
+        coupon: aiResult.coupon ?? base.coupon,
+        coupon_type: (aiResult.coupon_type as Product["coupon_type"]) ?? base.coupon_type,
+        underlying: aiResult.underlying?.length ? aiResult.underlying : base.underlying,
+        underlying_type: (aiResult.underlying_type as Product["underlying_type"]) ?? base.underlying_type,
+        barrier: aiResult.barrier ?? base.barrier,
+        capital_protection: aiResult.capital_protection ?? base.capital_protection,
+        autocall: aiResult.autocall ?? base.autocall,
+        issuer_rating: aiResult.issuer_rating ?? base.issuer_rating,
+        risk_level: (aiResult.risk_level as Product["risk_level"]) ?? base.risk_level,
+        notional: aiResult.notional ?? base.notional,
+        maturity_date: aiResult.maturity_date ?? base.maturity_date,
+        raw_text: rawText,
+        confidence: confidence as Record<string, number>,
+      };
+    };
 
-          const base = fallback();
-          const p: Product = {
-            ...base,
-            issuer: aiResult.issuer ?? base.issuer,
-            product_name: aiResult.product_name ?? base.product_name,
-            product_type: (aiResult.product_type as Product["product_type"]) ?? base.product_type,
-            currency: (aiResult.currency as Product["currency"]) ?? base.currency,
-            tenor_years: aiResult.tenor_years ?? base.tenor_years,
-            coupon: aiResult.coupon ?? base.coupon,
-            coupon_type: (aiResult.coupon_type as Product["coupon_type"]) ?? base.coupon_type,
-            underlying: aiResult.underlying?.length ? aiResult.underlying : base.underlying,
-            underlying_type: (aiResult.underlying_type as Product["underlying_type"]) ?? base.underlying_type,
-            barrier: aiResult.barrier ?? base.barrier,
-            capital_protection: aiResult.capital_protection ?? base.capital_protection,
-            autocall: aiResult.autocall ?? base.autocall,
-            issuer_rating: aiResult.issuer_rating ?? base.issuer_rating,
-            risk_level: (aiResult.risk_level as Product["risk_level"]) ?? base.risk_level,
-            notional: aiResult.notional ?? base.notional,
-            maturity_date: aiResult.maturity_date ?? base.maturity_date,
-            raw_text: rawText,
-          };
-          setJustExtracted(p);
-          addProduct(p);
-          setExtracting(false);
-          setText("");
-          toast.success(`${p.id} ingested · Gemini extracted ${highConfFields} fields · scoring...`);
-          return;
+    if (rawText.trim().length > 40) {
+      // ── 1st priority: backend Gemini extraction ──────────────────────────
+      setExtractingLabel("✦ Gemini (server) extracting financial terms...");
+      const backendResult = await extractViaBackend(rawText);
+      if (backendResult) {
+        const base = fallback();
+        const p = mergeAiResult(backendResult, base, "backend");
+        setJustExtracted(p);
+        addProduct(p);
+        setExtracting(false);
+        setText("");
+        return;
+      }
+
+      // ── 2nd priority: client-side Gemini (API key in browser) ────────────
+      if (geminiAvailable) {
+        setExtractingLabel("✦ Gemini extracting financial terms...");
+        try {
+          const aiResult = await extractProductWithGemini(rawText);
+          if (aiResult) {
+            const base = fallback();
+            const p = mergeAiResult(aiResult, base, "client");
+            setJustExtracted(p);
+            addProduct(p);
+            setExtracting(false);
+            setText("");
+            return;
+          }
+        } catch {
+          // fall through to regex
         }
       }
-    } catch {
-      // fall through to mock extraction
     }
 
+    // ── 3rd priority: regex heuristics (always works offline) ──────────────
     setExtractingLabel("Processing...");
     setTimeout(() => {
       const p = fallback();

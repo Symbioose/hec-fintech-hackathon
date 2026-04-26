@@ -20,4 +20,5 @@ export interface Recommendation {
   hard_fail_reasons: string[];
   sub_scores: SubScores;
   rationale: RationaleBullet[];
+  prose_rationale?: string | null;
 }

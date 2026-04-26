@@ -8,11 +8,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes_asset_managers import router as asset_managers_router
+from app.api.routes_extract import router as extract_router
 from app.api.routes_health import router as health_router
 from app.api.routes_indices import router as indices_router
 from app.api.routes_market_views import router as market_views_router
 from app.api.routes_products import router as products_router
 from app.api.routes_recommendations import router as recommendations_router
+from app.api.routes_score import router as score_router
 from app.config import settings
 from app.core.embeddings import EmbeddingClient
 from app.db import models  # noqa: F401  — registers ORM tables on Base.metadata
@@ -80,8 +82,10 @@ app.add_middleware(
 )
 
 app.include_router(health_router)
+app.include_router(extract_router)
 app.include_router(products_router)
 app.include_router(asset_managers_router)
 app.include_router(market_views_router)
 app.include_router(indices_router)
 app.include_router(recommendations_router)
+app.include_router(score_router)

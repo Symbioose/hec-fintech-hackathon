@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppStore } from "@/lib/store";
 import { recommendationsFor, score } from "@/lib/matchingMock";
 import { generateNegotiation, summarizeNegotiation, type NegoRec } from "@/lib/negotiation";
 import { generateCounterOfferEmail, generateICNote, printICNote } from "@/lib/draftEmail";
 import { generateAICounterOffer, generateAIExecSummary, geminiAvailable, type CounterOfferContext, type ICNoteContext } from "@/lib/gemini";
+import { scoreProductViaBackend } from "@/lib/api";
 import { ASSET_MANAGERS } from "@/mocks/assetManagers";
 import { PURCHASE_HISTORY } from "@/mocks/purchaseHistory";
 import type { Product } from "@/types/product";
@@ -698,9 +699,24 @@ function DetailPanel({
   const [aiDraft, setAiDraft] = useState<string | null>(null);
   const [aiDraftLoading, setAiDraftLoading] = useState(false);
   const [aiExecSummary, setAiExecSummary] = useState<string | null>(null);
+  const [geminiProse, setGeminiProse] = useState<string | null>(null);
+  const [geminiProseLoading, setGeminiProseLoading] = useState(false);
   const { setStatus, sendTermSheetRequest } = useAppStore();
   const navigate = useNavigate();
   const { product: p, rec, status } = item;
+
+  // Fetch Gemini prose rationale from backend when panel opens
+  useEffect(() => {
+    let cancelled = false;
+    setGeminiProse(null);
+    setGeminiProseLoading(true);
+    scoreProductViaBackend(p, am, true).then((backendRec) => {
+      if (cancelled) return;
+      setGeminiProseLoading(false);
+      if (backendRec?.prose_rationale) setGeminiProse(backendRec.prose_rationale);
+    });
+    return () => { cancelled = true; };
+  }, [p.id, am.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fitReasons = rec.rationale.filter((r) => r.kind === "positive").map((r) => r.text);
   const risks = rec.rationale
@@ -956,7 +972,49 @@ function DetailPanel({
               </div>
             </div>
 
-            {/* ── 3. KEY STRENGTHS & FLAGS ── */}
+            {/* ── 3. GEMINI RATIONALE ── */}
+            {(geminiProseLoading || geminiProse) && (
+              <div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+                  <SectionLabel>GEMINI RATIONALE</SectionLabel>
+                  <span style={{
+                    fontSize: 8, fontWeight: 700, letterSpacing: "0.08em",
+                    color: "var(--c-amber)", fontFamily: "JetBrains Mono, monospace",
+                    padding: "2px 6px", border: "1px solid var(--c-amber)",
+                    opacity: 0.85,
+                  }}>
+                    ✦ GEMINI 2.0 FLASH
+                  </span>
+                </div>
+                {geminiProseLoading && !geminiProse ? (
+                  <div style={{
+                    padding: "10px 12px",
+                    background: "var(--c-bg2)",
+                    border: "1px solid var(--c-border2)",
+                    fontSize: 10,
+                    color: "var(--c-text3)",
+                    fontFamily: "JetBrains Mono, monospace",
+                    letterSpacing: "0.04em",
+                  }}>
+                    ✦ Analyzing mandate fit...
+                  </div>
+                ) : geminiProse ? (
+                  <div style={{
+                    padding: "10px 12px",
+                    background: "var(--c-bg2)",
+                    border: "1px solid var(--c-border2)",
+                    fontSize: 10,
+                    color: "var(--c-text2)",
+                    fontFamily: "JetBrains Mono, monospace",
+                    lineHeight: 1.7,
+                  }}>
+                    {geminiProse}
+                  </div>
+                ) : null}
+              </div>
+            )}
+
+            {/* ── 4. KEY STRENGTHS & FLAGS ── */}
             {(fitReasons.length > 0 || risks.length > 0 || failChecks.length > 0) && (
               <div>
                 <SectionLabel>STRENGTHS & FLAGS</SectionLabel>
@@ -983,7 +1041,7 @@ function DetailPanel({
               </div>
             )}
 
-            {/* ── 4. PM VIEW ALIGNMENT ── */}
+            {/* ── 5. PM VIEW ALIGNMENT ── */}
             <div>
               <SectionLabel>PM VIEW ALIGNMENT</SectionLabel>
               <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 1, background: "var(--c-border)" }}>
@@ -1008,7 +1066,7 @@ function DetailPanel({
               </div>
             </div>
 
-            {/* ── 5. PORTFOLIO ANALYTICS ── */}
+            {/* ── 6. PORTFOLIO ANALYTICS ── */}
             <div>
               <SectionLabel>PORTFOLIO ANALYTICS</SectionLabel>
               <div style={{ marginTop: 8, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "var(--c-border)" }}>
